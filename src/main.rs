@@ -15,6 +15,12 @@ fn main() {
     println!("Hello, world!");
 }
 
+/// An algorithm described in the form of rewrite rules on interaction nets
+#[derive(Debug)]
+struct Algorithm {
+    rules: &'static [RewriteRule],
+}
+
 /// A rule that rewrites one net to another
 #[derive(Debug)]
 struct RewriteRule {

@@ -12,7 +12,132 @@
 use std::fmt::Debug;
 
 fn main() {
-    println!("Hello, world!");
+    /// Addition on unary numbers
+    let add = Algorithm {
+        rules: &[
+            RewriteRule {
+                left: Net {
+                    agents: &[&Add, &Zero],
+                    variables: &[
+                        Variable {
+                            name: "y",
+                            port: Some(Port {
+                                agent: 0,
+                                number: 1,
+                            }),
+                        },
+                        Variable {
+                            name: "z",
+                            port: Some(Port {
+                                agent: 0,
+                                number: 2,
+                            }),
+                        },
+                    ],
+                    connections: &[(
+                        Port {
+                            agent: 0,
+                            number: 0,
+                        },
+                        Port {
+                            agent: 1,
+                            number: 0,
+                        },
+                    )],
+                },
+                right: Net {
+                    agents: &[],
+                    variables: &[
+                        Variable {
+                            name: "y",
+                            port: None,
+                        },
+                        Variable {
+                            name: "z",
+                            port: None,
+                        },
+                    ],
+                    connections: &[],
+                },
+            },
+            RewriteRule {
+                left: Net {
+                    agents: &[&Add, &One],
+                    variables: &[
+                        Variable {
+                            name: "x",
+                            port: Some(Port {
+                                agent: 1,
+                                number: 1,
+                            }),
+                        },
+                        Variable {
+                            name: "y",
+                            port: Some(Port {
+                                agent: 0,
+                                number: 1,
+                            }),
+                        },
+                        Variable {
+                            name: "z",
+                            port: Some(Port {
+                                agent: 0,
+                                number: 2,
+                            }),
+                        },
+                    ],
+                    connections: &[(
+                        Port {
+                            agent: 0,
+                            number: 0,
+                        },
+                        Port {
+                            agent: 1,
+                            number: 0,
+                        },
+                    )],
+                },
+                right: Net {
+                    agents: &[&Add, &One],
+                    variables: &[
+                        Variable {
+                            name: "x",
+                            port: Some(Port {
+                                agent: 0,
+                                number: 0,
+                            }),
+                        },
+                        Variable {
+                            name: "y",
+                            port: Some(Port {
+                                agent: 0,
+                                number: 1,
+                            }),
+                        },
+                        Variable {
+                            name: "z",
+                            port: Some(Port {
+                                agent: 1,
+                                number: 0,
+                            }),
+                        },
+                    ],
+                    connections: &[(
+                        Port {
+                            agent: 0,
+                            number: 2,
+                        },
+                        Port {
+                            agent: 1,
+                            number: 1,
+                        },
+                    )],
+                },
+            },
+        ],
+    };
+
+    dbg!(add);
 }
 
 /// An algorithm described in the form of rewrite rules on interaction nets

@@ -15,6 +15,16 @@ fn main() {
     println!("Hello, world!");
 }
 
+/// A rule that rewrites one net to another
+#[derive(Debug)]
+struct RewriteRule {
+    /// The net that is being rewritten
+    left: Net,
+
+    /// The result of the rewrite
+    right: Net,
+}
+
 /// An interaction net
 #[derive(Debug)]
 struct Net {

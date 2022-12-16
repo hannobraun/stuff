@@ -7,6 +7,8 @@
 //! [paper]: https://dl.acm.org/doi/pdf/10.1145/96709.96718
 //! [diploma thesis]: https://www.dcs.gla.ac.uk/~simon/publications/diploma.pdf
 
+#![allow(unused)]
+
 fn main() {
     println!("Hello, world!");
 }

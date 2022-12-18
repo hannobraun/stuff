@@ -5,3 +5,7 @@ version = 3
 [[package]]
 name = "interaction-nets"
 version = "0.1.0"
+
+[[package]]
+name = "orbital"
+version = "0.1.0"

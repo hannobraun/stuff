@@ -1,5 +1,6 @@
 mod event_loop;
 
-fn main() {
-    event_loop::run();
+fn main() -> anyhow::Result<()> {
+    event_loop::run()?;
+    Ok(())
 }

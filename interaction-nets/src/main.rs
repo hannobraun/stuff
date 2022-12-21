@@ -19,11 +19,11 @@ fn main() {
                 left: Net {
                     agents: &[&Add, &Zero],
                     connections: &[(
-                        Port {
+                        PortOfAgent {
                             agent: 0,
                             number: 0,
                         },
-                        Port {
+                        PortOfAgent {
                             agent: 1,
                             number: 0,
                         },
@@ -37,7 +37,7 @@ fn main() {
                     Variable {
                         name: "y",
                         port: [
-                            Some(Port {
+                            Some(PortOfAgent {
                                 agent: 0,
                                 number: 1,
                             }),
@@ -47,7 +47,7 @@ fn main() {
                     Variable {
                         name: "z",
                         port: [
-                            Some(Port {
+                            Some(PortOfAgent {
                                 agent: 0,
                                 number: 2,
                             }),
@@ -60,11 +60,11 @@ fn main() {
                 left: Net {
                     agents: &[&Add, &One],
                     connections: &[(
-                        Port {
+                        PortOfAgent {
                             agent: 0,
                             number: 0,
                         },
-                        Port {
+                        PortOfAgent {
                             agent: 1,
                             number: 0,
                         },
@@ -73,11 +73,11 @@ fn main() {
                 right: Net {
                     agents: &[&Add, &One],
                     connections: &[(
-                        Port {
+                        PortOfAgent {
                             agent: 0,
                             number: 2,
                         },
-                        Port {
+                        PortOfAgent {
                             agent: 1,
                             number: 1,
                         },
@@ -87,11 +87,11 @@ fn main() {
                     Variable {
                         name: "x",
                         port: [
-                            Some(Port {
+                            Some(PortOfAgent {
                                 agent: 1,
                                 number: 1,
                             }),
-                            Some(Port {
+                            Some(PortOfAgent {
                                 agent: 0,
                                 number: 0,
                             }),
@@ -100,11 +100,11 @@ fn main() {
                     Variable {
                         name: "y",
                         port: [
-                            Some(Port {
+                            Some(PortOfAgent {
                                 agent: 0,
                                 number: 1,
                             }),
-                            Some(Port {
+                            Some(PortOfAgent {
                                 agent: 0,
                                 number: 1,
                             }),
@@ -113,11 +113,11 @@ fn main() {
                     Variable {
                         name: "z",
                         port: [
-                            Some(Port {
+                            Some(PortOfAgent {
                                 agent: 0,
                                 number: 2,
                             }),
-                            Some(Port {
+                            Some(PortOfAgent {
                                 agent: 1,
                                 number: 0,
                             }),
@@ -157,7 +157,7 @@ struct Net {
     agents: &'static [&'static dyn Agent],
 
     /// Connections between agents in the interaction net
-    connections: &'static [(Port, Port)],
+    connections: &'static [(PortOfAgent, PortOfAgent)],
 }
 
 /// A labeled vertex in a [`Net`]
@@ -211,12 +211,12 @@ struct Variable {
     ///
     /// If this is `None`, there are no ports, the net is just an edge, and the
     /// variable is attached to that.
-    port: [Option<Port>; 2],
+    port: [Option<PortOfAgent>; 2],
 }
 
 /// A port of an [`Agent`]
 #[derive(Debug)]
-struct Port {
+struct PortOfAgent {
     /// The agent to which this port belongs
     ///
     /// This is an index into [`Net`]'s `agents` field.

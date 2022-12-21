@@ -12,7 +12,7 @@
 use std::fmt::Debug;
 
 fn main() {
-    /// Addition on unary numbers
+    // Addition on unary numbers
     let add = Algorithm {
         rules: &[
             RewriteRule {

@@ -21,11 +21,11 @@ fn main() {
                     connections: &[(
                         PortOfAgent {
                             agent: 0,
-                            number: 0,
+                            number: Port::Principal,
                         },
                         PortOfAgent {
                             agent: 1,
-                            number: 0,
+                            number: Port::Principal,
                         },
                     )],
                 },
@@ -39,7 +39,7 @@ fn main() {
                         port: [
                             Some(PortOfAgent {
                                 agent: 0,
-                                number: 1,
+                                number: Port::Auxiliary(1),
                             }),
                             None,
                         ],
@@ -49,7 +49,7 @@ fn main() {
                         port: [
                             Some(PortOfAgent {
                                 agent: 0,
-                                number: 2,
+                                number: Port::Auxiliary(2),
                             }),
                             None,
                         ],
@@ -62,11 +62,11 @@ fn main() {
                     connections: &[(
                         PortOfAgent {
                             agent: 0,
-                            number: 0,
+                            number: Port::Principal,
                         },
                         PortOfAgent {
                             agent: 1,
-                            number: 0,
+                            number: Port::Principal,
                         },
                     )],
                 },
@@ -75,11 +75,11 @@ fn main() {
                     connections: &[(
                         PortOfAgent {
                             agent: 0,
-                            number: 2,
+                            number: Port::Auxiliary(2),
                         },
                         PortOfAgent {
                             agent: 1,
-                            number: 1,
+                            number: Port::Auxiliary(1),
                         },
                     )],
                 },
@@ -89,11 +89,11 @@ fn main() {
                         port: [
                             Some(PortOfAgent {
                                 agent: 1,
-                                number: 1,
+                                number: Port::Auxiliary(1),
                             }),
                             Some(PortOfAgent {
                                 agent: 0,
-                                number: 0,
+                                number: Port::Principal,
                             }),
                         ],
                     },
@@ -102,11 +102,11 @@ fn main() {
                         port: [
                             Some(PortOfAgent {
                                 agent: 0,
-                                number: 1,
+                                number: Port::Auxiliary(1),
                             }),
                             Some(PortOfAgent {
                                 agent: 0,
-                                number: 1,
+                                number: Port::Auxiliary(1),
                             }),
                         ],
                     },
@@ -115,11 +115,11 @@ fn main() {
                         port: [
                             Some(PortOfAgent {
                                 agent: 0,
-                                number: 2,
+                                number: Port::Auxiliary(2),
                             }),
                             Some(PortOfAgent {
                                 agent: 1,
-                                number: 0,
+                                number: Port::Principal,
                             }),
                         ],
                     },
@@ -225,5 +225,11 @@ struct PortOfAgent {
     /// The port number
     ///
     /// See [`Agent`] for a description of port numbering.
-    number: usize,
+    number: Port,
+}
+
+#[derive(Debug)]
+enum Port {
+    Principal,
+    Auxiliary(usize),
 }

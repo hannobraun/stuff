@@ -18,22 +18,6 @@ fn main() {
             RewriteRule {
                 left: Net {
                     agents: &[&Add, &Zero],
-                    variables: &[
-                        Variable {
-                            name: "y",
-                            port: Some(Port {
-                                agent: 0,
-                                number: 1,
-                            }),
-                        },
-                        Variable {
-                            name: "z",
-                            port: Some(Port {
-                                agent: 0,
-                                number: 2,
-                            }),
-                        },
-                    ],
                     connections: &[(
                         Port {
                             agent: 0,
@@ -47,45 +31,34 @@ fn main() {
                 },
                 right: Net {
                     agents: &[],
-                    variables: &[
-                        Variable {
-                            name: "y",
-                            port: None,
-                        },
-                        Variable {
-                            name: "z",
-                            port: None,
-                        },
-                    ],
                     connections: &[],
                 },
+                variables: &[
+                    Variable {
+                        name: "y",
+                        port: [
+                            Some(Port {
+                                agent: 0,
+                                number: 1,
+                            }),
+                            None,
+                        ],
+                    },
+                    Variable {
+                        name: "z",
+                        port: [
+                            Some(Port {
+                                agent: 0,
+                                number: 2,
+                            }),
+                            None,
+                        ],
+                    },
+                ],
             },
             RewriteRule {
                 left: Net {
                     agents: &[&Add, &One],
-                    variables: &[
-                        Variable {
-                            name: "x",
-                            port: Some(Port {
-                                agent: 1,
-                                number: 1,
-                            }),
-                        },
-                        Variable {
-                            name: "y",
-                            port: Some(Port {
-                                agent: 0,
-                                number: 1,
-                            }),
-                        },
-                        Variable {
-                            name: "z",
-                            port: Some(Port {
-                                agent: 0,
-                                number: 2,
-                            }),
-                        },
-                    ],
                     connections: &[(
                         Port {
                             agent: 0,
@@ -99,29 +72,6 @@ fn main() {
                 },
                 right: Net {
                     agents: &[&Add, &One],
-                    variables: &[
-                        Variable {
-                            name: "x",
-                            port: Some(Port {
-                                agent: 0,
-                                number: 0,
-                            }),
-                        },
-                        Variable {
-                            name: "y",
-                            port: Some(Port {
-                                agent: 0,
-                                number: 1,
-                            }),
-                        },
-                        Variable {
-                            name: "z",
-                            port: Some(Port {
-                                agent: 1,
-                                number: 0,
-                            }),
-                        },
-                    ],
                     connections: &[(
                         Port {
                             agent: 0,
@@ -133,6 +83,47 @@ fn main() {
                         },
                     )],
                 },
+                variables: &[
+                    Variable {
+                        name: "x",
+                        port: [
+                            Some(Port {
+                                agent: 1,
+                                number: 1,
+                            }),
+                            Some(Port {
+                                agent: 0,
+                                number: 0,
+                            }),
+                        ],
+                    },
+                    Variable {
+                        name: "y",
+                        port: [
+                            Some(Port {
+                                agent: 0,
+                                number: 1,
+                            }),
+                            Some(Port {
+                                agent: 0,
+                                number: 1,
+                            }),
+                        ],
+                    },
+                    Variable {
+                        name: "z",
+                        port: [
+                            Some(Port {
+                                agent: 0,
+                                number: 2,
+                            }),
+                            Some(Port {
+                                agent: 1,
+                                number: 0,
+                            }),
+                        ],
+                    },
+                ],
             },
         ],
     };
@@ -154,6 +145,9 @@ struct RewriteRule {
 
     /// The result of the rewrite
     right: Net,
+
+    /// The free variables in the interaction net
+    variables: &'static [Variable],
 }
 
 /// An interaction net
@@ -161,9 +155,6 @@ struct RewriteRule {
 struct Net {
     /// The agents in the interaction net
     agents: &'static [&'static dyn Agent],
-
-    /// The free variables in the interaction net
-    variables: &'static [Variable],
 
     /// Connections between agents in the interaction net
     connections: &'static [(Port, Port)],
@@ -216,11 +207,11 @@ struct Variable {
     /// The name of the variable
     name: &'static str,
 
-    /// The port to which the variable is attached
+    /// The ports to which the variables are attached
     ///
     /// If this is `None`, there are no ports, the net is just an edge, and the
     /// variable is attached to that.
-    port: Option<Port>,
+    port: [Option<Port>; 2],
 }
 
 /// A port of an [`Agent`]

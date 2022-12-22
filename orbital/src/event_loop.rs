@@ -1,5 +1,9 @@
 use anyhow::anyhow;
-use winit::{event::Event, event_loop::EventLoop, window::Window};
+use winit::{
+    event::{Event, WindowEvent},
+    event_loop::EventLoop,
+    window::Window,
+};
 
 pub async fn run() -> anyhow::Result<()> {
     let event_loop = EventLoop::new();
@@ -24,7 +28,7 @@ pub async fn run() -> anyhow::Result<()> {
             None,
         )
         .await?;
-    let surface = {
+    let (surface, mut surface_config) = {
         let surface = unsafe { instance.create_surface(&window) };
 
         let format = surface.get_supported_formats(&adapter)[0];
@@ -41,10 +45,19 @@ pub async fn run() -> anyhow::Result<()> {
 
         surface.configure(&device, &surface_config);
 
-        surface
+        (surface, surface_config)
     };
 
     event_loop.run(move |event, _, _| match event {
+        Event::WindowEvent {
+            event: WindowEvent::Resized(size),
+            ..
+        } => {
+            surface_config.width = size.width;
+            surface_config.height = size.height;
+
+            surface.configure(&device, &surface_config);
+        }
         Event::MainEventsCleared => {
             window.request_redraw();
         }

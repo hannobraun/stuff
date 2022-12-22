@@ -16,9 +16,10 @@ pub async fn run() -> anyhow::Result<()> {
     let mut renderer = Renderer::new(&window).await?;
 
     let status = Command::new("cargo")
-        .arg("build")
+        .arg("rustc")
         .args(["--manifest-path", "../orbital-game/Cargo.toml"])
         .args(["--target", "wasm32-unknown-unknown"])
+        .args(["--crate-type", "cdylib"])
         .status()
         .await?;
     if !status.success() {

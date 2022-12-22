@@ -2,12 +2,14 @@ use anyhow::anyhow;
 use winit::{
     event::{Event, VirtualKeyCode, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
-    window::Window,
+    window::WindowBuilder,
 };
 
 pub async fn run() -> anyhow::Result<()> {
     let event_loop = EventLoop::new();
-    let window = Window::new(&event_loop)?;
+    let window = WindowBuilder::new()
+        .with_maximized(true)
+        .build(&event_loop)?;
 
     let instance = wgpu::Instance::new(wgpu::Backends::PRIMARY);
     let adapter = instance

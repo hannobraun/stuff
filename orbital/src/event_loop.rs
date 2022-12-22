@@ -1,6 +1,6 @@
 use winit::{event::Event, event_loop::EventLoop, window::Window};
 
-pub fn run() -> anyhow::Result<()> {
+pub async fn run() -> anyhow::Result<()> {
     let event_loop = EventLoop::new();
     let window = Window::new(&event_loop)?;
 

@@ -1,4 +1,5 @@
-use tokio::{fs::File, io::AsyncReadExt};
+use anyhow::bail;
+use tokio::{fs::File, io::AsyncReadExt, process::Command};
 use winit::{
     event::{Event, VirtualKeyCode, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
@@ -13,6 +14,16 @@ pub async fn run() -> anyhow::Result<()> {
         .with_maximized(true)
         .build(&event_loop)?;
     let mut renderer = Renderer::new(&window).await?;
+
+    let status = Command::new("cargo")
+        .arg("build")
+        .args(["--manifest-path", "../orbital-game/Cargo.toml"])
+        .args(["--target", "wasm32-unknown-unknown"])
+        .status()
+        .await?;
+    if !status.success() {
+        bail!("Error building WASM module");
+    }
 
     let mut wasm = Vec::new();
     File::open("../target/wasm32-unknown-unknown/debug/orbital_game.wasm")

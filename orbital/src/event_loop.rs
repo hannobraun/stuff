@@ -89,8 +89,6 @@ pub async fn run() -> anyhow::Result<()> {
             queue.submit([encoder.finish()]);
             surface_texture.present();
         }
-        _ => {
-            dbg!(event);
-        }
+        _ => {}
     })
 }

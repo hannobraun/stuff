@@ -49,15 +49,15 @@ pub async fn run() -> anyhow::Result<()> {
     };
 
     event_loop.run(move |event, _, _| match event {
-        Event::WindowEvent {
-            event: WindowEvent::Resized(size),
-            ..
-        } => {
-            surface_config.width = size.width;
-            surface_config.height = size.height;
+        Event::WindowEvent { event, .. } => match event {
+            WindowEvent::Resized(size) => {
+                surface_config.width = size.width;
+                surface_config.height = size.height;
 
-            surface.configure(&device, &surface_config);
-        }
+                surface.configure(&device, &surface_config);
+            }
+            _ => {}
+        },
         Event::MainEventsCleared => {
             window.request_redraw();
         }

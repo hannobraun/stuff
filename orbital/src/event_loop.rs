@@ -1,7 +1,7 @@
 use anyhow::anyhow;
 use winit::{
     event::{Event, WindowEvent},
-    event_loop::EventLoop,
+    event_loop::{ControlFlow, EventLoop},
     window::Window,
 };
 
@@ -48,13 +48,16 @@ pub async fn run() -> anyhow::Result<()> {
         (surface, surface_config)
     };
 
-    event_loop.run(move |event, _, _| match event {
+    event_loop.run(move |event, _, control_flow| match event {
         Event::WindowEvent { event, .. } => match event {
             WindowEvent::Resized(size) => {
                 surface_config.width = size.width;
                 surface_config.height = size.height;
 
                 surface.configure(&device, &surface_config);
+            }
+            WindowEvent::CloseRequested => {
+                *control_flow = ControlFlow::Exit;
             }
             _ => {}
         },

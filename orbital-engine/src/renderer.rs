@@ -64,13 +64,13 @@ impl Renderer {
         self.surface.configure(&self.device, &self.surface_config);
     }
 
-    pub fn draw(&self, color: [f64; 4]) {
+    pub fn draw(&self, color: [f64; 4]) -> anyhow::Result<()> {
         let [r, g, b, a] = color;
 
         let mut encoder = self.device.create_command_encoder(
             &wgpu::CommandEncoderDescriptor { label: None },
         );
-        let surface_texture = self.surface.get_current_texture().unwrap();
+        let surface_texture = self.surface.get_current_texture()?;
         let view = surface_texture
             .texture
             .create_view(&wgpu::TextureViewDescriptor::default());
@@ -88,5 +88,7 @@ impl Renderer {
         });
         self.queue.submit([encoder.finish()]);
         surface_texture.present();
+
+        Ok(())
     }
 }

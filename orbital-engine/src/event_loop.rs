@@ -65,7 +65,7 @@ pub async fn run() -> anyhow::Result<()> {
             window.request_redraw();
         }
         Event::RedrawRequested(_) => {
-            renderer.draw(color);
+            renderer.draw(color).unwrap();
         }
         _ => {}
     })

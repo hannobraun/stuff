@@ -18,12 +18,7 @@ pub async fn run() -> anyhow::Result<()> {
     event_loop.run(move |event, _, control_flow| match event {
         Event::WindowEvent { event, .. } => match event {
             WindowEvent::Resized(size) => {
-                renderer.surface_config.width = size.width;
-                renderer.surface_config.height = size.height;
-
-                renderer
-                    .surface
-                    .configure(&renderer.device, &renderer.surface_config);
+                renderer.update_surface_size(size.width, size.height)
             }
             WindowEvent::CloseRequested => {
                 *control_flow = ControlFlow::Exit;

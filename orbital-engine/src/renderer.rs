@@ -70,10 +70,12 @@ impl Renderer {
         let mut encoder = self.device.create_command_encoder(
             &wgpu::CommandEncoderDescriptor { label: None },
         );
+
         let surface_texture = self.surface.get_current_texture()?;
         let view = surface_texture
             .texture
             .create_view(&wgpu::TextureViewDescriptor::default());
+
         encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
             label: None,
             color_attachments: &[Some(wgpu::RenderPassColorAttachment {
@@ -86,6 +88,7 @@ impl Renderer {
             })],
             depth_stencil_attachment: None,
         });
+
         self.queue.submit([encoder.finish()]);
         surface_texture.present();
 

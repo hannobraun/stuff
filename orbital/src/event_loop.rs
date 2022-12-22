@@ -75,6 +75,8 @@ pub async fn run() -> anyhow::Result<()> {
             window.request_redraw();
         }
         Event::RedrawRequested(_) => {
+            let [r, g, b, a] = [0., 0., 0., 1.];
+
             let mut encoder = device.create_command_encoder(
                 &wgpu::CommandEncoderDescriptor { label: None },
             );
@@ -88,12 +90,7 @@ pub async fn run() -> anyhow::Result<()> {
                     view: &view,
                     resolve_target: None,
                     ops: wgpu::Operations {
-                        load: wgpu::LoadOp::Clear(wgpu::Color {
-                            r: 0.,
-                            g: 0.,
-                            b: 0.,
-                            a: 1.,
-                        }),
+                        load: wgpu::LoadOp::Clear(wgpu::Color { r, g, b, a }),
                         store: true,
                     },
                 })],

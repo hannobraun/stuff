@@ -1,6 +1,6 @@
 use anyhow::anyhow;
 use winit::{
-    event::{Event, WindowEvent},
+    event::{Event, VirtualKeyCode, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
     window::Window,
 };
@@ -58,6 +58,14 @@ pub async fn run() -> anyhow::Result<()> {
             }
             WindowEvent::CloseRequested => {
                 *control_flow = ControlFlow::Exit;
+            }
+            WindowEvent::KeyboardInput { input, .. } => {
+                match input.virtual_keycode {
+                    Some(VirtualKeyCode::Escape) => {
+                        *control_flow = ControlFlow::Exit;
+                    }
+                    _ => {}
+                }
             }
             _ => {}
         },

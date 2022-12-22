@@ -50,6 +50,8 @@ pub async fn run() -> anyhow::Result<()> {
         (surface, surface_config)
     };
 
+    let mut color = [0., 0., 0., 1.];
+
     event_loop.run(move |event, _, control_flow| match event {
         Event::WindowEvent { event, .. } => match event {
             WindowEvent::Resized(size) => {
@@ -72,10 +74,11 @@ pub async fn run() -> anyhow::Result<()> {
             _ => {}
         },
         Event::MainEventsCleared => {
+            color = [0., 0., 0., 1.];
             window.request_redraw();
         }
         Event::RedrawRequested(_) => {
-            let [r, g, b, a] = [0., 0., 0., 1.];
+            let [r, g, b, a] = color;
 
             let mut encoder = device.create_command_encoder(
                 &wgpu::CommandEncoderDescriptor { label: None },

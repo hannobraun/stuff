@@ -30,17 +30,16 @@ pub async fn run() -> anyhow::Result<()> {
         let format = surface.get_supported_formats(&adapter)[0];
         let size = window.inner_size();
 
-        surface.configure(
-            &device,
-            &wgpu::SurfaceConfiguration {
-                usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
-                format,
-                width: size.width,
-                height: size.height,
-                present_mode: wgpu::PresentMode::AutoVsync,
-                alpha_mode: wgpu::CompositeAlphaMode::Auto,
-            },
-        );
+        let surface_config = wgpu::SurfaceConfiguration {
+            usage: wgpu::TextureUsages::RENDER_ATTACHMENT,
+            format,
+            width: size.width,
+            height: size.height,
+            present_mode: wgpu::PresentMode::AutoVsync,
+            alpha_mode: wgpu::CompositeAlphaMode::Auto,
+        };
+
+        surface.configure(&device, &surface_config);
 
         surface
     };

@@ -7,3 +7,7 @@ edition = "2021"
 anyhow = "*"
 wgpu = "*"
 winit = "*"
+
+[dependencies.tokio]
+version = "*"
+features = ["full"]

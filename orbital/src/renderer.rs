@@ -63,4 +63,30 @@ impl Renderer {
 
         self.surface.configure(&self.device, &self.surface_config);
     }
+
+    pub fn draw(&self, color: [f64; 4]) {
+        let [r, g, b, a] = color;
+
+        let mut encoder = self.device.create_command_encoder(
+            &wgpu::CommandEncoderDescriptor { label: None },
+        );
+        let surface_texture = self.surface.get_current_texture().unwrap();
+        let view = surface_texture
+            .texture
+            .create_view(&wgpu::TextureViewDescriptor::default());
+        encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
+            label: None,
+            color_attachments: &[Some(wgpu::RenderPassColorAttachment {
+                view: &view,
+                resolve_target: None,
+                ops: wgpu::Operations {
+                    load: wgpu::LoadOp::Clear(wgpu::Color { r, g, b, a }),
+                    store: true,
+                },
+            })],
+            depth_stencil_attachment: None,
+        });
+        self.queue.submit([encoder.finish()]);
+        surface_texture.present();
+    }
 }

@@ -5,6 +5,8 @@ use winit::{
     window::WindowBuilder,
 };
 
+use crate::renderer::Renderer;
+
 pub async fn run() -> anyhow::Result<()> {
     let event_loop = EventLoop::new();
     let window = WindowBuilder::new()
@@ -30,7 +32,7 @@ pub async fn run() -> anyhow::Result<()> {
             None,
         )
         .await?;
-    let (surface, mut surface_config) = {
+    let (surface, surface_config) = {
         let surface = unsafe { instance.create_surface(&window) };
 
         let format = surface.get_supported_formats(&adapter)[0];
@@ -50,15 +52,24 @@ pub async fn run() -> anyhow::Result<()> {
         (surface, surface_config)
     };
 
+    let mut renderer = Renderer {
+        device,
+        queue,
+        surface,
+        surface_config,
+    };
+
     let mut color = [0., 0., 0., 1.];
 
     event_loop.run(move |event, _, control_flow| match event {
         Event::WindowEvent { event, .. } => match event {
             WindowEvent::Resized(size) => {
-                surface_config.width = size.width;
-                surface_config.height = size.height;
+                renderer.surface_config.width = size.width;
+                renderer.surface_config.height = size.height;
 
-                surface.configure(&device, &surface_config);
+                renderer
+                    .surface
+                    .configure(&renderer.device, &renderer.surface_config);
             }
             WindowEvent::CloseRequested => {
                 *control_flow = ControlFlow::Exit;
@@ -80,10 +91,11 @@ pub async fn run() -> anyhow::Result<()> {
         Event::RedrawRequested(_) => {
             let [r, g, b, a] = color;
 
-            let mut encoder = device.create_command_encoder(
+            let mut encoder = renderer.device.create_command_encoder(
                 &wgpu::CommandEncoderDescriptor { label: None },
             );
-            let surface_texture = surface.get_current_texture().unwrap();
+            let surface_texture =
+                renderer.surface.get_current_texture().unwrap();
             let view = surface_texture
                 .texture
                 .create_view(&wgpu::TextureViewDescriptor::default());
@@ -99,7 +111,7 @@ pub async fn run() -> anyhow::Result<()> {
                 })],
                 depth_stencil_attachment: None,
             });
-            queue.submit([encoder.finish()]);
+            renderer.queue.submit([encoder.finish()]);
             surface_texture.present();
         }
         _ => {}

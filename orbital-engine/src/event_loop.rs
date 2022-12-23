@@ -1,7 +1,7 @@
 use winit::{
     event::{Event, VirtualKeyCode, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
-    window::WindowBuilder,
+    window::{Window, WindowBuilder},
 };
 
 use crate::{host::Host, renderer::Renderer};
@@ -11,16 +11,23 @@ pub async fn run() -> anyhow::Result<()> {
     let window = WindowBuilder::new()
         .with_maximized(true)
         .build(&event_loop)?;
-    let mut renderer = Renderer::new(&window).await?;
-    let mut host = Host::new().await?;
+    let renderer = Renderer::new(&window).await?;
+    let host = Host::new().await?;
 
-    let mut color = [0., 0., 0., 1.];
+    let color = [0., 0., 0., 1.];
+
+    let mut handler = EventLoopHandler {
+        window,
+        renderer,
+        host,
+        color,
+    };
 
     event_loop.run(move |event, _, control_flow| match event {
         Event::WindowEvent { event, .. } => match event {
-            WindowEvent::Resized(size) => {
-                renderer.update_surface_size(size.width, size.height)
-            }
+            WindowEvent::Resized(size) => handler
+                .renderer
+                .update_surface_size(size.width, size.height),
             WindowEvent::CloseRequested => {
                 *control_flow = ControlFlow::Exit;
             }
@@ -35,12 +42,19 @@ pub async fn run() -> anyhow::Result<()> {
             _ => {}
         },
         Event::MainEventsCleared => {
-            color = host.color();
-            window.request_redraw();
+            handler.color = handler.host.color();
+            handler.window.request_redraw();
         }
         Event::RedrawRequested(_) => {
-            renderer.draw(color).unwrap();
+            handler.renderer.draw(handler.color).unwrap();
         }
         _ => {}
     })
+}
+
+struct EventLoopHandler {
+    window: Window,
+    renderer: Renderer,
+    host: Host,
+    color: [f64; 4],
 }

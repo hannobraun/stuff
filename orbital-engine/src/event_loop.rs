@@ -33,7 +33,7 @@ impl EventLoopHandler {
         let renderer = Renderer::new(&window).await?;
         let host = Host::new().await?;
 
-        let color = [0., 0., 0., 1.];
+        let color = Default::default();
 
         Ok(Self {
             window,

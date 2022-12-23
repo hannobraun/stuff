@@ -23,32 +23,8 @@ pub async fn run() -> anyhow::Result<()> {
         color,
     };
 
-    event_loop.run(move |event, _, control_flow| match event {
-        Event::WindowEvent { event, .. } => match event {
-            WindowEvent::Resized(size) => handler
-                .renderer
-                .update_surface_size(size.width, size.height),
-            WindowEvent::CloseRequested => {
-                *control_flow = ControlFlow::Exit;
-            }
-            WindowEvent::KeyboardInput { input, .. } => {
-                match input.virtual_keycode {
-                    Some(VirtualKeyCode::Escape) => {
-                        *control_flow = ControlFlow::Exit;
-                    }
-                    _ => {}
-                }
-            }
-            _ => {}
-        },
-        Event::MainEventsCleared => {
-            handler.color = handler.host.color().unwrap();
-            handler.window.request_redraw();
-        }
-        Event::RedrawRequested(_) => {
-            handler.renderer.draw(handler.color).unwrap();
-        }
-        _ => {}
+    event_loop.run(move |event, _, control_flow| {
+        handler.handle_event(event, control_flow)
     })
 }
 
@@ -57,4 +33,40 @@ struct EventLoopHandler {
     renderer: Renderer,
     host: Host,
     color: [f64; 4],
+}
+
+impl EventLoopHandler {
+    fn handle_event(
+        &mut self,
+        event: Event<()>,
+        control_flow: &mut ControlFlow,
+    ) {
+        match event {
+            Event::WindowEvent { event, .. } => match event {
+                WindowEvent::Resized(size) => {
+                    self.renderer.update_surface_size(size.width, size.height)
+                }
+                WindowEvent::CloseRequested => {
+                    *control_flow = ControlFlow::Exit;
+                }
+                WindowEvent::KeyboardInput { input, .. } => {
+                    match input.virtual_keycode {
+                        Some(VirtualKeyCode::Escape) => {
+                            *control_flow = ControlFlow::Exit;
+                        }
+                        _ => {}
+                    }
+                }
+                _ => {}
+            },
+            Event::MainEventsCleared => {
+                self.color = self.host.color().unwrap();
+                self.window.request_redraw();
+            }
+            Event::RedrawRequested(_) => {
+                self.renderer.draw(self.color).unwrap();
+            }
+            _ => {}
+        }
+    }
 }

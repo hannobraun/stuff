@@ -24,7 +24,10 @@ pub async fn run() -> anyhow::Result<()> {
     };
 
     event_loop.run(move |event, _, control_flow| {
-        handler.handle_event(event, control_flow).unwrap()
+        let exit = handler.handle_event(event).unwrap();
+        if exit {
+            *control_flow = ControlFlow::Exit;
+        }
     })
 }
 
@@ -36,23 +39,19 @@ struct EventLoopHandler {
 }
 
 impl EventLoopHandler {
-    fn handle_event(
-        &mut self,
-        event: Event<()>,
-        control_flow: &mut ControlFlow,
-    ) -> anyhow::Result<()> {
+    fn handle_event(&mut self, event: Event<()>) -> anyhow::Result<bool> {
         match event {
             Event::WindowEvent { event, .. } => match event {
                 WindowEvent::Resized(size) => {
                     self.renderer.update_surface_size(size.width, size.height)
                 }
                 WindowEvent::CloseRequested => {
-                    *control_flow = ControlFlow::Exit;
+                    return Ok(true);
                 }
                 WindowEvent::KeyboardInput { input, .. } => {
                     match input.virtual_keycode {
                         Some(VirtualKeyCode::Escape) => {
-                            *control_flow = ControlFlow::Exit;
+                            return Ok(true);
                         }
                         _ => {}
                     }
@@ -69,6 +68,6 @@ impl EventLoopHandler {
             _ => {}
         }
 
-        Ok(())
+        Ok(false)
     }
 }

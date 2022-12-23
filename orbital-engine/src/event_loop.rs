@@ -24,7 +24,7 @@ pub async fn run() -> anyhow::Result<()> {
     };
 
     event_loop.run(move |event, _, control_flow| {
-        handler.handle_event(event, control_flow)
+        handler.handle_event(event, control_flow).unwrap()
     })
 }
 
@@ -40,7 +40,7 @@ impl EventLoopHandler {
         &mut self,
         event: Event<()>,
         control_flow: &mut ControlFlow,
-    ) {
+    ) -> anyhow::Result<()> {
         match event {
             Event::WindowEvent { event, .. } => match event {
                 WindowEvent::Resized(size) => {
@@ -68,5 +68,7 @@ impl EventLoopHandler {
             }
             _ => {}
         }
+
+        Ok(())
     }
 }

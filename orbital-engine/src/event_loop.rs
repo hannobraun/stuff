@@ -6,7 +6,7 @@ use winit::{
     window::WindowBuilder,
 };
 
-use crate::renderer::Renderer;
+use crate::{host::Host, renderer::Renderer};
 
 pub async fn run() -> anyhow::Result<()> {
     let event_loop = EventLoop::new();
@@ -37,6 +37,8 @@ pub async fn run() -> anyhow::Result<()> {
     let imports = wasmer::imports! {};
     let instance = wasmer::Instance::new(&mut store, &module, &imports)?;
 
+    let mut host = Host { store, instance };
+
     let mut color = [0., 0., 0., 1.];
 
     event_loop.run(move |event, _, control_flow| match event {
@@ -58,8 +60,9 @@ pub async fn run() -> anyhow::Result<()> {
             _ => {}
         },
         Event::MainEventsCleared => {
-            let get_color = instance.exports.get_function("color").unwrap();
-            let result = &*get_color.call(&mut store, &[]).unwrap();
+            let get_color =
+                host.instance.exports.get_function("color").unwrap();
+            let result = &*get_color.call(&mut host.store, &[]).unwrap();
             let &[wasmer::Value::F64(value)] = result else { panic!() };
 
             color = [value, value, value, 1.];

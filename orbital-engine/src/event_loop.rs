@@ -8,20 +8,7 @@ use crate::{host::Host, renderer::Renderer};
 
 pub async fn run() -> anyhow::Result<()> {
     let event_loop = EventLoop::new();
-    let window = WindowBuilder::new()
-        .with_maximized(true)
-        .build(&event_loop)?;
-    let renderer = Renderer::new(&window).await?;
-    let host = Host::new().await?;
-
-    let color = [0., 0., 0., 1.];
-
-    let mut handler = EventLoopHandler {
-        window,
-        renderer,
-        host,
-        color,
-    };
+    let mut handler = EventLoopHandler::new(&event_loop).await?;
 
     event_loop.run(move |event, _, control_flow| {
         let exit = handler.handle_event(event).unwrap();
@@ -39,6 +26,23 @@ struct EventLoopHandler {
 }
 
 impl EventLoopHandler {
+    async fn new(event_loop: &EventLoop<()>) -> anyhow::Result<Self> {
+        let window = WindowBuilder::new()
+            .with_maximized(true)
+            .build(&event_loop)?;
+        let renderer = Renderer::new(&window).await?;
+        let host = Host::new().await?;
+
+        let color = [0., 0., 0., 1.];
+
+        Ok(Self {
+            window,
+            renderer,
+            host,
+            color,
+        })
+    }
+
     fn handle_event(&mut self, event: Event<()>) -> anyhow::Result<bool> {
         match event {
             Event::WindowEvent { event, .. } => match event {

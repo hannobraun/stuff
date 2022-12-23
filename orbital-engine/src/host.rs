@@ -36,7 +36,9 @@ impl Host {
     pub fn color(&mut self) -> anyhow::Result<[f64; 4]> {
         let get_color = self.instance.exports.get_function("color")?;
         let result = &*get_color.call(&mut self.store, &[])?;
-        let &[wasmer::Value::F64(value)] = result else { panic!() };
+        let &[wasmer::Value::F64(value)] = result else {
+            bail!("Unexpected return type")
+        };
 
         Ok([value, value, value, 1.])
     }

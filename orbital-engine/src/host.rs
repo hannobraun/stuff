@@ -2,8 +2,8 @@ use anyhow::bail;
 use tokio::{fs::File, io::AsyncReadExt, process::Command};
 
 pub struct Host {
-    pub store: wasmer::Store,
-    pub instance: wasmer::Instance,
+    store: wasmer::Store,
+    instance: wasmer::Instance,
 }
 
 impl Host {
@@ -33,11 +33,11 @@ impl Host {
         Ok(Self { store, instance })
     }
 
-    pub fn color(&mut self) -> [f64; 4] {
+    pub fn color(&mut self) -> anyhow::Result<[f64; 4]> {
         let get_color = self.instance.exports.get_function("color").unwrap();
         let result = &*get_color.call(&mut self.store, &[]).unwrap();
         let &[wasmer::Value::F64(value)] = result else { panic!() };
 
-        [value, value, value, 1.]
+        Ok([value, value, value, 1.])
     }
 }

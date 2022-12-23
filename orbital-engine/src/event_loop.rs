@@ -42,7 +42,7 @@ pub async fn run() -> anyhow::Result<()> {
             _ => {}
         },
         Event::MainEventsCleared => {
-            handler.color = handler.host.color();
+            handler.color = handler.host.color().unwrap();
             handler.window.request_redraw();
         }
         Event::RedrawRequested(_) => {

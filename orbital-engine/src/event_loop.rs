@@ -60,11 +60,11 @@ impl EventLoopHandler {
                 _ => {}
             },
             Event::MainEventsCleared => {
-                self.color = self.host.color().unwrap();
+                self.color = self.host.color()?;
                 self.window.request_redraw();
             }
             Event::RedrawRequested(_) => {
-                self.renderer.draw(self.color).unwrap();
+                self.renderer.draw(self.color)?;
             }
             _ => {}
         }

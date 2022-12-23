@@ -32,4 +32,12 @@ impl Host {
 
         Ok(Self { store, instance })
     }
+
+    pub fn color(&mut self) -> [f64; 4] {
+        let get_color = self.instance.exports.get_function("color").unwrap();
+        let result = &*get_color.call(&mut self.store, &[]).unwrap();
+        let &[wasmer::Value::F64(value)] = result else { panic!() };
+
+        [value, value, value, 1.]
+    }
 }

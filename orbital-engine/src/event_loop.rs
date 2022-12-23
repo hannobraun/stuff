@@ -35,12 +35,7 @@ pub async fn run() -> anyhow::Result<()> {
             _ => {}
         },
         Event::MainEventsCleared => {
-            let get_color =
-                host.instance.exports.get_function("color").unwrap();
-            let result = &*get_color.call(&mut host.store, &[]).unwrap();
-            let &[wasmer::Value::F64(value)] = result else { panic!() };
-
-            color = [value, value, value, 1.];
+            color = host.color();
             window.request_redraw();
         }
         Event::RedrawRequested(_) => {

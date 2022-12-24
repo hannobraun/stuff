@@ -7,7 +7,7 @@ pub struct Watcher {
 }
 
 impl Watcher {
-    pub fn start() -> anyhow::Result<Self> {
+    pub fn new() -> anyhow::Result<Self> {
         let mut watcher = notify::recommended_watcher(|event| {
             println!("Game code changed: {event:?}");
         })?;

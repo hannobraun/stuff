@@ -4,11 +4,12 @@ use winit::{
     window::{Window, WindowBuilder},
 };
 
-use crate::{host::Host, renderer::Renderer};
+use crate::{host::Host, renderer::Renderer, watcher};
 
 pub async fn run() -> anyhow::Result<()> {
     let event_loop = EventLoop::new();
     let mut handler = EventLoopHandler::new(&event_loop).await?;
+    let _watcher = watcher::start()?;
 
     event_loop.run(move |event, _, control_flow| {
         let exit = handler.handle_event(event).unwrap();

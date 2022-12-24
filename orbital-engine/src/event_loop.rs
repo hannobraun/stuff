@@ -29,7 +29,7 @@ impl EventLoopHandler {
     async fn new(event_loop: &EventLoop<()>) -> anyhow::Result<Self> {
         let window = WindowBuilder::new()
             .with_maximized(true)
-            .build(&event_loop)?;
+            .build(event_loop)?;
         let renderer = Renderer::new(&window).await?;
         let host = Host::new().await?;
 

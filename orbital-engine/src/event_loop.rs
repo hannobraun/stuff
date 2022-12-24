@@ -53,11 +53,9 @@ impl EventLoopHandler {
                     return Ok(true);
                 }
                 WindowEvent::KeyboardInput { input, .. } => {
-                    match input.virtual_keycode {
-                        Some(VirtualKeyCode::Escape) => {
-                            return Ok(true);
-                        }
-                        _ => {}
+                    if let Some(VirtualKeyCode::Escape) = input.virtual_keycode
+                    {
+                        return Ok(true);
                     }
                 }
                 _ => {}

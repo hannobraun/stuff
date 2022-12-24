@@ -8,7 +8,7 @@ use crate::{host::Host, renderer::Renderer, watcher::Watcher};
 
 pub async fn run() -> anyhow::Result<()> {
     let event_loop = EventLoop::new();
-    let _watcher = Watcher::new()?;
+    let _watcher = Watcher::new(event_loop.create_proxy())?;
     let mut handler = EventLoopHandler::new(&event_loop).await?;
 
     event_loop.run(move |event, _, control_flow| {
@@ -61,6 +61,9 @@ impl EventLoopHandler {
                 }
                 _ => {}
             },
+            Event::UserEvent(()) => {
+                println!("Game code updated.");
+            }
             Event::MainEventsCleared => {
                 self.color = self.host.color()?;
                 self.window.request_redraw();

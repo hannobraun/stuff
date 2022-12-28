@@ -1,3 +1,7 @@
+# This is an attempt to imagine constructing a triangle from low-level building
+# blocks in a kind of concatenative, object-oriented language that is based on
+# message passing.
+
 # Here we define three functions, each of which represent a parameter of this
 # program. The parameters are points, but the functions we define won't return
 # a point, but a signal (in the FRP sense) of points. Meaning the user, through

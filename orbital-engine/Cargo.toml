@@ -8,7 +8,7 @@ anyhow = "*"
 futures = "*"
 notify = "*"
 wasmer = "*"
-wgpu = "*"
+wgpu = "0.14.2"
 winit = "*"
 
 [dependencies.tokio]

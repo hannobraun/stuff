@@ -1,3 +1,5 @@
+[workspace]
+
 [package]
 name = "interaction-nets"
 version = "0.1.0"

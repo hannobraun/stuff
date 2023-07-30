@@ -10,7 +10,7 @@ pub struct Osc {
 
 impl Signal for Osc {
     fn next_value(&mut self) -> f32 {
-        self.clock.time += 1;
+        self.clock.advance();
 
         // I don't believe this works for timers < 1 Hz. This requires some
         // investigation.

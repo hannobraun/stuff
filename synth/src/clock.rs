@@ -13,3 +13,9 @@ pub struct Clock {
 
     pub sample_rate: u64,
 }
+
+impl Clock {
+    pub fn advance(&mut self) {
+        self.time += 1;
+    }
+}

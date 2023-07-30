@@ -13,6 +13,7 @@ impl Signal for Osc {
         self.clock.time +=
             self.frequency.next_value() / self.clock.sample_rate as f32;
 
-        self.offset + (self.wave)(self.clock.time % 1.) * self.amplitude
+        let t = self.clock.time % 1.;
+        self.offset + (self.wave)(t) * self.amplitude
     }
 }

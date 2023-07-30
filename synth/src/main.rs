@@ -16,10 +16,19 @@ fn main() -> anyhow::Result<()> {
         channel_sample_count: 48000,
     };
 
+    let freq_osc = Osc {
+        clock: 0.,
+        sample_rate: params.sample_rate as f32,
+        frequency: Box::new(signal::Value(1.)),
+        amplitude: 220.,
+        offset: 440.,
+        wave: wave::square,
+    };
+
     let mut osc = Osc {
         clock: 0.,
         sample_rate: params.sample_rate as f32,
-        frequency: Box::new(signal::Value(440.)),
+        frequency: Box::new(freq_osc),
         amplitude: 0.1,
         offset: 0.,
         wave: wave::square,

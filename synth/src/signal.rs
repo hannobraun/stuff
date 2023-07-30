@@ -5,8 +5,10 @@ pub struct Signal {
 }
 
 impl Signal {
-    pub fn new(inner: Box<dyn IsSignal>) -> Self {
-        Self { inner }
+    pub fn new<T: IsSignal + 'static>(inner: T) -> Self {
+        Self {
+            inner: Box::new(inner),
+        }
     }
 
     pub fn value(&self, clock: &Clock) -> f32 {

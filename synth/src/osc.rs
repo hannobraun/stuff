@@ -8,8 +8,8 @@ pub struct Osc {
 }
 
 impl Signal for Osc {
-    fn next_value(&mut self, clock: &Clock) -> f32 {
-        let t = clock.t(self.frequency.next_value(clock));
+    fn value(&mut self, clock: &Clock) -> f32 {
+        let t = clock.t(self.frequency.value(clock));
         self.offset + (self.wave)(t) * self.amplitude
     }
 }

@@ -41,7 +41,7 @@ fn main() -> anyhow::Result<()> {
             use signal::Signal;
 
             clock.advance();
-            *value = osc.next_value(&clock);
+            *value = osc.value(&clock);
         }
     })
     .map_err(|err| anyhow!("{}", err))?;

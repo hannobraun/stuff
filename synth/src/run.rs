@@ -9,6 +9,10 @@ use crate::{
 };
 
 pub fn run() -> anyhow::Result<()> {
+    run_inner()
+}
+
+fn run_inner() -> anyhow::Result<()> {
     let params = OutputDeviceParameters {
         sample_rate: 48000,
         channels_count: 1,

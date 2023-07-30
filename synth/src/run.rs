@@ -64,7 +64,7 @@ fn run_inner() -> anyhow::Result<()> {
                 return Ok(());
             }
 
-            dbg!(key);
+            dbg!(key.code);
         }
     }
 }

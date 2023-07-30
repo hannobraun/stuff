@@ -18,4 +18,12 @@ impl Clock {
     pub fn advance(&mut self) {
         self.time += 1;
     }
+
+    pub fn t(&self, frequency: f32) -> f32 {
+        // I don't believe this works for timers < 1 Hz. This requires some
+        // investigation.
+        ((self.time % self.sample_rate) as f64 / self.sample_rate as f64
+            * frequency as f64
+            % 1.) as f32
+    }
 }

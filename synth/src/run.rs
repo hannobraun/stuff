@@ -6,10 +6,8 @@ use crossterm::{
 use tinyaudio::{run_output_device, OutputDeviceParameters};
 
 use crate::{
-    clock::Clock,
-    osc::Osc,
     signal::{IsSignal, Signal},
-    wave,
+    synth::{clock::Clock, osc::Osc, wave},
 };
 
 pub fn run() -> anyhow::Result<()> {

@@ -1,7 +1,6 @@
-use crate::{
-    clock::Clock,
-    signal::{IsSignal, Signal},
-};
+use crate::signal::{IsSignal, Signal};
+
+use super::clock::Clock;
 
 pub struct Osc {
     pub frequency: Signal,

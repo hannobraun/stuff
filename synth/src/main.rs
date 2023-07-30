@@ -1,8 +1,6 @@
-mod clock;
-mod osc;
 mod run;
 mod signal;
-mod wave;
+mod synth;
 
 fn main() -> anyhow::Result<()> {
     run::run()

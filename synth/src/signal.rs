@@ -1,6 +1,6 @@
 use std::sync::{Arc, RwLock};
 
-use crate::clock::Clock;
+use crate::synth::clock::Clock;
 
 pub struct Signal {
     inner: Box<dyn IsSignal + Send>,

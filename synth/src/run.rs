@@ -4,7 +4,7 @@ use tinyaudio::{run_output_device, OutputDeviceParameters};
 use crate::{
     clock::Clock,
     osc::Osc,
-    signal::{self, Signal},
+    signal::{IsSignal, Signal},
     wave,
 };
 
@@ -36,8 +36,6 @@ pub fn run() -> anyhow::Result<()> {
 
     let _device = run_output_device(params, move |data| {
         for value in data {
-            use signal::IsSignal;
-
             clock.advance();
             *value = osc.value(&clock);
         }

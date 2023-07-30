@@ -9,7 +9,10 @@ use crate::{
 };
 
 pub fn run() -> anyhow::Result<()> {
-    run_inner()
+    crossterm::terminal::enable_raw_mode()?;
+    let result = run_inner();
+    crossterm::terminal::disable_raw_mode()?;
+    result
 }
 
 fn run_inner() -> anyhow::Result<()> {

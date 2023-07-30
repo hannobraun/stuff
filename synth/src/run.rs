@@ -1,13 +1,11 @@
 use anyhow::anyhow;
-use crossterm::{
-    event::{self, Event, KeyCode, KeyModifiers},
-    terminal,
-};
+use crossterm::terminal;
 use tinyaudio::{run_output_device, OutputDeviceParameters};
 
 use crate::{
     signal::{IsSignal, Signal},
     synth::{clock::Clock, osc::Osc, wave},
+    ui::{self, UiEvent},
 };
 
 pub fn run() -> anyhow::Result<()> {
@@ -55,25 +53,22 @@ fn run_inner() -> anyhow::Result<()> {
     })
     .map_err(|err| anyhow!("{}", err))?;
 
-    loop {
-        if let Event::Key(key) = event::read()? {
-            if key.code == KeyCode::Char('c')
-                && key.modifiers.contains(KeyModifiers::CONTROL)
-            {
-                return Ok(());
-            }
+    let frequency_increment = 20.;
 
-            let frequency_increment = 20.;
-            if key.code == KeyCode::Left {
+    loop {
+        match ui::read_event()? {
+            Some(UiEvent::FrequencyDec) => {
                 frequency_writer.update(|freq| freq - frequency_increment);
                 continue;
             }
-            if key.code == KeyCode::Right {
+            Some(UiEvent::FrequencyInc) => {
                 frequency_writer.update(|freq| freq + frequency_increment);
                 continue;
             }
-
-            dbg!(key.code);
+            Some(UiEvent::Quit) => {
+                return Ok(());
+            }
+            None => {}
         }
     }
 }

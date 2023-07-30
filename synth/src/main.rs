@@ -23,14 +23,18 @@ fn main() -> anyhow::Result<()> {
     };
 
     let freq_osc = Osc {
-        frequency: Box::new(signal::Value(1.)),
+        frequency: signal::Signal {
+            inner: Box::new(signal::Value(1.)),
+        },
         amplitude: 220.,
         offset: 440.,
         wave: wave::triangle,
     };
 
     let mut osc = Osc {
-        frequency: Box::new(freq_osc),
+        frequency: signal::Signal {
+            inner: Box::new(freq_osc),
+        },
         amplitude: 0.1,
         offset: 0.,
         wave: wave::square,

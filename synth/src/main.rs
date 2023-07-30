@@ -18,7 +18,7 @@ fn main() -> anyhow::Result<()> {
     };
 
     let clock = clock::Clock {
-        time: 0.,
+        time: 0,
         sample_rate: params.sample_rate as u64,
     };
 

@@ -10,11 +10,11 @@ pub struct Osc {
 
 impl Signal for Osc {
     fn next_value(&mut self) -> f32 {
-        self.clock.time += 1.;
+        self.clock.time += 1;
 
         // I don't believe this works for timers < 1 Hz. This requires some
         // investigation.
-        let t = self.clock.time % self.clock.sample_rate as f64
+        let t = (self.clock.time % self.clock.sample_rate) as f64
             / self.clock.sample_rate as f64
             * self.frequency.next_value() as f64
             % 1.;

@@ -12,8 +12,7 @@ impl Signal for Osc {
     fn next_value(&mut self) -> f32 {
         self.clock.time +=
             self.frequency.next_value() / self.clock.sample_rate as f32;
-        self.clock.time %= 1.;
 
-        self.offset + (self.wave)(self.clock.time) * self.amplitude
+        self.offset + (self.wave)(self.clock.time % 1.) * self.amplitude
     }
 }

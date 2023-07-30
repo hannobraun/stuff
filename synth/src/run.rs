@@ -1,4 +1,8 @@
 use anyhow::anyhow;
+use crossterm::{
+    event::{self, Event},
+    terminal,
+};
 use tinyaudio::{run_output_device, OutputDeviceParameters};
 
 use crate::{
@@ -9,9 +13,9 @@ use crate::{
 };
 
 pub fn run() -> anyhow::Result<()> {
-    crossterm::terminal::enable_raw_mode()?;
+    terminal::enable_raw_mode()?;
     let result = run_inner();
-    crossterm::terminal::disable_raw_mode()?;
+    terminal::disable_raw_mode()?;
     result
 }
 
@@ -50,7 +54,7 @@ fn run_inner() -> anyhow::Result<()> {
     .map_err(|err| anyhow!("{}", err))?;
 
     loop {
-        if let crossterm::event::Event::Key(key) = crossterm::event::read()? {
+        if let Event::Key(key) = event::read()? {
             dbg!(key);
         }
     }

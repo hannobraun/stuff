@@ -1,6 +1,6 @@
 use anyhow::anyhow;
 use crossterm::{
-    event::{self, Event},
+    event::{self, Event, KeyCode, KeyModifiers},
     terminal,
 };
 use tinyaudio::{run_output_device, OutputDeviceParameters};
@@ -55,6 +55,12 @@ fn run_inner() -> anyhow::Result<()> {
 
     loop {
         if let Event::Key(key) = event::read()? {
+            if key.code == KeyCode::Char('c')
+                && key.modifiers.contains(KeyModifiers::CONTROL)
+            {
+                return Ok(());
+            }
+
             dbg!(key);
         }
     }

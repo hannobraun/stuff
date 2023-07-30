@@ -12,12 +12,12 @@ fn main() -> anyhow::Result<()> {
 
     let mut t = 0.;
 
-    let frequency_hz = 440.;
+    let frequency = 440.;
     let amplitude = 0.1;
 
     let _device = run_output_device(params, move |data| {
         for value in data {
-            t += frequency_hz / params.sample_rate as f32;
+            t += frequency / params.sample_rate as f32;
             t %= 1.;
 
             if t < 0.5 {

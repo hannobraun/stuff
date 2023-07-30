@@ -11,7 +11,7 @@ pub struct Osc {
 }
 
 impl IsSignal for Osc {
-    fn value(&mut self, clock: &Clock) -> f32 {
+    fn value(&self, clock: &Clock) -> f32 {
         let t = clock.t(self.frequency.inner.value(clock));
         self.offset + (self.wave)(t) * self.amplitude
     }

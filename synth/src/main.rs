@@ -31,7 +31,7 @@ fn main() -> anyhow::Result<()> {
         wave: wave::triangle,
     };
 
-    let mut osc = Osc {
+    let osc = Osc {
         frequency: signal::Signal {
             inner: Box::new(freq_osc),
         },

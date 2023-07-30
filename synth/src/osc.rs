@@ -10,10 +10,9 @@ pub struct Osc {
 
 impl Signal for Osc {
     fn next_value(&mut self) -> f32 {
-        self.clock.time +=
-            self.frequency.next_value() as f64 / self.clock.sample_rate as f64;
+        self.clock.time += self.frequency.next_value() as f64;
 
-        let t = self.clock.time % 1.;
+        let t = (self.clock.time / self.clock.sample_rate as f64) % 1.;
         self.offset + (self.wave)(t as f32) * self.amplitude
     }
 }

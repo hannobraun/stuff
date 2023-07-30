@@ -14,10 +14,10 @@ impl Signal for Osc {
 
         // I don't believe this works for timers < 1 Hz. This requires some
         // investigation.
-        let t = (self.clock.time % self.clock.sample_rate) as f64
+        let t = ((self.clock.time % self.clock.sample_rate) as f64
             / self.clock.sample_rate as f64
             * self.frequency.next_value() as f64
-            % 1.;
-        self.offset + (self.wave)(t as f32) * self.amplitude
+            % 1.) as f32;
+        self.offset + (self.wave)(t) * self.amplitude
     }
 }

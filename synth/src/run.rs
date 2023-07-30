@@ -39,9 +39,10 @@ fn run_inner() -> anyhow::Result<()> {
     let frequency = Signal::new(Osc {
         frequency: Signal::constant(1.),
         amplitude: Signal::constant(220.),
-        offset: frequency,
+        offset: Signal::constant(0.),
         wave: wave::triangle,
-    });
+    })
+    .map(move |value, clock| value + frequency.value(clock));
 
     let osc = Osc {
         frequency,

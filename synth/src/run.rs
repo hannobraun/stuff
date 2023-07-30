@@ -20,8 +20,10 @@ pub fn run() -> anyhow::Result<()> {
 }
 
 fn run_inner() -> anyhow::Result<()> {
+    let sample_rate = 48000;
+
     let params = OutputDeviceParameters {
-        sample_rate: 48000,
+        sample_rate,
         channels_count: 1,
         channel_sample_count: 2400,
     };

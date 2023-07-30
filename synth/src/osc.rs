@@ -2,6 +2,7 @@ pub struct Osc {
     pub clock: f32,
     pub frequency: f32,
     pub amplitude: f32,
+    pub wave: fn(f32) -> f32,
 }
 
 impl Osc {
@@ -9,7 +10,7 @@ impl Osc {
         self.clock += self.frequency / sample_rate;
         self.clock %= 1.;
 
-        square_wave(self.clock)
+        (self.wave)(self.clock)
     }
 }
 

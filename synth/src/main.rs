@@ -18,6 +18,7 @@ fn main() -> anyhow::Result<()> {
         clock: 0.,
         frequency: 440.,
         amplitude: 0.1,
+        wave: osc::square_wave,
     };
 
     let _device = run_output_device(params, move |data| {

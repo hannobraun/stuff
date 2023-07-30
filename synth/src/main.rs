@@ -19,7 +19,7 @@ fn main() -> anyhow::Result<()> {
 
     let clock = clock::Clock {
         time: 0.,
-        sample_rate: params.sample_rate as f32,
+        sample_rate: params.sample_rate as u64,
     };
 
     let freq_osc = Osc {

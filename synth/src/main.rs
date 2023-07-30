@@ -14,19 +14,18 @@ fn main() -> anyhow::Result<()> {
         channel_sample_count: 48000,
     };
 
-    let mut clock = 0.;
-
-    let osc = Osc {
+    let mut osc = Osc {
+        clock: 0.,
         frequency: 440.,
         amplitude: 0.1,
     };
 
     let _device = run_output_device(params, move |data| {
         for value in data {
-            clock += osc.frequency / params.sample_rate as f32;
-            clock %= 1.;
+            osc.clock += osc.frequency / params.sample_rate as f32;
+            osc.clock %= 1.;
 
-            if clock < 0.5 {
+            if osc.clock < 0.5 {
                 *value = 0.;
             } else {
                 *value = osc.amplitude;

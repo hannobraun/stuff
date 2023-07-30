@@ -9,10 +9,14 @@ impl Osc {
         self.clock += self.frequency / sample_rate;
         self.clock %= 1.;
 
-        if self.clock < 0.5 {
-            0.
-        } else {
-            self.amplitude
-        }
+        square_wave(self.clock)
+    }
+}
+
+pub fn square_wave(t: f32) -> f32 {
+    if t < 0.5 {
+        0.
+    } else {
+        t
     }
 }

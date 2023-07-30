@@ -1,11 +1,11 @@
 use crate::clock::Clock;
 
 pub struct Signal {
-    inner: Box<dyn IsSignal>,
+    inner: Box<dyn IsSignal + Send>,
 }
 
 impl Signal {
-    pub fn new<T: IsSignal + 'static>(inner: T) -> Self {
+    pub fn new<T: IsSignal + Send + 'static>(inner: T) -> Self {
         Self {
             inner: Box::new(inner),
         }
@@ -16,7 +16,7 @@ impl Signal {
     }
 }
 
-pub trait IsSignal: Send {
+pub trait IsSignal {
     fn value(&self, clock: &Clock) -> f32;
 }
 

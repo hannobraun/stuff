@@ -10,6 +10,6 @@ impl Osc {
         self.clock += self.frequency / sample_rate;
         self.clock %= 1.;
 
-        (self.wave)(self.clock)
+        (self.wave)(self.clock) * self.amplitude
     }
 }

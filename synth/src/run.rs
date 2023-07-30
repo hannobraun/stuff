@@ -23,7 +23,7 @@ fn run_inner() -> anyhow::Result<()> {
     let params = OutputDeviceParameters {
         sample_rate: 48000,
         channels_count: 1,
-        channel_sample_count: 48000,
+        channel_sample_count: 2400,
     };
 
     let mut clock = Clock {

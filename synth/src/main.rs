@@ -25,7 +25,7 @@ fn main() -> anyhow::Result<()> {
 
     let _device = run_output_device(params, move |data| {
         for value in data {
-            *value = osc.output();
+            *value = osc.next_value();
         }
     })
     .map_err(|err| anyhow!("{}", err))?;

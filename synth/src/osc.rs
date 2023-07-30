@@ -7,7 +7,7 @@ pub struct Osc {
 }
 
 impl Osc {
-    pub fn output(&mut self) -> f32 {
+    pub fn next_value(&mut self) -> f32 {
         self.clock += self.frequency / self.sample_rate;
         self.clock %= 1.;
 

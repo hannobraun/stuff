@@ -36,15 +36,15 @@ fn run_inner() -> anyhow::Result<()> {
 
     let (frequency, mut frequency_writer) = Signal::variable(440.);
 
-    let freq_osc = Osc {
+    let frequency = Signal::new(Osc {
         frequency: Signal::constant(1.),
         amplitude: Signal::constant(220.),
         offset: frequency,
         wave: wave::triangle,
-    };
+    });
 
     let osc = Osc {
-        frequency: Signal::new(freq_osc),
+        frequency,
         amplitude: Signal::constant(0.1),
         offset: Signal::constant(0.),
         wave: wave::square,

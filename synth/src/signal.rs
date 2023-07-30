@@ -4,6 +4,12 @@ pub struct Signal {
     pub inner: Box<dyn IsSignal>,
 }
 
+impl Signal {
+    pub fn value(&self, clock: &Clock) -> f32 {
+        self.inner.value(clock)
+    }
+}
+
 pub trait IsSignal: Send {
     fn value(&self, clock: &Clock) -> f32;
 }

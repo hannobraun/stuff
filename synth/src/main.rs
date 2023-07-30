@@ -23,7 +23,7 @@ fn main() -> anyhow::Result<()> {
     };
 
     let freq_osc = Osc {
-        frequency: signal::Signal::new(signal::Value(1.)),
+        frequency: signal::Signal::new(signal::Constant(1.)),
         amplitude: 220.,
         offset: 440.,
         wave: wave::triangle,

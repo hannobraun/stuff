@@ -20,9 +20,9 @@ pub trait IsSignal {
     fn value(&self, clock: &Clock) -> f32;
 }
 
-pub struct Value(pub f32);
+pub struct Constant(pub f32);
 
-impl IsSignal for Value {
+impl IsSignal for Constant {
     fn value(&self, _: &Clock) -> f32 {
         self.0
     }

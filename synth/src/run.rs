@@ -67,7 +67,6 @@ fn run_inner() -> anyhow::Result<()> {
             }
 
             let frequency_increment = 20.;
-
             if key.code == KeyCode::Left {
                 frequency_writer.update(|freq| freq - frequency_increment);
                 continue;

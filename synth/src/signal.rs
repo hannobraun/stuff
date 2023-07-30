@@ -1,10 +1,14 @@
 use crate::clock::Clock;
 
 pub struct Signal {
-    pub inner: Box<dyn IsSignal>,
+    inner: Box<dyn IsSignal>,
 }
 
 impl Signal {
+    pub fn new(inner: Box<dyn IsSignal>) -> Self {
+        Self { inner }
+    }
+
     pub fn value(&self, clock: &Clock) -> f32 {
         self.inner.value(clock)
     }

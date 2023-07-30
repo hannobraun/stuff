@@ -13,6 +13,7 @@ fn main() -> anyhow::Result<()> {
     let mut t = 0.;
 
     let frequency_hz = 440.;
+    let amplitude = 0.1;
 
     let _device = run_output_device(params, move |data| {
         for value in data {
@@ -22,7 +23,7 @@ fn main() -> anyhow::Result<()> {
             if t < 0.5 {
                 *value = 0.;
             } else {
-                *value = 0.1;
+                *value = amplitude;
             }
         }
     })

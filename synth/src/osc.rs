@@ -1,3 +1,5 @@
+use crate::signal::Signal;
+
 pub struct Osc {
     pub clock: f32,
     pub sample_rate: f32,
@@ -6,8 +8,8 @@ pub struct Osc {
     pub wave: fn(f32) -> f32,
 }
 
-impl Osc {
-    pub fn next_value(&mut self) -> f32 {
+impl Signal for Osc {
+    fn next_value(&mut self) -> f32 {
         self.clock += self.frequency / self.sample_rate;
         self.clock %= 1.;
 

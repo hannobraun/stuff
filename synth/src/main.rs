@@ -4,6 +4,7 @@ use anyhow::anyhow;
 use tinyaudio::{run_output_device, OutputDeviceParameters};
 
 mod osc;
+mod signal;
 mod wave;
 
 use self::osc::Osc;
@@ -25,6 +26,7 @@ fn main() -> anyhow::Result<()> {
 
     let _device = run_output_device(params, move |data| {
         for value in data {
+            use signal::Signal;
             *value = osc.next_value();
         }
     })

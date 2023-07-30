@@ -17,6 +17,7 @@ fn main() -> anyhow::Result<()> {
 
     let mut osc = Osc {
         clock: 0.,
+        sample_rate: params.sample_rate as f32,
         frequency: 440.,
         amplitude: 0.1,
         wave: wave::square,
@@ -24,7 +25,7 @@ fn main() -> anyhow::Result<()> {
 
     let _device = run_output_device(params, move |data| {
         for value in data {
-            *value = osc.output(params.sample_rate as f32);
+            *value = osc.output();
         }
     })
     .map_err(|err| anyhow!("{}", err))?;

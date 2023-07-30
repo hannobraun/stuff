@@ -1,7 +1,12 @@
 use anyhow::anyhow;
 use tinyaudio::{run_output_device, OutputDeviceParameters};
 
-use crate::{clock, osc::Osc, signal, wave};
+use crate::{
+    clock::Clock,
+    osc::Osc,
+    signal::{self, Signal},
+    wave,
+};
 
 pub fn run() -> anyhow::Result<()> {
     let params = OutputDeviceParameters {
@@ -10,22 +15,22 @@ pub fn run() -> anyhow::Result<()> {
         channel_sample_count: 48000,
     };
 
-    let mut clock = clock::Clock {
+    let mut clock = Clock {
         time: 0,
         sample_rate: params.sample_rate as u64,
     };
 
     let freq_osc = Osc {
-        frequency: signal::Signal::constant(1.),
-        amplitude: signal::Signal::constant(220.),
-        offset: signal::Signal::constant(440.),
+        frequency: Signal::constant(1.),
+        amplitude: Signal::constant(220.),
+        offset: Signal::constant(440.),
         wave: wave::triangle,
     };
 
     let osc = Osc {
-        frequency: signal::Signal::new(freq_osc),
-        amplitude: signal::Signal::constant(0.1),
-        offset: signal::Signal::constant(0.),
+        frequency: Signal::new(freq_osc),
+        amplitude: Signal::constant(0.1),
+        offset: Signal::constant(0.),
         wave: wave::square,
     };
 

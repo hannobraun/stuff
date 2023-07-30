@@ -5,3 +5,7 @@ pub fn square(t: f32) -> f32 {
         1.
     }
 }
+
+pub fn triangle(t: f32) -> f32 {
+    t
+}

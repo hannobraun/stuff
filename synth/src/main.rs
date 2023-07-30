@@ -22,7 +22,7 @@ fn main() -> anyhow::Result<()> {
         frequency: Box::new(signal::Value(1.)),
         amplitude: 220.,
         offset: 440.,
-        wave: wave::square,
+        wave: wave::triangle,
     };
 
     let mut osc = Osc {

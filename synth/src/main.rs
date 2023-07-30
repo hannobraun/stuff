@@ -3,6 +3,10 @@ use std::{thread::sleep, time::Duration};
 use anyhow::anyhow;
 use tinyaudio::{run_output_device, OutputDeviceParameters};
 
+mod osc;
+
+use self::osc::Osc;
+
 fn main() -> anyhow::Result<()> {
     let params = OutputDeviceParameters {
         sample_rate: 48000,
@@ -12,18 +16,20 @@ fn main() -> anyhow::Result<()> {
 
     let mut t = 0.;
 
-    let frequency = 440.;
-    let amplitude = 0.1;
+    let osc = Osc {
+        frequency: 440.,
+        amplitude: 0.1,
+    };
 
     let _device = run_output_device(params, move |data| {
         for value in data {
-            t += frequency / params.sample_rate as f32;
+            t += osc.frequency / params.sample_rate as f32;
             t %= 1.;
 
             if t < 0.5 {
                 *value = 0.;
             } else {
-                *value = amplitude;
+                *value = osc.amplitude;
             }
         }
     })

@@ -21,6 +21,7 @@ fn main() -> anyhow::Result<()> {
         sample_rate: params.sample_rate as f32,
         frequency: Box::new(signal::Value(440.)),
         amplitude: 0.1,
+        offset: 0.,
         wave: wave::square,
     };
 

@@ -29,7 +29,7 @@ fn main() -> anyhow::Result<()> {
     })
     .map_err(|err| anyhow!("{}", err))?;
 
-    sleep(Duration::from_secs(5));
-
-    Ok(())
+    loop {
+        sleep(Duration::from_secs(1));
+    }
 }

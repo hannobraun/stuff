@@ -5,7 +5,7 @@ use crate::{
 
 pub struct Osc {
     pub frequency: Signal,
-    pub amplitude: f32,
+    pub amplitude: Signal,
     pub offset: f32,
     pub wave: fn(f32) -> f32,
 }
@@ -13,6 +13,6 @@ pub struct Osc {
 impl IsSignal for Osc {
     fn value(&self, clock: &Clock) -> f32 {
         let t = clock.t(self.frequency.value(clock));
-        self.offset + (self.wave)(t) * self.amplitude
+        self.offset + (self.wave)(t) * self.amplitude.value(clock)
     }
 }

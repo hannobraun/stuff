@@ -4,6 +4,7 @@ use anyhow::anyhow;
 use tinyaudio::{run_output_device, OutputDeviceParameters};
 
 mod osc;
+mod wave;
 
 use self::osc::Osc;
 
@@ -18,7 +19,7 @@ fn main() -> anyhow::Result<()> {
         clock: 0.,
         frequency: 440.,
         amplitude: 0.1,
-        wave: osc::square_wave,
+        wave: wave::square_wave,
     };
 
     let _device = run_output_device(params, move |data| {

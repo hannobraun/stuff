@@ -22,14 +22,7 @@ fn main() -> anyhow::Result<()> {
 
     let _device = run_output_device(params, move |data| {
         for value in data {
-            osc.clock += osc.frequency / params.sample_rate as f32;
-            osc.clock %= 1.;
-
-            if osc.clock < 0.5 {
-                *value = 0.;
-            } else {
-                *value = osc.amplitude;
-            }
+            *value = osc.output(params.sample_rate as f32);
         }
     })
     .map_err(|err| anyhow!("{}", err))?;

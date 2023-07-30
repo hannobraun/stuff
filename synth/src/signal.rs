@@ -11,6 +11,10 @@ impl Signal {
         }
     }
 
+    pub fn constant(constant: f32) -> Self {
+        Self::new(Constant(constant))
+    }
+
     pub fn value(&self, clock: &Clock) -> f32 {
         self.inner.value(clock)
     }

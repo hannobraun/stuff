@@ -34,10 +34,12 @@ fn run_inner() -> anyhow::Result<()> {
         sample_rate: params.sample_rate as u64,
     };
 
+    let (frequency, mut frequency_writer) = Signal::variable(440.);
+
     let freq_osc = Osc {
         frequency: Signal::constant(1.),
         amplitude: Signal::constant(220.),
-        offset: Signal::constant(440.),
+        offset: frequency,
         wave: wave::triangle,
     };
 
@@ -62,6 +64,17 @@ fn run_inner() -> anyhow::Result<()> {
                 && key.modifiers.contains(KeyModifiers::CONTROL)
             {
                 return Ok(());
+            }
+
+            let frequency_increment = 20.;
+
+            if key.code == KeyCode::Left {
+                frequency_writer.update(|freq| freq - frequency_increment);
+                continue;
+            }
+            if key.code == KeyCode::Right {
+                frequency_writer.update(|freq| freq + frequency_increment);
+                continue;
             }
 
             dbg!(key.code);

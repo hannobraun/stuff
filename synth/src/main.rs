@@ -19,7 +19,7 @@ fn main() -> anyhow::Result<()> {
     let mut osc = Osc {
         clock: 0.,
         sample_rate: params.sample_rate as f32,
-        frequency: 440.,
+        frequency: Box::new(signal::Value(440.)),
         amplitude: 0.1,
         wave: wave::square,
     };

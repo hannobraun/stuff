@@ -21,11 +21,12 @@ pub fn run() -> anyhow::Result<()> {
 
 fn run_inner() -> anyhow::Result<()> {
     let sample_rate = 48000;
+    let channel_sample_count = sample_rate / 20; // results in 50 ms latency
 
     let params = OutputDeviceParameters {
         sample_rate,
         channels_count: 1,
-        channel_sample_count: 2400,
+        channel_sample_count,
     };
 
     let mut clock = Clock {

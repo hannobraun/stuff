@@ -1,5 +1,3 @@
-use std::{thread::sleep, time::Duration};
-
 use anyhow::anyhow;
 use tinyaudio::{run_output_device, OutputDeviceParameters};
 
@@ -47,6 +45,8 @@ fn main() -> anyhow::Result<()> {
     .map_err(|err| anyhow!("{}", err))?;
 
     loop {
-        sleep(Duration::from_secs(1));
+        if let crossterm::event::Event::Key(key) = crossterm::event::read()? {
+            dbg!(key);
+        }
     }
 }

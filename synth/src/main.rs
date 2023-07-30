@@ -38,7 +38,7 @@ fn main() -> anyhow::Result<()> {
 
     let _device = run_output_device(params, move |data| {
         for value in data {
-            use signal::Signal;
+            use signal::IsSignal;
 
             clock.advance();
             *value = osc.value(&clock);

@@ -8,7 +8,9 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
 
     thread::spawn(move || {
         loop {
-            let event = match read_event() {
+            let event = read_event();
+
+            let event = match event {
                 Ok(Some(event)) => event,
                 Ok(None) => continue,
                 Err(err) => panic!("{err}"),

@@ -4,7 +4,7 @@ use crossterm::terminal;
 use tinyaudio::{run_output_device, OutputDeviceParameters};
 
 use crate::{
-    audio::{NUM_CHANNELS, SAMPLE_COUNT, SAMPLE_RATE},
+    audio::{Buffer, BUFFER_SIZE, NUM_CHANNELS, SAMPLE_COUNT, SAMPLE_RATE},
     synth::{
         clock::Clock,
         components::{
@@ -60,11 +60,11 @@ fn run_inner() -> anyhow::Result<()> {
         scale: volume,
     });
 
+    let (tx, rx) = crossbeam_channel::bounded::<Buffer>(0);
+
     let _device = run_output_device(params, move |data| {
-        for value in data {
-            clock.advance();
-            *value = osc.value(&clock);
-        }
+        let new_data = rx.recv().unwrap();
+        data.copy_from_slice(&new_data);
     })
     .map_err(|err| anyhow!("{}", err))?;
 
@@ -73,10 +73,22 @@ fn run_inner() -> anyhow::Result<()> {
 
     let ui_events = ui::start();
 
+    let mut buffer = [0.; BUFFER_SIZE];
+
     loop {
         let ui_event = select! {
             recv(ui_events) -> ui_event => {
                 ui_event.unwrap()
+            }
+            send(tx, buffer) -> res => {
+                res.unwrap();
+
+                for value in &mut buffer {
+                    clock.advance();
+                    *value = osc.value(&clock);
+                }
+
+                continue;
             }
         };
 

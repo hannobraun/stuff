@@ -1,4 +1,4 @@
-use std::{cell::Cell, sync::Arc};
+use std::{cell::Cell, rc::Rc};
 
 use crate::synth::clock::Clock;
 
@@ -18,7 +18,7 @@ impl Signal {
     }
 
     pub fn variable(initial: f32) -> (Self, VariableWriter) {
-        let signal = Variable(Arc::new(Cell::new(initial)));
+        let signal = Variable(Rc::new(Cell::new(initial)));
         let writer = VariableWriter(signal.0.clone());
 
         let signal = Self::new(signal);
@@ -71,4 +71,4 @@ impl VariableWriter {
     }
 }
 
-type VariableInner = Arc<Cell<f32>>;
+type VariableInner = Rc<Cell<f32>>;

@@ -72,7 +72,7 @@ fn run_inner() -> anyhow::Result<()> {
             }
             recv(input) -> input => {
                 match input {
-                    Ok(ui_event) => ui_event,
+                    Ok(input) => input,
                     Err(RecvError) =>  {
                         break Ok(());
                     }

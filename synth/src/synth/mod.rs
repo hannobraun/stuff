@@ -1,3 +1,3 @@
 pub mod clock;
-pub mod osc;
+pub mod components;
 pub mod wave;

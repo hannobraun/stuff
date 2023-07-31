@@ -4,7 +4,7 @@ use tinyaudio::{run_output_device, OutputDeviceParameters};
 
 use crate::{
     signal::{IsSignal, Signal},
-    synth::{clock::Clock, osc::Osc, wave},
+    synth::{clock::Clock, components::osc::Osc, wave},
     ui::{self, UiEvent},
 };
 

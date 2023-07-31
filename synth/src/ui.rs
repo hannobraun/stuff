@@ -6,7 +6,7 @@ use crossterm::event::{self, Event, KeyCode, KeyModifiers};
 use crate::synth::input::{Input, Note};
 
 pub fn start() -> Receiver<Input> {
-    let (tx, rx) = crossbeam_channel::bounded(0);
+    let (input, rx) = crossbeam_channel::bounded(0);
 
     thread::spawn(move || {
         loop {
@@ -52,7 +52,7 @@ pub fn start() -> Receiver<Input> {
                 }
             };
 
-            match tx.send(event) {
+            match input.send(event) {
                 Ok(()) => {}
                 Err(SendError(_)) => {
                     // channel is disconnected

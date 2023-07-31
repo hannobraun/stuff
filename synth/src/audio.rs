@@ -14,7 +14,7 @@ pub type Buffer = [f32; BUFFER_SIZE];
 
 pub struct Audio {
     pub buffers: Sender<Buffer>,
-    pub _device: Box<dyn BaseAudioOutputDevice>,
+    _device: Box<dyn BaseAudioOutputDevice>,
 }
 
 impl Audio {

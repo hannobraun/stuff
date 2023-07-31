@@ -8,10 +8,11 @@ use crate::{
     synth::{
         clock::Clock,
         components::{oscillator::Oscillator, scaler::Scaler},
+        input::{Input, Note},
         signal::Signal,
         wave,
     },
-    ui::{self, Input, Note},
+    ui,
 };
 
 pub fn run() -> anyhow::Result<()> {

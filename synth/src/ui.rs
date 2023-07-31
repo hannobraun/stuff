@@ -3,6 +3,8 @@ use std::thread;
 use crossbeam_channel::{Receiver, SendError};
 use crossterm::event::{self, Event, KeyCode, KeyModifiers};
 
+use crate::synth::input::{Input, Note};
+
 pub fn start() -> anyhow::Result<Receiver<Input>> {
     let (tx, rx) = crossbeam_channel::bounded(0);
 
@@ -61,24 +63,4 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
     });
 
     Ok(rx)
-}
-
-pub enum Input {
-    OctaveDec,
-    OctaveInc,
-
-    VolumeDec,
-    VolumeInc,
-
-    PlayNote(Note),
-}
-
-pub enum Note {
-    C,
-    D,
-    E,
-    F,
-    G,
-    A,
-    B,
 }

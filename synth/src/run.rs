@@ -79,7 +79,10 @@ fn run_inner() -> anyhow::Result<()> {
     })
     .map_err(|err| anyhow!("{}", err))?;
 
-    let audio = Audio { buffers: tx };
+    let audio = Audio {
+        buffers: tx,
+        device: _device,
+    };
 
     let frequency_increment = 20.;
     let volume_increment = 0.1;

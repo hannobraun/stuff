@@ -1,14 +1,10 @@
 use std::panic;
 
-use anyhow::anyhow;
 use crossbeam_channel::select;
 use crossterm::terminal;
-use tinyaudio::{run_output_device, OutputDeviceParameters};
 
 use crate::{
-    audio::{
-        Audio, Buffer, BUFFER_SIZE, NUM_CHANNELS, SAMPLE_COUNT, SAMPLE_RATE,
-    },
+    audio::{Audio, BUFFER_SIZE, SAMPLE_RATE},
     synth::{
         clock::Clock,
         components::{
@@ -35,12 +31,6 @@ pub fn run() -> anyhow::Result<()> {
 }
 
 fn run_inner() -> anyhow::Result<()> {
-    let params = OutputDeviceParameters {
-        sample_rate: SAMPLE_RATE,
-        channels_count: NUM_CHANNELS,
-        channel_sample_count: SAMPLE_COUNT,
-    };
-
     let mut clock = Clock {
         time: 0,
         sample_rate: SAMPLE_RATE as u64,
@@ -71,18 +61,7 @@ fn run_inner() -> anyhow::Result<()> {
         scale: volume,
     });
 
-    let (tx, rx) = crossbeam_channel::bounded::<Buffer>(0);
-
-    let device = run_output_device(params, move |data| {
-        let new_data = rx.recv().unwrap();
-        data.copy_from_slice(&new_data);
-    })
-    .map_err(|err| anyhow!("{}", err))?;
-
-    let audio = Audio {
-        buffers: tx,
-        device,
-    };
+    let audio = Audio::start()?;
 
     let frequency_increment = 20.;
     let volume_increment = 0.1;

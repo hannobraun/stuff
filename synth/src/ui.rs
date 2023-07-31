@@ -3,7 +3,7 @@ use std::thread;
 use crossbeam_channel::{Receiver, SendError};
 use crossterm::event::{self, Event, KeyCode, KeyModifiers};
 
-pub fn start() -> Receiver<UiEvent> {
+pub fn start() -> anyhow::Result<Receiver<UiEvent>> {
     let (tx, rx) = crossbeam_channel::bounded(0);
 
     thread::spawn(move || {
@@ -24,7 +24,7 @@ pub fn start() -> Receiver<UiEvent> {
         }
     });
 
-    rx
+    Ok(rx)
 }
 
 fn read_event() -> anyhow::Result<Option<UiEvent>> {

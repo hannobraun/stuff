@@ -48,7 +48,7 @@ fn run_inner() -> anyhow::Result<()> {
     });
 
     let audio = Audio::start()?;
-    let ui_events = ui::start();
+    let ui_events = ui::start()?;
 
     let volume_increment = 0.1;
 

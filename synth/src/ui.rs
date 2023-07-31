@@ -8,12 +8,11 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
 
     thread::spawn(move || {
         loop {
-            let event = read_event();
+            let event = read_event().unwrap();
 
             let event = match event {
-                Ok(Some(event)) => event,
-                Ok(None) => continue,
-                Err(err) => panic!("{err}"),
+                Some(event) => event,
+                None => continue,
             };
 
             match tx.send(event) {

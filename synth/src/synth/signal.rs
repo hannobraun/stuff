@@ -29,22 +29,6 @@ impl Signal {
     pub fn value(&self, clock: &Clock) -> f32 {
         self.inner.value(clock)
     }
-
-    #[allow(unused)]
-    pub fn map(self, f: impl Fn(f32, &Clock) -> f32 + Send + 'static) -> Self {
-        struct Map<F: Fn(f32, &Clock) -> f32> {
-            signal: Signal,
-            f: F,
-        }
-
-        impl<F: Fn(f32, &Clock) -> f32 + Send> IsSignal for Map<F> {
-            fn value(&self, clock: &Clock) -> f32 {
-                (self.f)(self.signal.value(clock), clock)
-            }
-        }
-
-        Signal::new(Map { signal: self, f })
-    }
 }
 
 pub trait IsSignal {

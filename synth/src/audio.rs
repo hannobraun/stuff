@@ -28,7 +28,10 @@ impl Audio {
         let (tx, rx) = crossbeam_channel::bounded::<Buffer>(0);
 
         let _device = run_output_device(params, move |data| {
-            let new_data = rx.recv().unwrap();
+            let new_data = match rx.recv() {
+                Ok(data) => data,
+                Err(_) => return,
+            };
             data.copy_from_slice(&new_data);
         })
         .map_err(|err| anyhow!("{}", err))?;

@@ -70,8 +70,8 @@ fn run_inner() -> anyhow::Result<()> {
 
                 continue;
             }
-            recv(input) -> ui_event => {
-                match ui_event {
+            recv(input) -> input => {
+                match input {
                     Ok(ui_event) => ui_event,
                     Err(RecvError) =>  {
                         break Ok(());

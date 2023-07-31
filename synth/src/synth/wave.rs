@@ -7,6 +7,6 @@ pub fn square(t: f32) -> f32 {
 }
 
 #[allow(unused)]
-pub fn triangle(t: f32) -> f32 {
+pub fn sawtooth(t: f32) -> f32 {
     t
 }

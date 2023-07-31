@@ -1,4 +1,4 @@
-use std::sync::{Arc, RwLock};
+use std::{cell::Cell, sync::Arc};
 
 use crate::synth::clock::Clock;
 
@@ -18,7 +18,7 @@ impl Signal {
     }
 
     pub fn variable(initial: f32) -> (Self, VariableWriter) {
-        let signal = Variable(Arc::new(RwLock::new(initial)));
+        let signal = Variable(Arc::new(Cell::new(initial)));
         let writer = VariableWriter(signal.0.clone());
 
         let signal = Self::new(signal);
@@ -57,7 +57,7 @@ pub struct Variable(pub VariableInner);
 
 impl IsSignal for Variable {
     fn value(&self, _: &Clock) -> f32 {
-        *self.0.read().unwrap()
+        self.0.get()
     }
 }
 
@@ -65,10 +65,10 @@ pub struct VariableWriter(pub VariableInner);
 
 impl VariableWriter {
     pub fn update(&mut self, f: impl FnOnce(f32) -> f32) {
-        let original = *self.0.read().unwrap();
+        let original = self.0.get();
         let updated = f(original);
-        *self.0.write().unwrap() = updated;
+        self.0.set(updated);
     }
 }
 
-type VariableInner = Arc<RwLock<f32>>;
+type VariableInner = Arc<Cell<f32>>;

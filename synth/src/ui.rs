@@ -67,8 +67,6 @@ fn read_event() -> anyhow::Result<Option<Input>> {
                 return Ok(Some(Input::PlayNote(note)));
             }
         }
-
-        dbg!(key.code);
     }
 
     Ok(None)

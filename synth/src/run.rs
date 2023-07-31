@@ -57,7 +57,7 @@ fn run_inner() -> anyhow::Result<()> {
     let mut octave = 0;
 
     loop {
-        let ui_event = select! {
+        let input = select! {
             send(audio.buffers, buffer) -> res => {
                 if let Err(SendError(_)) = res {
                     break Ok(());
@@ -80,7 +80,7 @@ fn run_inner() -> anyhow::Result<()> {
             }
         };
 
-        match ui_event {
+        match input {
             Input::OctaveDec => {
                 octave -= 1;
                 continue;

@@ -3,7 +3,7 @@ use std::thread;
 use crossbeam_channel::{Receiver, SendError};
 use crossterm::event::{self, Event, KeyCode, KeyModifiers};
 
-pub fn start() -> anyhow::Result<Receiver<UiEvent>> {
+pub fn start() -> anyhow::Result<Receiver<Input>> {
     let (tx, rx) = crossbeam_channel::bounded(0);
 
     thread::spawn(move || {
@@ -27,26 +27,26 @@ pub fn start() -> anyhow::Result<Receiver<UiEvent>> {
     Ok(rx)
 }
 
-fn read_event() -> anyhow::Result<Option<UiEvent>> {
+fn read_event() -> anyhow::Result<Option<Input>> {
     if let Event::Key(key) = event::read()? {
         if key.code == KeyCode::Char('c')
             && key.modifiers.contains(KeyModifiers::CONTROL)
         {
-            return Ok(Some(UiEvent::Quit));
+            return Ok(Some(Input::Quit));
         }
 
         if key.code == KeyCode::Left {
-            return Ok(Some(UiEvent::OctaveDec));
+            return Ok(Some(Input::OctaveDec));
         }
         if key.code == KeyCode::Right {
-            return Ok(Some(UiEvent::OctaveInc));
+            return Ok(Some(Input::OctaveInc));
         }
 
         if key.code == KeyCode::Down {
-            return Ok(Some(UiEvent::VolumeDec));
+            return Ok(Some(Input::VolumeDec));
         }
         if key.code == KeyCode::Up {
-            return Ok(Some(UiEvent::VolumeInc));
+            return Ok(Some(Input::VolumeInc));
         }
 
         if let KeyCode::Char(c) = key.code {
@@ -62,7 +62,7 @@ fn read_event() -> anyhow::Result<Option<UiEvent>> {
             };
 
             if let Some(note) = note {
-                return Ok(Some(UiEvent::PlayNote(note)));
+                return Ok(Some(Input::PlayNote(note)));
             }
         }
 
@@ -72,7 +72,7 @@ fn read_event() -> anyhow::Result<Option<UiEvent>> {
     Ok(None)
 }
 
-pub enum UiEvent {
+pub enum Input {
     OctaveDec,
     OctaveInc,
 

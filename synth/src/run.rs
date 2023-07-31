@@ -11,7 +11,7 @@ use crate::{
         signal::Signal,
         wave,
     },
-    ui::{self, UiEvent},
+    ui::{self, Input},
 };
 
 pub fn run() -> anyhow::Result<()> {
@@ -73,27 +73,27 @@ fn run_inner() -> anyhow::Result<()> {
         };
 
         match ui_event {
-            UiEvent::OctaveDec => {
+            Input::OctaveDec => {
                 octave -= 1;
                 continue;
             }
-            UiEvent::OctaveInc => {
+            Input::OctaveInc => {
                 octave += 1;
                 continue;
             }
 
-            UiEvent::VolumeDec => {
+            Input::VolumeDec => {
                 volume_writer
                     .update(|volume| Some(volume.unwrap() - volume_increment));
                 continue;
             }
-            UiEvent::VolumeInc => {
+            Input::VolumeInc => {
                 volume_writer
                     .update(|volume| Some(volume.unwrap() + volume_increment));
                 continue;
             }
 
-            UiEvent::PlayNote(note) => {
+            Input::PlayNote(note) => {
                 let number = match note {
                     ui::Note::C => 4,
                     ui::Note::D => 6,
@@ -110,7 +110,7 @@ fn run_inner() -> anyhow::Result<()> {
                 note_writer.update(|_| Some(frequency));
             }
 
-            UiEvent::Quit => {
+            Input::Quit => {
                 return Ok(());
             }
         }

@@ -6,7 +6,9 @@ use crossterm::terminal;
 use tinyaudio::{run_output_device, OutputDeviceParameters};
 
 use crate::{
-    audio::{Buffer, BUFFER_SIZE, NUM_CHANNELS, SAMPLE_COUNT, SAMPLE_RATE},
+    audio::{
+        Audio, Buffer, BUFFER_SIZE, NUM_CHANNELS, SAMPLE_COUNT, SAMPLE_RATE,
+    },
     synth::{
         clock::Clock,
         components::{
@@ -77,6 +79,8 @@ fn run_inner() -> anyhow::Result<()> {
     })
     .map_err(|err| anyhow!("{}", err))?;
 
+    let audio = Audio { buffers: tx };
+
     let frequency_increment = 20.;
     let volume_increment = 0.1;
 
@@ -89,7 +93,7 @@ fn run_inner() -> anyhow::Result<()> {
             recv(ui_events) -> ui_event => {
                 ui_event.unwrap()
             }
-            send(tx, buffer) -> res => {
+            send(audio.buffers, buffer) -> res => {
                 res.unwrap();
 
                 for value in &mut buffer {

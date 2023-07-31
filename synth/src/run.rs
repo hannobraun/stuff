@@ -70,30 +70,33 @@ fn run_inner() -> anyhow::Result<()> {
     let frequency_increment = 20.;
     let volume_increment = 0.1;
 
+    let ui_events = ui::start();
+
     loop {
-        match ui::read_event()? {
-            Some(UiEvent::FrequencyDec) => {
+        let ui_event = ui_events.recv().expect("UI thread stopped");
+
+        match ui_event {
+            UiEvent::FrequencyDec => {
                 note_writer.update(|freq| freq - frequency_increment);
                 continue;
             }
-            Some(UiEvent::FrequencyInc) => {
+            UiEvent::FrequencyInc => {
                 note_writer.update(|freq| freq + frequency_increment);
                 continue;
             }
 
-            Some(UiEvent::VolumeDec) => {
+            UiEvent::VolumeDec => {
                 volume_writer.update(|volume| volume - volume_increment);
                 continue;
             }
-            Some(UiEvent::VolumeInc) => {
+            UiEvent::VolumeInc => {
                 volume_writer.update(|volume| volume + volume_increment);
                 continue;
             }
 
-            Some(UiEvent::Quit) => {
+            UiEvent::Quit => {
                 return Ok(());
             }
-            None => {}
         }
     }
 }

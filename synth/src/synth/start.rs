@@ -1,6 +1,6 @@
 use std::thread::{self, JoinHandle};
 
-use crossbeam_channel::{select, Receiver, RecvError, SendError, Sender};
+use crossbeam_channel::{select, RecvError, SendError, Sender};
 
 use crate::audio::{Buffer, BUFFER_SIZE, SAMPLE_RATE};
 
@@ -12,8 +12,10 @@ use super::{
     wave,
 };
 
-pub fn start(input: Receiver<Input>, output: Sender<Buffer>) -> JoinHandle<()> {
-    thread::spawn(move || {
+pub fn start(output: Sender<Buffer>) -> (Sender<Input>, JoinHandle<()>) {
+    let (input_tx, input) = crossbeam_channel::bounded::<Input>(0);
+
+    let join_handle = thread::spawn(move || {
         let mut clock = Clock {
             time: 0,
             sample_rate: SAMPLE_RATE as u64,
@@ -103,5 +105,7 @@ pub fn start(input: Receiver<Input>, output: Sender<Buffer>) -> JoinHandle<()> {
                 }
             }
         }
-    })
+    });
+
+    (input_tx, join_handle)
 }

@@ -1,13 +1,11 @@
 use std::thread;
 
-use crossbeam_channel::{Receiver, SendError};
+use crossbeam_channel::{SendError, Sender};
 use crossterm::event::{self, Event, KeyCode, KeyModifiers};
 
 use crate::synth::input::{Input, Note};
 
-pub fn start() -> Receiver<Input> {
-    let (input, rx) = crossbeam_channel::bounded(0);
-
+pub fn start(input: Sender<Input>) {
     thread::spawn(move || {
         loop {
             let event = {
@@ -61,6 +59,4 @@ pub fn start() -> Receiver<Input> {
             }
         }
     });
-
-    rx
 }

@@ -73,7 +73,7 @@ fn run_inner() -> anyhow::Result<()> {
 
     let (tx, rx) = crossbeam_channel::bounded::<Buffer>(0);
 
-    let _device = run_output_device(params, move |data| {
+    let device = run_output_device(params, move |data| {
         let new_data = rx.recv().unwrap();
         data.copy_from_slice(&new_data);
     })
@@ -81,7 +81,7 @@ fn run_inner() -> anyhow::Result<()> {
 
     let audio = Audio {
         buffers: tx,
-        device: _device,
+        device,
     };
 
     let frequency_increment = 20.;

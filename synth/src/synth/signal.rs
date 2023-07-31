@@ -18,8 +18,8 @@ impl Signal {
         Self::new(Constant(constant))
     }
 
-    pub fn variable(initial: f32) -> (Self, VariableWriter) {
-        let signal = Variable(Rc::new(Cell::new(Some(initial))));
+    pub fn variable() -> (Self, VariableWriter) {
+        let signal = Variable(Rc::new(Cell::new(None)));
         let writer = VariableWriter(signal.0.clone());
 
         let signal = Self::new(signal);

@@ -34,8 +34,9 @@ fn run_inner() -> anyhow::Result<()> {
         sample_rate: SAMPLE_RATE as u64,
     };
 
-    let (note, mut note_writer) = Signal::variable(440.);
-    let (volume, mut volume_writer) = Signal::variable(0.1);
+    let (note, mut note_writer) = Signal::variable();
+    let (volume, mut volume_writer) = Signal::variable();
+    volume_writer.update(|_| Some(0.1));
 
     let osc = Signal::new(Oscillator {
         frequency: note,

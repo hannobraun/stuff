@@ -32,7 +32,7 @@ fn run_inner() -> anyhow::Result<()> {
 
     let mut clock = Clock {
         time: 0,
-        sample_rate: params.sample_rate as u64,
+        sample_rate: SAMPLE_RATE as u64,
     };
 
     let (note, mut note_writer) = Signal::variable(440.);

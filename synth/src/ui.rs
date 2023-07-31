@@ -2,7 +2,7 @@ use std::num::NonZeroU32;
 
 use crossbeam_channel::{SendError, Sender};
 use winit::{
-    event::{Event, VirtualKeyCode, WindowEvent},
+    event::{ElementState, Event, VirtualKeyCode, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
     window::Window,
 };
@@ -24,25 +24,48 @@ pub fn run(input: Sender<Input>) {
                     return;
                 }
                 WindowEvent::KeyboardInput { input, .. } => {
-                    match input.virtual_keycode {
-                        Some(VirtualKeyCode::Escape) => {
+                    match (input.virtual_keycode, input.state) {
+                        (Some(VirtualKeyCode::Escape), _) => {
                             *control_flow = ControlFlow::Exit;
                             return;
                         }
 
-                        Some(VirtualKeyCode::Left) => Input::OctaveDec,
-                        Some(VirtualKeyCode::Right) => Input::OctaveInc,
+                        (Some(VirtualKeyCode::Left), ElementState::Pressed) => {
+                            Input::OctaveDec
+                        }
+                        (
+                            Some(VirtualKeyCode::Right),
+                            ElementState::Pressed,
+                        ) => Input::OctaveInc,
 
-                        Some(VirtualKeyCode::Down) => Input::VolumeDec,
-                        Some(VirtualKeyCode::Up) => Input::VolumeInc,
+                        (Some(VirtualKeyCode::Down), ElementState::Pressed) => {
+                            Input::VolumeDec
+                        }
+                        (Some(VirtualKeyCode::Up), ElementState::Pressed) => {
+                            Input::VolumeInc
+                        }
 
-                        Some(VirtualKeyCode::A) => Input::PlayNote(Note::C),
-                        Some(VirtualKeyCode::S) => Input::PlayNote(Note::D),
-                        Some(VirtualKeyCode::D) => Input::PlayNote(Note::E),
-                        Some(VirtualKeyCode::F) => Input::PlayNote(Note::F),
-                        Some(VirtualKeyCode::G) => Input::PlayNote(Note::G),
-                        Some(VirtualKeyCode::H) => Input::PlayNote(Note::A),
-                        Some(VirtualKeyCode::J) => Input::PlayNote(Note::B),
+                        (Some(VirtualKeyCode::A), ElementState::Pressed) => {
+                            Input::PlayNote(Note::C)
+                        }
+                        (Some(VirtualKeyCode::S), ElementState::Pressed) => {
+                            Input::PlayNote(Note::D)
+                        }
+                        (Some(VirtualKeyCode::D), ElementState::Pressed) => {
+                            Input::PlayNote(Note::E)
+                        }
+                        (Some(VirtualKeyCode::F), ElementState::Pressed) => {
+                            Input::PlayNote(Note::F)
+                        }
+                        (Some(VirtualKeyCode::G), ElementState::Pressed) => {
+                            Input::PlayNote(Note::G)
+                        }
+                        (Some(VirtualKeyCode::H), ElementState::Pressed) => {
+                            Input::PlayNote(Note::A)
+                        }
+                        (Some(VirtualKeyCode::J), ElementState::Pressed) => {
+                            Input::PlayNote(Note::B)
+                        }
 
                         _ => return,
                     }

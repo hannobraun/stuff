@@ -27,7 +27,7 @@ pub fn start() -> Receiver<UiEvent> {
     rx
 }
 
-pub fn read_event() -> anyhow::Result<Option<UiEvent>> {
+fn read_event() -> anyhow::Result<Option<UiEvent>> {
     if let Event::Key(key) = event::read()? {
         if key.code == KeyCode::Char('c')
             && key.modifiers.contains(KeyModifiers::CONTROL)

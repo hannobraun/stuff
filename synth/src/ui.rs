@@ -9,8 +9,8 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
     thread::spawn(move || {
         loop {
             let event = 'event: {
-                if let Event::Key(key) = event::read().unwrap() {
-                    match key.code {
+                match event::read().unwrap() {
+                    Event::Key(key) => match key.code {
                         KeyCode::Char('c') => {
                             if key.modifiers.contains(KeyModifiers::CONTROL) {
                                 break 'event Some(Input::Quit);
@@ -51,7 +51,8 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
                         _ => {
                             break 'event None;
                         }
-                    }
+                    },
+                    _ => break 'event None,
                 }
 
                 None

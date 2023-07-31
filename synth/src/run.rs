@@ -3,7 +3,7 @@ use crossterm::terminal;
 use tinyaudio::{run_output_device, OutputDeviceParameters};
 
 use crate::{
-    audio::{SAMPLE_COUNT, SAMPLE_RATE},
+    audio::{NUM_CHANNELS, SAMPLE_COUNT, SAMPLE_RATE},
     synth::{
         clock::Clock,
         components::{
@@ -25,7 +25,7 @@ pub fn run() -> anyhow::Result<()> {
 fn run_inner() -> anyhow::Result<()> {
     let params = OutputDeviceParameters {
         sample_rate: SAMPLE_RATE,
-        channels_count: 1,
+        channels_count: NUM_CHANNELS,
         channel_sample_count: SAMPLE_COUNT,
     };
 

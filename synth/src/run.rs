@@ -34,14 +34,14 @@ fn run_inner() -> anyhow::Result<()> {
         sample_rate: params.sample_rate as u64,
     };
 
-    let (frequency, mut frequency_writer) = Signal::variable(440.);
+    let (note, mut frequency_writer) = Signal::variable(440.);
 
     let frequency_oscillator = Signal::new(Oscillator {
         frequency: Signal::constant(1.),
         amplitude: Signal::constant(220.),
         wave: wave::triangle,
     })
-    .map(move |value, clock| value + frequency.value(clock));
+    .map(move |value, clock| value + note.value(clock));
 
     let osc = Oscillator {
         frequency: frequency_oscillator,

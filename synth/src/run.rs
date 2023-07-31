@@ -5,7 +5,7 @@ use tinyaudio::{run_output_device, OutputDeviceParameters};
 use crate::{
     synth::{
         clock::Clock,
-        components::oscillator::Osc,
+        components::oscillator::Oscillator,
         signal::{IsSignal, Signal},
         wave,
     },
@@ -36,14 +36,14 @@ fn run_inner() -> anyhow::Result<()> {
 
     let (frequency, mut frequency_writer) = Signal::variable(440.);
 
-    let frequency = Signal::new(Osc {
+    let frequency = Signal::new(Oscillator {
         frequency: Signal::constant(1.),
         amplitude: Signal::constant(220.),
         wave: wave::triangle,
     })
     .map(move |value, clock| value + frequency.value(clock));
 
-    let osc = Osc {
+    let osc = Oscillator {
         frequency,
         amplitude: Signal::constant(0.1),
         wave: wave::square,

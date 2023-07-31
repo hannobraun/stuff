@@ -7,9 +7,7 @@ use crate::{
     audio::{Audio, BUFFER_SIZE, SAMPLE_RATE},
     synth::{
         clock::Clock,
-        components::{
-            offsetter::Offsetter, oscillator::Oscillator, scaler::Scaler,
-        },
+        components::{oscillator::Oscillator, scaler::Scaler},
         signal::Signal,
         wave,
     },
@@ -39,21 +37,8 @@ fn run_inner() -> anyhow::Result<()> {
     let (note, mut note_writer) = Signal::variable(440.);
     let (volume, mut volume_writer) = Signal::variable(0.1);
 
-    let frequency = Signal::new(Oscillator {
-        frequency: Signal::constant(1.),
-        wave: wave::triangle,
-    });
-    let frequency = Signal::new(Scaler {
-        input: frequency,
-        scale: Signal::constant(220.),
-    });
-    let frequency = Signal::new(Offsetter {
-        input: frequency,
-        offset: note,
-    });
-
     let osc = Signal::new(Oscillator {
-        frequency,
+        frequency: note,
         wave: wave::square,
     });
     let osc = Signal::new(Scaler {

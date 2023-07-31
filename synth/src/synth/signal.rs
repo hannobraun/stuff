@@ -13,6 +13,7 @@ impl Signal {
         }
     }
 
+    #[allow(unused)]
     pub fn constant(constant: f32) -> Self {
         Self::new(Constant(constant))
     }

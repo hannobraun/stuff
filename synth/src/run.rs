@@ -62,11 +62,10 @@ fn run_inner() -> anyhow::Result<()> {
     });
 
     let audio = Audio::start()?;
+    let ui_events = ui::start();
 
     let frequency_increment = 20.;
     let volume_increment = 0.1;
-
-    let ui_events = ui::start();
 
     let mut buffer = [0.; BUFFER_SIZE];
 

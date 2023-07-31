@@ -11,7 +11,7 @@ use crate::{
         signal::Signal,
         wave,
     },
-    ui::{self, Input},
+    ui::{self, Input, Note},
 };
 
 pub fn run() -> anyhow::Result<()> {
@@ -102,13 +102,13 @@ fn run_inner() -> anyhow::Result<()> {
 
             Input::PlayNote(note) => {
                 let number = match note {
-                    ui::Note::C => 4,
-                    ui::Note::D => 6,
-                    ui::Note::E => 8,
-                    ui::Note::F => 9,
-                    ui::Note::G => 11,
-                    ui::Note::A => 13,
-                    ui::Note::B => 15,
+                    Note::C => 4,
+                    Note::D => 6,
+                    Note::E => 8,
+                    Note::F => 9,
+                    Note::G => 11,
+                    Note::A => 13,
+                    Note::B => 15,
                 };
                 let number = number + octave * 12;
 

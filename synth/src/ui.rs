@@ -15,6 +15,13 @@ pub fn read_event() -> anyhow::Result<Option<UiEvent>> {
             return Ok(Some(UiEvent::FrequencyInc));
         }
 
+        if key.code == KeyCode::Down {
+            return Ok(Some(UiEvent::VolumeDec));
+        }
+        if key.code == KeyCode::Up {
+            return Ok(Some(UiEvent::VolumeInc));
+        }
+
         dbg!(key.code);
     }
 
@@ -24,6 +31,9 @@ pub fn read_event() -> anyhow::Result<Option<UiEvent>> {
 pub enum UiEvent {
     FrequencyDec,
     FrequencyInc,
+
+    VolumeDec,
+    VolumeInc,
 
     Quit,
 }

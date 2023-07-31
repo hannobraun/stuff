@@ -37,7 +37,7 @@ fn run_inner() -> anyhow::Result<()> {
     };
 
     let (note, mut frequency_writer) = Signal::variable(440.);
-    let volume = Signal::constant(0.1);
+    let (volume, mut volume_writer) = Signal::variable(0.1);
 
     let frequency = Signal::new(Oscillator {
         frequency: Signal::constant(1.),
@@ -70,6 +70,7 @@ fn run_inner() -> anyhow::Result<()> {
     .map_err(|err| anyhow!("{}", err))?;
 
     let frequency_increment = 20.;
+    let volume_increment = 0.1;
 
     loop {
         match ui::read_event()? {
@@ -81,6 +82,16 @@ fn run_inner() -> anyhow::Result<()> {
                 frequency_writer.update(|freq| freq + frequency_increment);
                 continue;
             }
+
+            Some(UiEvent::VolumeDec) => {
+                volume_writer.update(|volume| volume - volume_increment);
+                continue;
+            }
+            Some(UiEvent::VolumeInc) => {
+                volume_writer.update(|volume| volume + volume_increment);
+                continue;
+            }
+
             Some(UiEvent::Quit) => {
                 return Ok(());
             }

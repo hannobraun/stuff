@@ -49,10 +49,10 @@ fn run_inner() -> anyhow::Result<()> {
     let audio = Audio::start()?;
     let ui_events = ui::start();
 
-    let frequency_increment = 20.;
     let volume_increment = 0.1;
 
     let mut buffer = [0.; BUFFER_SIZE];
+    let mut octave = 0;
 
     loop {
         let ui_event = select! {
@@ -72,12 +72,12 @@ fn run_inner() -> anyhow::Result<()> {
         };
 
         match ui_event {
-            UiEvent::FrequencyDec => {
-                note_writer.update(|freq| freq - frequency_increment);
+            UiEvent::OctaveDec => {
+                octave -= 1;
                 continue;
             }
-            UiEvent::FrequencyInc => {
-                note_writer.update(|freq| freq + frequency_increment);
+            UiEvent::OctaveInc => {
+                octave += 1;
                 continue;
             }
 
@@ -100,6 +100,7 @@ fn run_inner() -> anyhow::Result<()> {
                     ui::Note::A => 13,
                     ui::Note::B => 15,
                 };
+                let number = number + octave * 12;
 
                 let frequency = 2f32.powf((number - 49) as f32 / 12.) * 440.;
 

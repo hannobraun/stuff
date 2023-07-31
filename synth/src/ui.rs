@@ -36,10 +36,10 @@ fn read_event() -> anyhow::Result<Option<UiEvent>> {
         }
 
         if key.code == KeyCode::Left {
-            return Ok(Some(UiEvent::FrequencyDec));
+            return Ok(Some(UiEvent::OctaveDec));
         }
         if key.code == KeyCode::Right {
-            return Ok(Some(UiEvent::FrequencyInc));
+            return Ok(Some(UiEvent::OctaveInc));
         }
 
         if key.code == KeyCode::Down {
@@ -78,8 +78,8 @@ fn read_event() -> anyhow::Result<Option<UiEvent>> {
 }
 
 pub enum UiEvent {
-    FrequencyDec,
-    FrequencyInc,
+    OctaveDec,
+    OctaveInc,
 
     VolumeDec,
     VolumeInc,

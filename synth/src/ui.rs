@@ -13,17 +13,17 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
                     Event::Key(key) => match key.code {
                         KeyCode::Char('c') => {
                             if key.modifiers.contains(KeyModifiers::CONTROL) {
-                                Some(Input::Quit)
+                                Input::Quit
                             } else {
-                                None
+                                continue;
                             }
                         }
 
-                        KeyCode::Left => Some(Input::OctaveDec),
-                        KeyCode::Right => Some(Input::OctaveInc),
+                        KeyCode::Left => Input::OctaveDec,
+                        KeyCode::Right => Input::OctaveInc,
 
-                        KeyCode::Down => Some(Input::VolumeDec),
-                        KeyCode::Up => Some(Input::VolumeInc),
+                        KeyCode::Down => Input::VolumeDec,
+                        KeyCode::Up => Input::VolumeInc,
 
                         KeyCode::Char(c) => {
                             let note = match c {
@@ -37,23 +37,17 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
                                 _ => None,
                             };
 
-                            #[allow(clippy::manual_map)]
                             if let Some(note) = note {
-                                Some(Input::PlayNote(note))
+                                Input::PlayNote(note)
                             } else {
-                                None
+                                continue;
                             }
                         }
 
-                        _ => None,
+                        _ => continue,
                     },
-                    _ => None,
+                    _ => continue,
                 }
-            };
-
-            let event = match event {
-                Some(event) => event,
-                None => continue,
             };
 
             match tx.send(event) {

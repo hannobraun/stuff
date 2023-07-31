@@ -8,7 +8,7 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
 
     thread::spawn(move || {
         loop {
-            let event = read_event().unwrap();
+            let event = read_event();
 
             let event = match event {
                 Some(event) => event,
@@ -28,26 +28,26 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
     Ok(rx)
 }
 
-fn read_event() -> anyhow::Result<Option<Input>> {
-    if let Event::Key(key) = event::read()? {
+fn read_event() -> Option<Input> {
+    if let Event::Key(key) = event::read().unwrap() {
         if key.code == KeyCode::Char('c')
             && key.modifiers.contains(KeyModifiers::CONTROL)
         {
-            return Ok(Some(Input::Quit));
+            return Some(Input::Quit);
         }
 
         if key.code == KeyCode::Left {
-            return Ok(Some(Input::OctaveDec));
+            return Some(Input::OctaveDec);
         }
         if key.code == KeyCode::Right {
-            return Ok(Some(Input::OctaveInc));
+            return Some(Input::OctaveInc);
         }
 
         if key.code == KeyCode::Down {
-            return Ok(Some(Input::VolumeDec));
+            return Some(Input::VolumeDec);
         }
         if key.code == KeyCode::Up {
-            return Ok(Some(Input::VolumeInc));
+            return Some(Input::VolumeInc);
         }
 
         if let KeyCode::Char(c) = key.code {
@@ -63,12 +63,12 @@ fn read_event() -> anyhow::Result<Option<Input>> {
             };
 
             if let Some(note) = note {
-                return Ok(Some(Input::PlayNote(note)));
+                return Some(Input::PlayNote(note));
             }
         }
     }
 
-    Ok(None)
+    None
 }
 
 pub enum Input {

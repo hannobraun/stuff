@@ -90,6 +90,22 @@ fn run_inner() -> anyhow::Result<()> {
                 continue;
             }
 
+            UiEvent::Note(note) => {
+                let number = match note {
+                    ui::Note::C => 4,
+                    ui::Note::D => 6,
+                    ui::Note::E => 8,
+                    ui::Note::F => 9,
+                    ui::Note::G => 11,
+                    ui::Note::A => 13,
+                    ui::Note::B => 15,
+                };
+
+                let frequency = 2f32.powf((number - 49) as f32 / 12.) * 440.;
+
+                note_writer.update(|_| frequency);
+            }
+
             UiEvent::Quit => {
                 return Ok(());
             }

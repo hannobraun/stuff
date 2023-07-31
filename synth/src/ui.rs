@@ -49,6 +49,28 @@ fn read_event() -> anyhow::Result<Option<UiEvent>> {
             return Ok(Some(UiEvent::VolumeInc));
         }
 
+        if key.code == KeyCode::Char('a') {
+            return Ok(Some(UiEvent::Note(Note::C)));
+        }
+        if key.code == KeyCode::Char('s') {
+            return Ok(Some(UiEvent::Note(Note::D)));
+        }
+        if key.code == KeyCode::Char('d') {
+            return Ok(Some(UiEvent::Note(Note::E)));
+        }
+        if key.code == KeyCode::Char('f') {
+            return Ok(Some(UiEvent::Note(Note::F)));
+        }
+        if key.code == KeyCode::Char('g') {
+            return Ok(Some(UiEvent::Note(Note::G)));
+        }
+        if key.code == KeyCode::Char('h') {
+            return Ok(Some(UiEvent::Note(Note::A)));
+        }
+        if key.code == KeyCode::Char('j') {
+            return Ok(Some(UiEvent::Note(Note::B)));
+        }
+
         dbg!(key.code);
     }
 
@@ -62,5 +84,17 @@ pub enum UiEvent {
     VolumeDec,
     VolumeInc,
 
+    Note(Note),
+
     Quit,
+}
+
+pub enum Note {
+    C,
+    D,
+    E,
+    F,
+    G,
+    A,
+    B,
 }

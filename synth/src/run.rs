@@ -49,7 +49,7 @@ fn run_inner() -> anyhow::Result<()> {
     });
 
     let audio = Audio::start()?;
-    let ui_events = ui::start()?;
+    let input = ui::start()?;
 
     let volume_increment = 0.1;
 
@@ -70,7 +70,7 @@ fn run_inner() -> anyhow::Result<()> {
 
                 continue;
             }
-            recv(ui_events) -> ui_event => {
+            recv(input) -> ui_event => {
                 match ui_event {
                     Ok(ui_event) => ui_event,
                     Err(RecvError) =>  {

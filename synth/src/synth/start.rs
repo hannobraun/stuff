@@ -23,7 +23,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<Input> {
 
         let (note, mut note_writer) = Signal::variable();
         let (volume, mut volume_writer) = Signal::variable();
-        volume_writer.update(|_| Some(0.1));
+        volume_writer.update(|_| Some(0.5));
 
         let osc = Signal::new(Oscillator {
             frequency: note,

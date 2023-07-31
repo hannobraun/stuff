@@ -73,7 +73,7 @@ fn run_inner() -> anyhow::Result<()> {
     let ui_events = ui::start();
 
     loop {
-        let ui_event = ui_events.recv().expect("UI thread stopped");
+        let ui_event = ui_events.recv().unwrap();
 
         match ui_event {
             UiEvent::FrequencyDec => {

@@ -3,7 +3,7 @@ use crossterm::event::{self, Event, KeyCode, KeyModifiers};
 
 use crate::synth::input::{Input, Note};
 
-pub fn start(input: Sender<Input>) {
+pub fn run(input: Sender<Input>) {
     loop {
         let event = {
             match event::read().unwrap() {

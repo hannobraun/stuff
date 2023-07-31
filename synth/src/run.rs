@@ -25,7 +25,7 @@ pub fn run() -> anyhow::Result<()> {
 fn run_inner() -> anyhow::Result<()> {
     let audio = Audio::start()?;
     let input = synth::start::start(audio.buffers);
-    ui::start(input);
+    ui::run(input);
 
     Ok(())
 }

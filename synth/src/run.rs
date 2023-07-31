@@ -90,7 +90,7 @@ fn run_inner() -> anyhow::Result<()> {
                 continue;
             }
 
-            UiEvent::Note(note) => {
+            UiEvent::PlayNote(note) => {
                 let number = match note {
                     ui::Note::C => 4,
                     ui::Note::D => 6,

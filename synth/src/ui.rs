@@ -50,25 +50,25 @@ fn read_event() -> anyhow::Result<Option<UiEvent>> {
         }
 
         if key.code == KeyCode::Char('a') {
-            return Ok(Some(UiEvent::Note(Note::C)));
+            return Ok(Some(UiEvent::PlayNote(Note::C)));
         }
         if key.code == KeyCode::Char('s') {
-            return Ok(Some(UiEvent::Note(Note::D)));
+            return Ok(Some(UiEvent::PlayNote(Note::D)));
         }
         if key.code == KeyCode::Char('d') {
-            return Ok(Some(UiEvent::Note(Note::E)));
+            return Ok(Some(UiEvent::PlayNote(Note::E)));
         }
         if key.code == KeyCode::Char('f') {
-            return Ok(Some(UiEvent::Note(Note::F)));
+            return Ok(Some(UiEvent::PlayNote(Note::F)));
         }
         if key.code == KeyCode::Char('g') {
-            return Ok(Some(UiEvent::Note(Note::G)));
+            return Ok(Some(UiEvent::PlayNote(Note::G)));
         }
         if key.code == KeyCode::Char('h') {
-            return Ok(Some(UiEvent::Note(Note::A)));
+            return Ok(Some(UiEvent::PlayNote(Note::A)));
         }
         if key.code == KeyCode::Char('j') {
-            return Ok(Some(UiEvent::Note(Note::B)));
+            return Ok(Some(UiEvent::PlayNote(Note::B)));
         }
 
         dbg!(key.code);
@@ -84,7 +84,7 @@ pub enum UiEvent {
     VolumeDec,
     VolumeInc,
 
-    Note(Note),
+    PlayNote(Note),
 
     Quit,
 }

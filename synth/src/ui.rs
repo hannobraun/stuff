@@ -10,40 +10,46 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
         loop {
             let event = 'event: {
                 if let Event::Key(key) = event::read().unwrap() {
-                    if key.code == KeyCode::Char('c')
-                        && key.modifiers.contains(KeyModifiers::CONTROL)
-                    {
-                        break 'event Some(Input::Quit);
-                    }
+                    match key.code {
+                        KeyCode::Char('c') => {
+                            if key.modifiers.contains(KeyModifiers::CONTROL) {
+                                break 'event Some(Input::Quit);
+                            }
+                        }
 
-                    if key.code == KeyCode::Left {
-                        break 'event Some(Input::OctaveDec);
-                    }
-                    if key.code == KeyCode::Right {
-                        break 'event Some(Input::OctaveInc);
-                    }
+                        KeyCode::Left => {
+                            break 'event Some(Input::OctaveDec);
+                        }
+                        KeyCode::Right => {
+                            break 'event Some(Input::OctaveInc);
+                        }
 
-                    if key.code == KeyCode::Down {
-                        break 'event Some(Input::VolumeDec);
-                    }
-                    if key.code == KeyCode::Up {
-                        break 'event Some(Input::VolumeInc);
-                    }
+                        KeyCode::Down => {
+                            break 'event Some(Input::VolumeDec);
+                        }
+                        KeyCode::Up => {
+                            break 'event Some(Input::VolumeInc);
+                        }
 
-                    if let KeyCode::Char(c) = key.code {
-                        let note = match c {
-                            'a' => Some(Note::C),
-                            's' => Some(Note::D),
-                            'd' => Some(Note::E),
-                            'f' => Some(Note::F),
-                            'g' => Some(Note::G),
-                            'h' => Some(Note::A),
-                            'j' => Some(Note::B),
-                            _ => None,
-                        };
+                        KeyCode::Char(c) => {
+                            let note = match c {
+                                'a' => Some(Note::C),
+                                's' => Some(Note::D),
+                                'd' => Some(Note::E),
+                                'f' => Some(Note::F),
+                                'g' => Some(Note::G),
+                                'h' => Some(Note::A),
+                                'j' => Some(Note::B),
+                                _ => None,
+                            };
 
-                        if let Some(note) = note {
-                            break 'event Some(Input::PlayNote(note));
+                            if let Some(note) = note {
+                                break 'event Some(Input::PlayNote(note));
+                            }
+                        }
+
+                        _ => {
+                            break 'event None;
                         }
                     }
                 }

@@ -5,7 +5,7 @@ use crossterm::event::{self, Event, KeyCode, KeyModifiers};
 
 use crate::synth::input::{Input, Note};
 
-pub fn start() -> anyhow::Result<Receiver<Input>> {
+pub fn start() -> Receiver<Input> {
     let (tx, rx) = crossbeam_channel::bounded(0);
 
     thread::spawn(move || {
@@ -62,5 +62,5 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
         }
     });
 
-    Ok(rx)
+    rx
 }

@@ -1,6 +1,6 @@
 use std::panic;
 
-use crossbeam_channel::select;
+use crossbeam_channel::{select, RecvError, SendError};
 use crossterm::terminal;
 
 use crate::{
@@ -58,7 +58,9 @@ fn run_inner() -> anyhow::Result<()> {
     loop {
         let ui_event = select! {
             send(audio.buffers, buffer) -> res => {
-                res.unwrap();
+                if let Err(SendError(_)) = res {
+                    break Ok(());
+                }
 
                 for value in &mut buffer {
                     clock.advance();
@@ -68,7 +70,12 @@ fn run_inner() -> anyhow::Result<()> {
                 continue;
             }
             recv(ui_events) -> ui_event => {
-                ui_event.unwrap()
+                match ui_event {
+                    Ok(ui_event) => ui_event,
+                    Err(RecvError) =>  {
+                        break Ok(());
+                    }
+                }
             }
         };
 

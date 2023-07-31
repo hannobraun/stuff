@@ -14,6 +14,8 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
                         KeyCode::Char('c') => {
                             if key.modifiers.contains(KeyModifiers::CONTROL) {
                                 break 'event Some(Input::Quit);
+                            } else {
+                                break 'event None;
                             }
                         }
 
@@ -45,6 +47,8 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
 
                             if let Some(note) = note {
                                 break 'event Some(Input::PlayNote(note));
+                            } else {
+                                break 'event None;
                             }
                         }
 
@@ -54,8 +58,6 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
                     },
                     _ => break 'event None,
                 }
-
-                None
             };
 
             let event = match event {

@@ -10,7 +10,8 @@ pub struct Oscillator {
 
 impl IsSignal for Oscillator {
     fn value(&self, clock: &Clock) -> f32 {
-        let t = clock.t(self.frequency.value(clock));
+        let frequency = self.frequency.value(clock);
+        let t = clock.t(frequency);
         (self.wave)(t)
     }
 }

@@ -1,4 +1,5 @@
 use anyhow::anyhow;
+use crossbeam_channel::select;
 use crossterm::terminal;
 use tinyaudio::{run_output_device, OutputDeviceParameters};
 
@@ -73,7 +74,11 @@ fn run_inner() -> anyhow::Result<()> {
     let ui_events = ui::start();
 
     loop {
-        let ui_event = ui_events.recv().unwrap();
+        let ui_event = select! {
+            recv(ui_events) -> ui_event => {
+                ui_event.unwrap()
+            }
+        };
 
         match ui_event {
             UiEvent::FrequencyDec => {

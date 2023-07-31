@@ -1,3 +1,4 @@
+mod audio;
 mod run;
 mod synth;
 mod ui;

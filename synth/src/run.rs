@@ -116,10 +116,6 @@ fn run_inner() -> anyhow::Result<()> {
 
                 note_writer.update(|_| Some(frequency));
             }
-
-            Input::Quit => {
-                return Ok(());
-            }
         }
     }
 }

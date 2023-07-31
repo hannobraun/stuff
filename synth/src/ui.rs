@@ -13,7 +13,7 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
                     Event::Key(key) => match key.code {
                         KeyCode::Char('c') => {
                             if key.modifiers.contains(KeyModifiers::CONTROL) {
-                                Input::Quit
+                                break;
                             } else {
                                 continue;
                             }
@@ -71,8 +71,6 @@ pub enum Input {
     VolumeInc,
 
     PlayNote(Note),
-
-    Quit,
 }
 
 pub enum Note {

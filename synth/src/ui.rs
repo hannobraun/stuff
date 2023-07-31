@@ -50,26 +50,19 @@ fn read_event() -> anyhow::Result<Option<UiEvent>> {
         }
 
         if let KeyCode::Char(c) = key.code {
-            if c == 'a' {
-                return Ok(Some(UiEvent::PlayNote(Note::C)));
-            }
-            if c == 's' {
-                return Ok(Some(UiEvent::PlayNote(Note::D)));
-            }
-            if c == 'd' {
-                return Ok(Some(UiEvent::PlayNote(Note::E)));
-            }
-            if c == 'f' {
-                return Ok(Some(UiEvent::PlayNote(Note::F)));
-            }
-            if c == 'g' {
-                return Ok(Some(UiEvent::PlayNote(Note::G)));
-            }
-            if c == 'h' {
-                return Ok(Some(UiEvent::PlayNote(Note::A)));
-            }
-            if c == 'j' {
-                return Ok(Some(UiEvent::PlayNote(Note::B)));
+            let note = match c {
+                'a' => Some(Note::C),
+                's' => Some(Note::D),
+                'd' => Some(Note::E),
+                'f' => Some(Note::F),
+                'g' => Some(Note::G),
+                'h' => Some(Note::A),
+                'j' => Some(Note::B),
+                _ => None,
+            };
+
+            if let Some(note) = note {
+                return Ok(Some(UiEvent::PlayNote(note)));
             }
         }
 

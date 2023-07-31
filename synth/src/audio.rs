@@ -14,7 +14,7 @@ pub type Buffer = [f32; BUFFER_SIZE];
 
 pub struct Audio {
     pub buffers: Sender<Buffer>,
-    pub device: Box<dyn BaseAudioOutputDevice>,
+    pub _device: Box<dyn BaseAudioOutputDevice>,
 }
 
 impl Audio {
@@ -27,7 +27,7 @@ impl Audio {
 
         let (tx, rx) = crossbeam_channel::bounded::<Buffer>(0);
 
-        let device = run_output_device(params, move |data| {
+        let _device = run_output_device(params, move |data| {
             let new_data = rx.recv().unwrap();
             data.copy_from_slice(&new_data);
         })
@@ -35,7 +35,7 @@ impl Audio {
 
         Ok(Self {
             buffers: tx,
-            device,
+            _device,
         })
     }
 }

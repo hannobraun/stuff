@@ -36,7 +36,7 @@ fn run_inner() -> anyhow::Result<()> {
 
     let (note, mut frequency_writer) = Signal::variable(440.);
 
-    let frequency_oscillator = Signal::new(Oscillator {
+    let frequency = Signal::new(Oscillator {
         frequency: Signal::constant(1.),
         amplitude: Signal::constant(220.),
         wave: wave::triangle,
@@ -44,7 +44,7 @@ fn run_inner() -> anyhow::Result<()> {
     .map(move |value, clock| value + note.value(clock));
 
     let osc = Oscillator {
-        frequency: frequency_oscillator,
+        frequency,
         amplitude: Signal::constant(0.1),
         wave: wave::square,
     };

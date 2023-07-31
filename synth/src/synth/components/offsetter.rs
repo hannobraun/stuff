@@ -9,7 +9,9 @@ pub struct Offsetter {
 }
 
 impl IsSignal for Offsetter {
-    fn value(&self, clock: &Clock) -> f32 {
-        self.input.value(clock) + self.offset.value(clock)
+    fn value(&self, clock: &Clock) -> Option<f32> {
+        self.input
+            .value(clock)
+            .map(|input| input + self.offset.value(clock).unwrap_or(0.))
     }
 }

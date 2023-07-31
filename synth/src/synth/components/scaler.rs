@@ -9,7 +9,9 @@ pub struct Scaler {
 }
 
 impl IsSignal for Scaler {
-    fn value(&self, clock: &Clock) -> f32 {
-        self.input.value(clock) * self.scale.value(clock)
+    fn value(&self, clock: &Clock) -> Option<f32> {
+        self.input
+            .value(clock)
+            .map(|input| input * self.scale.value(clock).unwrap_or(1.))
     }
 }

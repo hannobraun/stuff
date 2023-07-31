@@ -61,7 +61,7 @@ fn run_inner() -> anyhow::Result<()> {
 
                 for value in &mut buffer {
                     clock.advance();
-                    *value = osc.value(&clock);
+                    *value = osc.value(&clock).unwrap_or(0.);
                 }
 
                 continue;

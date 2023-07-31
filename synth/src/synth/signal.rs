@@ -27,7 +27,7 @@ impl Signal {
         (signal, writer)
     }
 
-    pub fn value(&self, clock: &Clock) -> f32 {
+    pub fn value(&self, clock: &Clock) -> Option<f32> {
         // It might make sense to clamp the value between 0 and 1 here. Then
         // we'd have nice and uniform signals that can be used anywhere. That
         // would require some adjustment on the component side though, as the
@@ -43,22 +43,22 @@ impl Signal {
 }
 
 pub trait IsSignal {
-    fn value(&self, clock: &Clock) -> f32;
+    fn value(&self, clock: &Clock) -> Option<f32>;
 }
 
 pub struct Constant(pub f32);
 
 impl IsSignal for Constant {
-    fn value(&self, _: &Clock) -> f32 {
-        self.0
+    fn value(&self, _: &Clock) -> Option<f32> {
+        Some(self.0)
     }
 }
 
 pub struct Variable(pub VariableInner);
 
 impl IsSignal for Variable {
-    fn value(&self, _: &Clock) -> f32 {
-        self.0.get()
+    fn value(&self, _: &Clock) -> Option<f32> {
+        Some(self.0.get())
     }
 }
 

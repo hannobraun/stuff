@@ -8,30 +8,22 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
 
     thread::spawn(move || {
         loop {
-            let event = 'event: {
+            let event = {
                 match event::read().unwrap() {
                     Event::Key(key) => match key.code {
                         KeyCode::Char('c') => {
                             if key.modifiers.contains(KeyModifiers::CONTROL) {
-                                break 'event Some(Input::Quit);
+                                Some(Input::Quit)
                             } else {
-                                break 'event None;
+                                None
                             }
                         }
 
-                        KeyCode::Left => {
-                            break 'event Some(Input::OctaveDec);
-                        }
-                        KeyCode::Right => {
-                            break 'event Some(Input::OctaveInc);
-                        }
+                        KeyCode::Left => Some(Input::OctaveDec),
+                        KeyCode::Right => Some(Input::OctaveInc),
 
-                        KeyCode::Down => {
-                            break 'event Some(Input::VolumeDec);
-                        }
-                        KeyCode::Up => {
-                            break 'event Some(Input::VolumeInc);
-                        }
+                        KeyCode::Down => Some(Input::VolumeDec),
+                        KeyCode::Up => Some(Input::VolumeInc),
 
                         KeyCode::Char(c) => {
                             let note = match c {
@@ -45,18 +37,17 @@ pub fn start() -> anyhow::Result<Receiver<Input>> {
                                 _ => None,
                             };
 
+                            #[allow(clippy::manual_map)]
                             if let Some(note) = note {
-                                break 'event Some(Input::PlayNote(note));
+                                Some(Input::PlayNote(note))
                             } else {
-                                break 'event None;
+                                None
                             }
                         }
 
-                        _ => {
-                            break 'event None;
-                        }
+                        _ => None,
                     },
-                    _ => break 'event None,
+                    _ => None,
                 }
             };
 

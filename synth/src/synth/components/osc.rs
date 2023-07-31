@@ -1,6 +1,6 @@
-use crate::{
+use crate::synth::{
+    clock::Clock,
     signal::{IsSignal, Signal},
-    synth::clock::Clock,
 };
 
 pub struct Osc {

@@ -1,5 +1,4 @@
 mod run;
-mod signal;
 mod synth;
 mod ui;
 

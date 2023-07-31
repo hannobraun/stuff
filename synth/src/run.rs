@@ -3,8 +3,12 @@ use crossterm::terminal;
 use tinyaudio::{run_output_device, OutputDeviceParameters};
 
 use crate::{
-    signal::{IsSignal, Signal},
-    synth::{clock::Clock, components::osc::Osc, wave},
+    synth::{
+        clock::Clock,
+        components::osc::Osc,
+        signal::{IsSignal, Signal},
+        wave,
+    },
     ui::{self, UiEvent},
 };
 

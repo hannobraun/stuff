@@ -37,6 +37,7 @@ fn run_inner() -> anyhow::Result<()> {
     };
 
     let (note, mut frequency_writer) = Signal::variable(440.);
+    let volume = Signal::constant(0.1);
 
     let frequency = Signal::new(Oscillator {
         frequency: Signal::constant(1.),
@@ -57,7 +58,7 @@ fn run_inner() -> anyhow::Result<()> {
     });
     let osc = Signal::new(Scaler {
         input: osc,
-        scale: Signal::constant(0.1),
+        scale: volume,
     });
 
     let _device = run_output_device(params, move |data| {

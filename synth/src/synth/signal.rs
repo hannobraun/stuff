@@ -3,11 +3,11 @@ use std::sync::{Arc, RwLock};
 use crate::synth::clock::Clock;
 
 pub struct Signal {
-    inner: Box<dyn IsSignal + Send>,
+    inner: Box<dyn IsSignal>,
 }
 
 impl Signal {
-    pub fn new<T: IsSignal + Send + 'static>(inner: T) -> Self {
+    pub fn new<T: IsSignal + 'static>(inner: T) -> Self {
         Self {
             inner: Box::new(inner),
         }

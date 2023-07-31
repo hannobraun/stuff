@@ -82,11 +82,13 @@ fn run_inner() -> anyhow::Result<()> {
             }
 
             UiEvent::VolumeDec => {
-                volume_writer.update(|volume| volume - volume_increment);
+                volume_writer
+                    .update(|volume| Some(volume.unwrap() - volume_increment));
                 continue;
             }
             UiEvent::VolumeInc => {
-                volume_writer.update(|volume| volume + volume_increment);
+                volume_writer
+                    .update(|volume| Some(volume.unwrap() + volume_increment));
                 continue;
             }
 
@@ -104,7 +106,7 @@ fn run_inner() -> anyhow::Result<()> {
 
                 let frequency = 2f32.powf((number - 49) as f32 / 12.) * 440.;
 
-                note_writer.update(|_| frequency);
+                note_writer.update(|_| Some(frequency));
             }
 
             UiEvent::Quit => {

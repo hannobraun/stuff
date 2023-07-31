@@ -67,6 +67,28 @@ pub fn run(input: Sender<Input>) {
                             Input::PlayNote(Note::B)
                         }
 
+                        (Some(VirtualKeyCode::A), ElementState::Released) => {
+                            Input::ReleaseNote
+                        }
+                        (Some(VirtualKeyCode::S), ElementState::Released) => {
+                            Input::ReleaseNote
+                        }
+                        (Some(VirtualKeyCode::D), ElementState::Released) => {
+                            Input::ReleaseNote
+                        }
+                        (Some(VirtualKeyCode::F), ElementState::Released) => {
+                            Input::ReleaseNote
+                        }
+                        (Some(VirtualKeyCode::G), ElementState::Released) => {
+                            Input::ReleaseNote
+                        }
+                        (Some(VirtualKeyCode::H), ElementState::Released) => {
+                            Input::ReleaseNote
+                        }
+                        (Some(VirtualKeyCode::J), ElementState::Released) => {
+                            Input::ReleaseNote
+                        }
+
                         _ => return,
                     }
                 }

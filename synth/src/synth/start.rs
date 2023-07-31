@@ -103,6 +103,9 @@ pub fn start(output: Sender<Buffer>) -> Sender<Input> {
 
                     note_writer.update(|_| Some(frequency));
                 }
+                Input::ReleaseNote => {
+                    note_writer.update(|_| None);
+                }
             }
         }
     });

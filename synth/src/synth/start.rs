@@ -1,4 +1,4 @@
-use std::thread::{self, JoinHandle};
+use std::thread;
 
 use crossbeam_channel::{select, RecvError, SendError, Sender};
 
@@ -12,10 +12,10 @@ use super::{
     wave,
 };
 
-pub fn start(output: Sender<Buffer>) -> (Sender<Input>, JoinHandle<()>) {
+pub fn start(output: Sender<Buffer>) -> Sender<Input> {
     let (input_tx, input) = crossbeam_channel::bounded::<Input>(0);
 
-    let join_handle = thread::spawn(move || {
+    thread::spawn(move || {
         let mut clock = Clock {
             time: 0,
             sample_rate: SAMPLE_RATE as u64,
@@ -107,5 +107,5 @@ pub fn start(output: Sender<Buffer>) -> (Sender<Input>, JoinHandle<()>) {
         }
     });
 
-    (input_tx, join_handle)
+    input_tx
 }

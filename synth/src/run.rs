@@ -24,10 +24,8 @@ pub fn run() -> anyhow::Result<()> {
 
 fn run_inner() -> anyhow::Result<()> {
     let audio = Audio::start()?;
-    let (input, join_handle) = synth::start::start(audio.buffers);
+    let input = synth::start::start(audio.buffers);
     ui::start(input);
-
-    join_handle.join().unwrap();
 
     Ok(())
 }

@@ -71,9 +71,6 @@ fn run_inner() -> anyhow::Result<()> {
 
     loop {
         let ui_event = select! {
-            recv(ui_events) -> ui_event => {
-                ui_event.unwrap()
-            }
             send(audio.buffers, buffer) -> res => {
                 res.unwrap();
 
@@ -83,6 +80,9 @@ fn run_inner() -> anyhow::Result<()> {
                 }
 
                 continue;
+            }
+            recv(ui_events) -> ui_event => {
+                ui_event.unwrap()
             }
         };
 

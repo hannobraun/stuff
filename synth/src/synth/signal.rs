@@ -30,6 +30,7 @@ impl Signal {
         self.inner.value(clock)
     }
 
+    #[allow(unused)]
     pub fn map(self, f: impl Fn(f32, &Clock) -> f32 + Send + 'static) -> Self {
         struct Map<F: Fn(f32, &Clock) -> f32> {
             signal: Signal,

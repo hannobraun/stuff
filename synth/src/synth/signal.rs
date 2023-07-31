@@ -27,6 +27,16 @@ impl Signal {
     }
 
     pub fn value(&self, clock: &Clock) -> f32 {
+        // It might make sense to clamp the value between 0 and 1 here. Then
+        // we'd have nice and uniform signals that can be used anywhere. That
+        // would require some adjustment on the component side though, as the
+        // oscillator interprets its frequency signal in terms of Hz. Either it
+        // needs to be made configurable, or we need a separate low-frequency
+        // oscillator.
+        //
+        // Another option is to lean into the fact that this is software, and
+        // not actually an electrical signal. Make this fully typed. That's more
+        // of a question of which philosophy this project would like to follow.
         self.inner.value(clock)
     }
 }

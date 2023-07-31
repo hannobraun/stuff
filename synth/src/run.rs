@@ -1,3 +1,5 @@
+use std::panic;
+
 use anyhow::anyhow;
 use crossbeam_channel::select;
 use crossterm::terminal;
@@ -18,9 +20,16 @@ use crate::{
 
 pub fn run() -> anyhow::Result<()> {
     terminal::enable_raw_mode()?;
-    let result = run_inner();
+    let result = panic::catch_unwind(run_inner);
     terminal::disable_raw_mode()?;
-    result
+
+    // This would probably be a good case for `Result::flatten`, but as of this
+    // writing, that is not stable yet.
+    match result {
+        Ok(Ok(())) => Ok(()),
+        Ok(err) => err,
+        Err(payload) => panic::resume_unwind(payload),
+    }
 }
 
 fn run_inner() -> anyhow::Result<()> {

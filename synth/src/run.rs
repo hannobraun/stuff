@@ -36,7 +36,7 @@ fn run_inner() -> anyhow::Result<()> {
         sample_rate: params.sample_rate as u64,
     };
 
-    let (note, mut frequency_writer) = Signal::variable(440.);
+    let (note, mut note_writer) = Signal::variable(440.);
     let (volume, mut volume_writer) = Signal::variable(0.1);
 
     let frequency = Signal::new(Oscillator {
@@ -75,11 +75,11 @@ fn run_inner() -> anyhow::Result<()> {
     loop {
         match ui::read_event()? {
             Some(UiEvent::FrequencyDec) => {
-                frequency_writer.update(|freq| freq - frequency_increment);
+                note_writer.update(|freq| freq - frequency_increment);
                 continue;
             }
             Some(UiEvent::FrequencyInc) => {
-                frequency_writer.update(|freq| freq + frequency_increment);
+                note_writer.update(|freq| freq + frequency_increment);
                 continue;
             }
 

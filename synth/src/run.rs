@@ -6,7 +6,7 @@ use crate::{
     synth::{
         clock::Clock,
         components::{offsetter::Offsetter, oscillator::Oscillator},
-        signal::{IsSignal, Signal},
+        signal::Signal,
         wave,
     },
     ui::{self, UiEvent},
@@ -46,11 +46,11 @@ fn run_inner() -> anyhow::Result<()> {
         offset: note,
     });
 
-    let osc = Oscillator {
+    let osc = Signal::new(Oscillator {
         frequency,
         amplitude: Signal::constant(0.1),
         wave: wave::square,
-    };
+    });
 
     let _device = run_output_device(params, move |data| {
         for value in data {

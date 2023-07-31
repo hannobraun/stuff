@@ -39,7 +39,7 @@ fn run_inner() -> anyhow::Result<()> {
 
     let osc = Signal::new(Oscillator {
         frequency: note,
-        wave: wave::square,
+        wave: wave::sawtooth,
     });
     let osc = Signal::new(Scaler {
         input: osc,

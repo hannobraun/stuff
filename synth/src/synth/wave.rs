@@ -1,3 +1,4 @@
+#[allow(unused)]
 pub fn square(t: f32) -> f32 {
     if t < 0.5 {
         0.
@@ -6,7 +7,6 @@ pub fn square(t: f32) -> f32 {
     }
 }
 
-#[allow(unused)]
 pub fn sawtooth(t: f32) -> f32 {
     t
 }

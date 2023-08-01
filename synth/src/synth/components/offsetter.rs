@@ -3,9 +3,17 @@ use crate::synth::{
     signal::{HasOutput, Signal},
 };
 
+use super::SynthComponent;
+
 pub struct Offsetter {
     pub input: Signal,
     pub offset: Signal,
+}
+
+impl SynthComponent for Offsetter {
+    fn update(&mut self) {
+        // nothing to do yet
+    }
 }
 
 impl HasOutput for Offsetter {

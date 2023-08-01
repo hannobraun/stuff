@@ -4,10 +4,18 @@ use crate::synth::{
     wave::Wave,
 };
 
+use super::SynthComponent;
+
 #[derive(Default)]
 pub struct Oscillator {
     pub frequency: Signal,
     pub wave: Wave,
+}
+
+impl SynthComponent for Oscillator {
+    fn update(&mut self) {
+        // nothing to do yet
+    }
 }
 
 impl HasOutput for Oscillator {

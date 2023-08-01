@@ -3,9 +3,17 @@ use crate::synth::{
     signal::{HasOutput, Signal},
 };
 
+use super::SynthComponent;
+
 pub struct Scaler {
     pub input: Signal,
     pub scale: Signal,
+}
+
+impl SynthComponent for Scaler {
+    fn update(&mut self) {
+        // nothing to do yet
+    }
 }
 
 impl HasOutput for Scaler {

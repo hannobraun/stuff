@@ -42,6 +42,12 @@ impl Signal {
     }
 }
 
+impl Default for Signal {
+    fn default() -> Self {
+        Self::variable().0
+    }
+}
+
 pub trait HasOutput {
     fn value(&self, clock: &Clock) -> Option<f32>;
 }

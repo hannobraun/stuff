@@ -24,9 +24,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
 
         let mut oscillator = Oscillator::default();
 
-        let mut scaler = Scaler {
-            ..Default::default()
-        };
+        let mut scaler = Scaler::default();
         scaler.input.connect(&oscillator.output);
         scaler.scale.set(Some(0.5));
 

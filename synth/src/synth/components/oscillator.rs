@@ -4,6 +4,7 @@ use crate::synth::{
     wave::Wave,
 };
 
+#[derive(Default)]
 pub struct Oscillator {
     pub frequency: Signal,
     pub wave: Wave,

@@ -9,7 +9,7 @@ use super::{
     components::{oscillator::Oscillator, scaler::Scaler},
     interface::{Note, UserInput},
     signal::Signal,
-    wave,
+    wave::Wave,
 };
 
 pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
@@ -27,7 +27,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
 
         let osc = Signal::new(Oscillator {
             frequency: note,
-            wave: wave::sawtooth,
+            wave: Wave::sawtooth(),
         });
         let osc = Signal::new(Scaler {
             input: osc,

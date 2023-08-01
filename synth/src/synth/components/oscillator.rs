@@ -1,17 +1,18 @@
 use crate::synth::{
     clock::Clock,
     signal::{HasOutput, Signal},
+    wave::Wave,
 };
 
 pub struct Oscillator {
     pub frequency: Signal,
-    pub wave: fn(f32) -> f32,
+    pub wave: Wave,
 }
 
 impl HasOutput for Oscillator {
     fn value(&self, clock: &Clock) -> Option<f32> {
         let frequency = self.frequency.value(clock)?;
         let t = clock.t(frequency);
-        Some((self.wave)(t))
+        Some(self.wave.value(t))
     }
 }

@@ -7,6 +7,12 @@ pub struct Input {
 
 impl Input {
     pub fn set(&mut self, value: Option<f32>) {
+        assert_eq!(
+            Rc::strong_count(&self.into()),
+            1,
+            "Attempting to set connected input."
+        );
+
         self.inner.set(value);
     }
 

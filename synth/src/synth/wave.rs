@@ -12,6 +12,6 @@ impl Wave {
     }
 }
 
-pub fn sawtooth(t: f32) -> f32 {
+fn sawtooth(t: f32) -> f32 {
     t
 }

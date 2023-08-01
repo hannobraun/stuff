@@ -21,22 +21,22 @@ impl Input {
     }
 
     pub fn connect(&mut self, output: &Output) {
-        self.signal = output.inner.clone();
+        self.signal = output.signal.clone();
     }
 }
 
 #[derive(Default)]
 pub struct Output {
-    inner: Signal,
+    signal: Signal,
 }
 
 impl Output {
     pub fn set(&mut self, value: Option<f32>) {
-        self.inner.set(value);
+        self.signal.set(value);
     }
 
     pub fn get(&self) -> Option<f32> {
-        self.inner.get()
+        self.signal.get()
     }
 }
 

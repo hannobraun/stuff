@@ -11,7 +11,6 @@ use super::{
     clock::Clock,
     components::{oscillator::Oscillator, scaler::Scaler},
     interface::{Note, UserInput},
-    signal::Signal,
     wave::Wave,
 };
 
@@ -24,10 +23,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
             sample_rate: SAMPLE_RATE as u64,
         };
 
-        let (note, mut note_writer) = Signal::variable();
-
         let mut osc = Oscillator {
-            frequency: note,
             wave: Wave::sawtooth(),
             ..Default::default()
         };
@@ -109,10 +105,10 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
                     let frequency =
                         2f32.powf((number - 49) as f32 / 12.) * 440.;
 
-                    note_writer.update(|_| Some(frequency));
+                    osc.frequency.set(Some(frequency));
                 }
                 UserInput::ReleaseNote => {
-                    note_writer.update(|_| None);
+                    osc.frequency.set(None);
                 }
             }
         }

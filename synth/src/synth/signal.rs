@@ -104,12 +104,4 @@ impl HasOutput for Variable {
 
 pub struct VariableWriter(pub VariableInner);
 
-impl VariableWriter {
-    pub fn update(&mut self, f: impl FnOnce(Option<f32>) -> Option<f32>) {
-        let original = self.0.get();
-        let updated = f(original);
-        self.0.set(updated);
-    }
-}
-
 type VariableInner = Rc<Cell<Option<f32>>>;

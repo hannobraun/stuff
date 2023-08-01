@@ -2,7 +2,7 @@ use std::{cell::Cell, rc::Rc};
 
 #[derive(Default)]
 pub struct Input {
-    inner: Signal,
+    signal: Signal,
 }
 
 impl Input {
@@ -13,15 +13,15 @@ impl Input {
             "Attempting to set connected input."
         );
 
-        self.inner.set(value);
+        self.signal.set(value);
     }
 
     pub fn get(&self) -> Option<f32> {
-        self.inner.get()
+        self.signal.get()
     }
 
     pub fn connect(&mut self, output: &Output) {
-        self.inner = output.inner.clone();
+        self.signal = output.inner.clone();
     }
 }
 

@@ -6,7 +6,7 @@ pub enum UserInput {
     VolumeInc,
 
     PlayNote(Note),
-    ReleaseNote,
+    ReleaseNote(Note),
 }
 
 pub enum Note {

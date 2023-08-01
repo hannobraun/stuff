@@ -68,25 +68,25 @@ pub fn run(input: Sender<UserInput>) {
                         }
 
                         (Some(VirtualKeyCode::A), ElementState::Released) => {
-                            UserInput::ReleaseNote
+                            UserInput::ReleaseNote(Note::C)
                         }
                         (Some(VirtualKeyCode::S), ElementState::Released) => {
-                            UserInput::ReleaseNote
+                            UserInput::ReleaseNote(Note::D)
                         }
                         (Some(VirtualKeyCode::D), ElementState::Released) => {
-                            UserInput::ReleaseNote
+                            UserInput::ReleaseNote(Note::E)
                         }
                         (Some(VirtualKeyCode::F), ElementState::Released) => {
-                            UserInput::ReleaseNote
+                            UserInput::ReleaseNote(Note::F)
                         }
                         (Some(VirtualKeyCode::G), ElementState::Released) => {
-                            UserInput::ReleaseNote
+                            UserInput::ReleaseNote(Note::G)
                         }
                         (Some(VirtualKeyCode::H), ElementState::Released) => {
-                            UserInput::ReleaseNote
+                            UserInput::ReleaseNote(Note::A)
                         }
                         (Some(VirtualKeyCode::J), ElementState::Released) => {
-                            UserInput::ReleaseNote
+                            UserInput::ReleaseNote(Note::B)
                         }
 
                         _ => return,

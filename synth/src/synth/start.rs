@@ -107,7 +107,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
 
                     oscillator.frequency.set(Some(frequency));
                 }
-                UserInput::ReleaseNote => {
+                UserInput::ReleaseNote(_) => {
                     oscillator.frequency.set(None);
                 }
             }

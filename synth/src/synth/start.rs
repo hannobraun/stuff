@@ -31,6 +31,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
             wave: Wave::sawtooth(),
             ..Default::default()
         };
+
         let mut scaler = Scaler {
             ..Default::default()
         };

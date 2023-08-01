@@ -11,7 +11,7 @@ pub struct Scaler {
 }
 
 impl SynthComponent for Scaler {
-    fn update(&mut self) {
+    fn update(&mut self, _: &Clock) {
         // nothing to do yet
     }
 }

@@ -11,7 +11,7 @@ pub struct Offsetter {
 }
 
 impl SynthComponent for Offsetter {
-    fn update(&mut self) {
+    fn update(&mut self, _: &Clock) {
         // nothing to do yet
     }
 }

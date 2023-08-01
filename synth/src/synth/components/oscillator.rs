@@ -13,7 +13,7 @@ pub struct Oscillator {
 }
 
 impl SynthComponent for Oscillator {
-    fn update(&mut self) {
+    fn update(&mut self, _: &Clock) {
         // nothing to do yet
     }
 }

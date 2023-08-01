@@ -2,7 +2,7 @@ use std::{cell::Cell, rc::Rc};
 
 #[derive(Default)]
 pub struct Input {
-    inner: Rc<Cell<Option<f32>>>,
+    inner: Signal,
 }
 
 impl Input {
@@ -21,7 +21,7 @@ impl Input {
 
 #[derive(Default)]
 pub struct Output {
-    inner: Rc<Cell<Option<f32>>>,
+    inner: Signal,
 }
 
 impl Output {
@@ -33,3 +33,5 @@ impl Output {
         self.inner.get()
     }
 }
+
+type Signal = Rc<Cell<Option<f32>>>;

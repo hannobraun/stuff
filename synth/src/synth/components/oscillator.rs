@@ -12,6 +12,14 @@ pub struct Oscillator {
     pub wave: Wave,
 }
 
+impl Oscillator {
+    pub fn output(&self, clock: &Clock) -> Option<f32> {
+        let frequency = self.frequency.value(clock)?;
+        let t = clock.t(frequency);
+        Some(self.wave.value(t))
+    }
+}
+
 impl SynthComponent for Oscillator {
     fn update(&mut self, _: &Clock) {
         // nothing to do yet
@@ -20,8 +28,6 @@ impl SynthComponent for Oscillator {
 
 impl HasOutput for Oscillator {
     fn value(&self, clock: &Clock) -> Option<f32> {
-        let frequency = self.frequency.value(clock)?;
-        let t = clock.t(frequency);
-        Some(self.wave.value(t))
+        self.output(clock)
     }
 }

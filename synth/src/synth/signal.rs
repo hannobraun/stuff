@@ -15,6 +15,10 @@ impl Input {
     pub fn get(&self) -> Option<f32> {
         self.inner.get()
     }
+
+    pub fn connect(&mut self, output: &Output) {
+        self.inner = output.inner.clone();
+    }
 }
 
 #[derive(Default)]

@@ -26,15 +26,15 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
 
         let (note, mut note_writer) = Signal::variable();
 
-        let osc = Signal::new(Oscillator {
+        let mut osc = Oscillator {
             frequency: note,
             wave: Wave::sawtooth(),
             ..Default::default()
-        });
+        };
         let mut scaler = Scaler {
-            input: osc,
             ..Default::default()
         };
+        scaler.input.connect(&osc.output);
         scaler.scale.set(Some(0.5));
 
         let volume_increment = 0.1;
@@ -51,7 +51,10 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
 
                     for value in &mut buffer {
                         clock.advance();
+
+                        osc.update(&clock);
                         scaler.update(&clock);
+
                         *value = scaler.output.get().unwrap_or(0.);
                     }
 

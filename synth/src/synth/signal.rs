@@ -4,16 +4,16 @@ use crate::synth::clock::Clock;
 
 #[derive(Default)]
 pub struct Output {
-    inner: Option<f32>,
+    inner: Rc<Cell<Option<f32>>>,
 }
 
 impl Output {
     pub fn set(&mut self, value: Option<f32>) {
-        self.inner = value;
+        self.inner.set(value);
     }
 
     pub fn get(&self) -> Option<f32> {
-        self.inner
+        self.inner.get()
     }
 }
 

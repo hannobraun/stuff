@@ -12,6 +12,12 @@ impl Wave {
     }
 }
 
+impl Default for Wave {
+    fn default() -> Self {
+        Self::sawtooth()
+    }
+}
+
 fn sawtooth(t: f32) -> f32 {
     t
 }

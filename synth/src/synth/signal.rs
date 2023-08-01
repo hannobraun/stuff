@@ -2,6 +2,17 @@ use std::{cell::Cell, rc::Rc};
 
 use crate::synth::clock::Clock;
 
+#[derive(Default)]
+pub struct Output {
+    inner: Option<f32>,
+}
+
+impl Output {
+    pub fn set(&mut self, value: Option<f32>) {
+        self.inner = value;
+    }
+}
+
 pub struct Signal {
     inner: Box<dyn HasOutput>,
 }

@@ -1,6 +1,6 @@
 use crate::synth::{
     clock::Clock,
-    signal::{HasOutput, Signal},
+    signal::{HasOutput, Output, Signal},
 };
 
 use super::SynthComponent;
@@ -9,11 +9,16 @@ use super::SynthComponent;
 pub struct Scaler {
     pub input: Signal,
     pub scale: Signal,
+    pub output: Output,
 }
 
 impl SynthComponent for Scaler {
-    fn update(&mut self, _: &Clock) {
-        // nothing to do yet
+    fn update(&mut self, clock: &Clock) {
+        let output = self
+            .input
+            .value(clock)
+            .map(|input| input * self.scale.value(clock).unwrap_or(1.));
+        self.output.set(output);
     }
 }
 

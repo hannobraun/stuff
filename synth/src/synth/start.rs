@@ -32,6 +32,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
         let osc = Signal::new(Scaler {
             input: osc,
             scale: volume,
+            ..Default::default()
         });
 
         let volume_increment = 0.1;

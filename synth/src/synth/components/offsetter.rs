@@ -1,6 +1,6 @@
 use crate::synth::{
     clock::Clock,
-    signal::{IsSignal, Signal},
+    signal::{HasOutput, Signal},
 };
 
 pub struct Offsetter {
@@ -8,7 +8,7 @@ pub struct Offsetter {
     pub offset: Signal,
 }
 
-impl IsSignal for Offsetter {
+impl HasOutput for Offsetter {
     fn value(&self, clock: &Clock) -> Option<f32> {
         self.input
             .value(clock)

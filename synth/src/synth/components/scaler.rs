@@ -1,6 +1,6 @@
 use crate::synth::{
     clock::Clock,
-    signal::{IsSignal, Signal},
+    signal::{HasOutput, Signal},
 };
 
 pub struct Scaler {
@@ -8,7 +8,7 @@ pub struct Scaler {
     pub scale: Signal,
 }
 
-impl IsSignal for Scaler {
+impl HasOutput for Scaler {
     fn value(&self, clock: &Clock) -> Option<f32> {
         self.input
             .value(clock)

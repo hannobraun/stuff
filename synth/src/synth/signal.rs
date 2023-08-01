@@ -3,11 +3,11 @@ use std::{cell::Cell, rc::Rc};
 use crate::synth::clock::Clock;
 
 pub struct Signal {
-    inner: Box<dyn IsSignal>,
+    inner: Box<dyn HasOutput>,
 }
 
 impl Signal {
-    pub fn new<T: IsSignal + 'static>(inner: T) -> Self {
+    pub fn new<T: HasOutput + 'static>(inner: T) -> Self {
         Self {
             inner: Box::new(inner),
         }
@@ -42,13 +42,13 @@ impl Signal {
     }
 }
 
-pub trait IsSignal {
+pub trait HasOutput {
     fn value(&self, clock: &Clock) -> Option<f32>;
 }
 
 pub struct Constant(pub f32);
 
-impl IsSignal for Constant {
+impl HasOutput for Constant {
     fn value(&self, _: &Clock) -> Option<f32> {
         Some(self.0)
     }
@@ -56,7 +56,7 @@ impl IsSignal for Constant {
 
 pub struct Variable(pub VariableInner);
 
-impl IsSignal for Variable {
+impl HasOutput for Variable {
     fn value(&self, _: &Clock) -> Option<f32> {
         self.0.get()
     }

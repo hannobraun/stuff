@@ -2,7 +2,10 @@ use std::thread;
 
 use crossbeam_channel::{select, RecvError, SendError, Sender};
 
-use crate::audio::{Buffer, BUFFER_SIZE, SAMPLE_RATE};
+use crate::{
+    audio::{Buffer, BUFFER_SIZE, SAMPLE_RATE},
+    synth::signal::HasOutput,
+};
 
 use super::{
     clock::Clock,
@@ -29,11 +32,11 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
             frequency: note,
             wave: Wave::sawtooth(),
         });
-        let osc = Signal::new(Scaler {
+        let osc = Scaler {
             input: osc,
             scale: volume,
             ..Default::default()
-        });
+        };
 
         let volume_increment = 0.1;
 

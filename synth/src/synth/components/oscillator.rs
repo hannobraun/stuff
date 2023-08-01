@@ -1,6 +1,6 @@
 use crate::synth::{
     clock::Clock,
-    signal::{HasOutput, Signal},
+    signal::{HasOutput, Output, Signal},
     wave::Wave,
 };
 
@@ -10,6 +10,7 @@ use super::SynthComponent;
 pub struct Oscillator {
     pub frequency: Signal,
     pub wave: Wave,
+    pub output: Output,
 }
 
 impl Oscillator {
@@ -21,8 +22,9 @@ impl Oscillator {
 }
 
 impl SynthComponent for Oscillator {
-    fn update(&mut self, _: &Clock) {
-        // nothing to do yet
+    fn update(&mut self, clock: &Clock) {
+        let output = self.output(clock);
+        self.output.set(output);
     }
 }
 

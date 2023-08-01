@@ -31,6 +31,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
         let osc = Signal::new(Oscillator {
             frequency: note,
             wave: Wave::sawtooth(),
+            ..Default::default()
         });
         let mut scaler = Scaler {
             input: osc,

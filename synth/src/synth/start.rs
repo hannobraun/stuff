@@ -32,7 +32,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
             frequency: note,
             wave: Wave::sawtooth(),
         });
-        let osc = Scaler {
+        let scaler = Scaler {
             input: osc,
             scale: volume,
             ..Default::default()
@@ -52,7 +52,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
 
                     for value in &mut buffer {
                         clock.advance();
-                        *value = osc.value(&clock).unwrap_or(0.);
+                        *value = scaler.value(&clock).unwrap_or(0.);
                     }
 
                     continue;

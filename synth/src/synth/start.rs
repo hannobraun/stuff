@@ -9,7 +9,7 @@ use crate::{
 
 use super::{
     clock::Clock,
-    components::{oscillator::Oscillator, scaler::Scaler},
+    components::{mixer::Mixer, oscillator::Oscillator, scaler::Scaler},
     interface::{Note, UserInput},
 };
 
@@ -22,10 +22,25 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
             sample_rate: SAMPLE_RATE as u64,
         };
 
-        let mut oscillator = Oscillator::default();
+        let mut osc_c = Oscillator::default();
+        let mut osc_d = Oscillator::default();
+        let mut osc_e = Oscillator::default();
+        let mut osc_f = Oscillator::default();
+        let mut osc_g = Oscillator::default();
+        let mut osc_a = Oscillator::default();
+        let mut osc_b = Oscillator::default();
+
+        let mut mixer = Mixer::default();
+        mixer.connect(&osc_c.output);
+        mixer.connect(&osc_d.output);
+        mixer.connect(&osc_e.output);
+        mixer.connect(&osc_f.output);
+        mixer.connect(&osc_g.output);
+        mixer.connect(&osc_a.output);
+        mixer.connect(&osc_b.output);
 
         let mut scaler = Scaler::default();
-        scaler.input.connect(&oscillator.output);
+        scaler.input.connect(&mixer.output);
         scaler.scale.set(Some(0.5));
 
         let volume_increment = 0.1;
@@ -43,7 +58,14 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
                     for value in &mut buffer {
                         clock.advance();
 
-                        oscillator.update(&clock);
+                        osc_c.update(&clock);
+                        osc_d.update(&clock);
+                        osc_e.update(&clock);
+                        osc_f.update(&clock);
+                        osc_g.update(&clock);
+                        osc_a.update(&clock);
+                        osc_b.update(&clock);
+                        mixer.update(&clock);
                         scaler.update(&clock);
 
                         *value = scaler.output.get().unwrap_or(0.);
@@ -99,9 +121,29 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
                     let frequency =
                         2f32.powf((number - 49) as f32 / 12.) * 440.;
 
+                    let oscillator = match note {
+                        Note::C => &mut osc_c,
+                        Note::D => &mut osc_d,
+                        Note::E => &mut osc_e,
+                        Note::F => &mut osc_f,
+                        Note::G => &mut osc_g,
+                        Note::A => &mut osc_a,
+                        Note::B => &mut osc_b,
+                    };
+
                     oscillator.frequency.set(Some(frequency));
                 }
-                UserInput::ReleaseNote(_) => {
+                UserInput::ReleaseNote(note) => {
+                    let oscillator = match note {
+                        Note::C => &mut osc_c,
+                        Note::D => &mut osc_d,
+                        Note::E => &mut osc_e,
+                        Note::F => &mut osc_f,
+                        Note::G => &mut osc_g,
+                        Note::A => &mut osc_a,
+                        Note::B => &mut osc_b,
+                    };
+
                     oscillator.frequency.set(None);
                 }
             }

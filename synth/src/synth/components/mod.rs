@@ -1,3 +1,4 @@
+pub mod mixer;
 pub mod oscillator;
 pub mod scaler;
 

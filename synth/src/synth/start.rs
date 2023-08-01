@@ -4,7 +4,7 @@ use crossbeam_channel::{select, RecvError, SendError, Sender};
 
 use crate::{
     audio::{Buffer, BUFFER_SIZE, SAMPLE_RATE},
-    synth::signal::HasOutput,
+    synth::components::SynthComponent,
 };
 
 use super::{
@@ -32,7 +32,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
             frequency: note,
             wave: Wave::sawtooth(),
         });
-        let scaler = Scaler {
+        let mut scaler = Scaler {
             input: osc,
             scale: volume,
             ..Default::default()
@@ -52,7 +52,8 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
 
                     for value in &mut buffer {
                         clock.advance();
-                        *value = scaler.value(&clock).unwrap_or(0.);
+                        scaler.update(&clock);
+                        *value = scaler.output.get().unwrap_or(0.);
                     }
 
                     continue;

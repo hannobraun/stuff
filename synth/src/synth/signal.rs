@@ -11,6 +11,10 @@ impl Output {
     pub fn set(&mut self, value: Option<f32>) {
         self.inner = value;
     }
+
+    pub fn get(&self) -> Option<f32> {
+        self.inner
+    }
 }
 
 pub struct Signal {

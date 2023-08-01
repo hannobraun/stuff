@@ -25,8 +25,6 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
         };
 
         let (note, mut note_writer) = Signal::variable();
-        let (volume, mut volume_writer) = Signal::variable();
-        volume_writer.update(|_| Some(0.5));
 
         let osc = Signal::new(Oscillator {
             frequency: note,
@@ -35,9 +33,9 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
         });
         let mut scaler = Scaler {
             input: osc,
-            scale: volume,
             ..Default::default()
         };
+        scaler.scale.set(Some(0.5));
 
         let volume_increment = 0.1;
 
@@ -80,15 +78,15 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
                 }
 
                 UserInput::VolumeDec => {
-                    volume_writer.update(|volume| {
-                        Some(volume.unwrap() - volume_increment)
-                    });
+                    scaler.scale.set(Some(
+                        scaler.scale.get().unwrap() - volume_increment,
+                    ));
                     continue;
                 }
                 UserInput::VolumeInc => {
-                    volume_writer.update(|volume| {
-                        Some(volume.unwrap() + volume_increment)
-                    });
+                    scaler.scale.set(Some(
+                        scaler.scale.get().unwrap() + volume_increment,
+                    ));
                     continue;
                 }
 

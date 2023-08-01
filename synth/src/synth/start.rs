@@ -7,7 +7,7 @@ use crate::audio::{Buffer, BUFFER_SIZE, SAMPLE_RATE};
 use super::{
     clock::Clock,
     components::{oscillator::Oscillator, scaler::Scaler},
-    input::{Input, Note},
+    interface::{Input, Note},
     signal::Signal,
     wave,
 };

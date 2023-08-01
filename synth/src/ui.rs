@@ -7,7 +7,7 @@ use winit::{
     window::Window,
 };
 
-use crate::synth::input::{Input, Note};
+use crate::synth::interface::{Input, Note};
 
 pub fn run(input: Sender<Input>) {
     let event_loop = EventLoop::new();

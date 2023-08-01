@@ -23,7 +23,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
             sample_rate: SAMPLE_RATE as u64,
         };
 
-        let mut osc = Oscillator {
+        let mut oscillator = Oscillator {
             wave: Wave::sawtooth(),
             ..Default::default()
         };
@@ -31,7 +31,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
         let mut scaler = Scaler {
             ..Default::default()
         };
-        scaler.input.connect(&osc.output);
+        scaler.input.connect(&oscillator.output);
         scaler.scale.set(Some(0.5));
 
         let volume_increment = 0.1;
@@ -49,7 +49,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
                     for value in &mut buffer {
                         clock.advance();
 
-                        osc.update(&clock);
+                        oscillator.update(&clock);
                         scaler.update(&clock);
 
                         *value = scaler.output.get().unwrap_or(0.);
@@ -105,10 +105,10 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
                     let frequency =
                         2f32.powf((number - 49) as f32 / 12.) * 440.;
 
-                    osc.frequency.set(Some(frequency));
+                    oscillator.frequency.set(Some(frequency));
                 }
                 UserInput::ReleaseNote => {
-                    osc.frequency.set(None);
+                    oscillator.frequency.set(None);
                 }
             }
         }

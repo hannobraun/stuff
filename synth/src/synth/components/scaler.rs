@@ -14,10 +14,8 @@ pub struct Scaler {
 
 impl SynthComponent for Scaler {
     fn update(&mut self, clock: &Clock) {
-        let output = self
-            .input
-            .value(clock)
-            .map(|input| input * self.scale.value(clock).unwrap_or(1.));
+        let scale = self.scale.value(clock).unwrap_or(1.);
+        let output = self.input.value(clock).map(|input| input * scale);
         self.output.set(output);
     }
 }

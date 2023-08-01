@@ -5,6 +5,7 @@ use crate::synth::{
 
 use super::SynthComponent;
 
+#[derive(Default)]
 pub struct Scaler {
     pub input: Signal,
     pub scale: Signal,

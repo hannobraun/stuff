@@ -7,13 +7,13 @@ use crate::audio::{Buffer, BUFFER_SIZE, SAMPLE_RATE};
 use super::{
     clock::Clock,
     components::{oscillator::Oscillator, scaler::Scaler},
-    interface::{Input, Note},
+    interface::{Note, UserInput},
     signal::Signal,
     wave,
 };
 
-pub fn start(output: Sender<Buffer>) -> Sender<Input> {
-    let (input_tx, input) = crossbeam_channel::bounded::<Input>(0);
+pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
+    let (input_tx, input) = crossbeam_channel::bounded::<UserInput>(0);
 
     thread::spawn(move || {
         let mut clock = Clock {
@@ -64,29 +64,29 @@ pub fn start(output: Sender<Buffer>) -> Sender<Input> {
             };
 
             match input {
-                Input::OctaveDec => {
+                UserInput::OctaveDec => {
                     octave -= 1;
                     continue;
                 }
-                Input::OctaveInc => {
+                UserInput::OctaveInc => {
                     octave += 1;
                     continue;
                 }
 
-                Input::VolumeDec => {
+                UserInput::VolumeDec => {
                     volume_writer.update(|volume| {
                         Some(volume.unwrap() - volume_increment)
                     });
                     continue;
                 }
-                Input::VolumeInc => {
+                UserInput::VolumeInc => {
                     volume_writer.update(|volume| {
                         Some(volume.unwrap() + volume_increment)
                     });
                     continue;
                 }
 
-                Input::PlayNote(note) => {
+                UserInput::PlayNote(note) => {
                     let number = match note {
                         Note::C => 4,
                         Note::D => 6,
@@ -103,7 +103,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<Input> {
 
                     note_writer.update(|_| Some(frequency));
                 }
-                Input::ReleaseNote => {
+                UserInput::ReleaseNote => {
                     note_writer.update(|_| None);
                 }
             }

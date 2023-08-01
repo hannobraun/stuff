@@ -7,9 +7,9 @@ use winit::{
     window::Window,
 };
 
-use crate::synth::interface::{Input, Note};
+use crate::synth::interface::{Note, UserInput};
 
-pub fn run(input: Sender<Input>) {
+pub fn run(input: Sender<UserInput>) {
     let event_loop = EventLoop::new();
     let window = Window::new(&event_loop).unwrap();
     let context = unsafe { softbuffer::Context::new(&window) }.unwrap();
@@ -31,62 +31,62 @@ pub fn run(input: Sender<Input>) {
                         }
 
                         (Some(VirtualKeyCode::Left), ElementState::Pressed) => {
-                            Input::OctaveDec
+                            UserInput::OctaveDec
                         }
                         (
                             Some(VirtualKeyCode::Right),
                             ElementState::Pressed,
-                        ) => Input::OctaveInc,
+                        ) => UserInput::OctaveInc,
 
                         (Some(VirtualKeyCode::Down), ElementState::Pressed) => {
-                            Input::VolumeDec
+                            UserInput::VolumeDec
                         }
                         (Some(VirtualKeyCode::Up), ElementState::Pressed) => {
-                            Input::VolumeInc
+                            UserInput::VolumeInc
                         }
 
                         (Some(VirtualKeyCode::A), ElementState::Pressed) => {
-                            Input::PlayNote(Note::C)
+                            UserInput::PlayNote(Note::C)
                         }
                         (Some(VirtualKeyCode::S), ElementState::Pressed) => {
-                            Input::PlayNote(Note::D)
+                            UserInput::PlayNote(Note::D)
                         }
                         (Some(VirtualKeyCode::D), ElementState::Pressed) => {
-                            Input::PlayNote(Note::E)
+                            UserInput::PlayNote(Note::E)
                         }
                         (Some(VirtualKeyCode::F), ElementState::Pressed) => {
-                            Input::PlayNote(Note::F)
+                            UserInput::PlayNote(Note::F)
                         }
                         (Some(VirtualKeyCode::G), ElementState::Pressed) => {
-                            Input::PlayNote(Note::G)
+                            UserInput::PlayNote(Note::G)
                         }
                         (Some(VirtualKeyCode::H), ElementState::Pressed) => {
-                            Input::PlayNote(Note::A)
+                            UserInput::PlayNote(Note::A)
                         }
                         (Some(VirtualKeyCode::J), ElementState::Pressed) => {
-                            Input::PlayNote(Note::B)
+                            UserInput::PlayNote(Note::B)
                         }
 
                         (Some(VirtualKeyCode::A), ElementState::Released) => {
-                            Input::ReleaseNote
+                            UserInput::ReleaseNote
                         }
                         (Some(VirtualKeyCode::S), ElementState::Released) => {
-                            Input::ReleaseNote
+                            UserInput::ReleaseNote
                         }
                         (Some(VirtualKeyCode::D), ElementState::Released) => {
-                            Input::ReleaseNote
+                            UserInput::ReleaseNote
                         }
                         (Some(VirtualKeyCode::F), ElementState::Released) => {
-                            Input::ReleaseNote
+                            UserInput::ReleaseNote
                         }
                         (Some(VirtualKeyCode::G), ElementState::Released) => {
-                            Input::ReleaseNote
+                            UserInput::ReleaseNote
                         }
                         (Some(VirtualKeyCode::H), ElementState::Released) => {
-                            Input::ReleaseNote
+                            UserInput::ReleaseNote
                         }
                         (Some(VirtualKeyCode::J), ElementState::Released) => {
-                            Input::ReleaseNote
+                            UserInput::ReleaseNote
                         }
 
                         _ => return,

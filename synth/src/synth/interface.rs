@@ -1,4 +1,4 @@
-pub enum Input {
+pub enum UserInput {
     OctaveDec,
     OctaveInc,
 

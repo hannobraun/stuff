@@ -11,7 +11,6 @@ use super::{
     clock::Clock,
     components::{oscillator::Oscillator, scaler::Scaler},
     interface::{Note, UserInput},
-    wave::Wave,
 };
 
 pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
@@ -23,10 +22,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
             sample_rate: SAMPLE_RATE as u64,
         };
 
-        let mut oscillator = Oscillator {
-            wave: Wave::sawtooth(),
-            ..Default::default()
-        };
+        let mut oscillator = Oscillator::default();
 
         let mut scaler = Scaler {
             ..Default::default()

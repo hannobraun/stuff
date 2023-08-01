@@ -1,6 +1,6 @@
 use crate::synth::{
     clock::Clock,
-    signal::{Input, Output},
+    io::{Input, Output},
 };
 
 use super::SynthComponent;

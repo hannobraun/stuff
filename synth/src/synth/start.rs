@@ -46,7 +46,7 @@ pub fn start(output: Sender<Buffer>) -> Sender<UserInput> {
         let volume_increment = 0.1;
 
         let mut buffer = [0.; BUFFER_SIZE];
-        let mut octave = 0;
+        let mut octave = 2;
 
         loop {
             let input = select! {

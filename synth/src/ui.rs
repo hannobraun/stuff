@@ -25,6 +25,10 @@ pub fn run(input: Sender<UserInput>) {
                     return;
                 }
                 WindowEvent::KeyboardInput { event, .. } => {
+                    if event.repeat {
+                        return;
+                    }
+
                     match (event.physical_key, event.state) {
                         (KeyCode::Escape, _) => {
                             *control_flow = ControlFlow::Exit;

@@ -2,8 +2,9 @@ use std::num::NonZeroU32;
 
 use crossbeam_channel::{SendError, Sender};
 use winit::{
-    event::{ElementState, Event, VirtualKeyCode, WindowEvent},
+    event::{ElementState, Event, WindowEvent},
     event_loop::{ControlFlow, EventLoop},
+    keyboard::KeyCode,
     window::Window,
 };
 
@@ -23,69 +24,68 @@ pub fn run(input: Sender<UserInput>) {
                     *control_flow = ControlFlow::Exit;
                     return;
                 }
-                WindowEvent::KeyboardInput { input, .. } => {
-                    match (input.virtual_keycode, input.state) {
-                        (Some(VirtualKeyCode::Escape), _) => {
+                WindowEvent::KeyboardInput { event, .. } => {
+                    match (event.physical_key, event.state) {
+                        (KeyCode::Escape, _) => {
                             *control_flow = ControlFlow::Exit;
                             return;
                         }
 
-                        (Some(VirtualKeyCode::Left), ElementState::Pressed) => {
+                        (KeyCode::ArrowLeft, ElementState::Pressed) => {
                             UserInput::OctaveDec
                         }
-                        (
-                            Some(VirtualKeyCode::Right),
-                            ElementState::Pressed,
-                        ) => UserInput::OctaveInc,
+                        (KeyCode::ArrowRight, ElementState::Pressed) => {
+                            UserInput::OctaveInc
+                        }
 
-                        (Some(VirtualKeyCode::Down), ElementState::Pressed) => {
+                        (KeyCode::ArrowDown, ElementState::Pressed) => {
                             UserInput::VolumeDec
                         }
-                        (Some(VirtualKeyCode::Up), ElementState::Pressed) => {
+                        (KeyCode::ArrowUp, ElementState::Pressed) => {
                             UserInput::VolumeInc
                         }
 
-                        (Some(VirtualKeyCode::A), ElementState::Pressed) => {
+                        (KeyCode::KeyA, ElementState::Pressed) => {
                             UserInput::PlayNote(Note::C)
                         }
-                        (Some(VirtualKeyCode::S), ElementState::Pressed) => {
+                        (KeyCode::KeyS, ElementState::Pressed) => {
                             UserInput::PlayNote(Note::D)
                         }
-                        (Some(VirtualKeyCode::D), ElementState::Pressed) => {
+                        (KeyCode::KeyD, ElementState::Pressed) => {
                             UserInput::PlayNote(Note::E)
                         }
-                        (Some(VirtualKeyCode::F), ElementState::Pressed) => {
+                        (KeyCode::KeyF, ElementState::Pressed) => {
                             UserInput::PlayNote(Note::F)
                         }
-                        (Some(VirtualKeyCode::G), ElementState::Pressed) => {
+                        (KeyCode::KeyG, ElementState::Pressed) => {
                             UserInput::PlayNote(Note::G)
                         }
-                        (Some(VirtualKeyCode::H), ElementState::Pressed) => {
+                        (KeyCode::KeyH, ElementState::Pressed) => {
                             UserInput::PlayNote(Note::A)
                         }
-                        (Some(VirtualKeyCode::J), ElementState::Pressed) => {
+                        (KeyCode::KeyJ, ElementState::Pressed) => {
                             UserInput::PlayNote(Note::B)
                         }
 
-                        (Some(VirtualKeyCode::A), ElementState::Released) => {
+                        (KeyCode::KeyA, ElementState::Released) => {
                             UserInput::ReleaseNote(Note::C)
                         }
-                        (Some(VirtualKeyCode::S), ElementState::Released) => {
+                        (KeyCode::KeyS, ElementState::Released) => {
                             UserInput::ReleaseNote(Note::D)
                         }
-                        (Some(VirtualKeyCode::D), ElementState::Released) => {
+                        (KeyCode::KeyD, ElementState::Released) => {
                             UserInput::ReleaseNote(Note::E)
                         }
-                        (Some(VirtualKeyCode::F), ElementState::Released) => {
+                        (KeyCode::KeyF, ElementState::Released) => {
                             UserInput::ReleaseNote(Note::F)
                         }
-                        (Some(VirtualKeyCode::G), ElementState::Released) => {
+                        (KeyCode::KeyG, ElementState::Released) => {
                             UserInput::ReleaseNote(Note::G)
                         }
-                        (Some(VirtualKeyCode::H), ElementState::Released) => {
+                        (KeyCode::KeyH, ElementState::Released) => {
                             UserInput::ReleaseNote(Note::A)
                         }
-                        (Some(VirtualKeyCode::J), ElementState::Released) => {
+                        (KeyCode::KeyJ, ElementState::Released) => {
                             UserInput::ReleaseNote(Note::B)
                         }
 

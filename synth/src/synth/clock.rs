@@ -19,8 +19,6 @@ impl Clock {
     }
 
     pub fn t(&self, frequency: f32) -> f32 {
-        // I don't believe this works for timers < 1 Hz. This requires some
-        // investigation.
         self.time as f32 / self.sample_rate as f32 * frequency % 1.
     }
 }

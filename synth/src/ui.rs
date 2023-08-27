@@ -12,7 +12,7 @@ use crate::synth::interface::{Note, UserInput};
 
 pub fn run(input: Sender<UserInput>) -> anyhow::Result<()> {
     let event_loop = EventLoop::new();
-    let window = Window::new(&event_loop).unwrap();
+    let window = Window::new(&event_loop)?;
     let context = unsafe { softbuffer::Context::new(&window) }.unwrap();
     let mut surface =
         unsafe { softbuffer::Surface::new(&context, &window) }.unwrap();

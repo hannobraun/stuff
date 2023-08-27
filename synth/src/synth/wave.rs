@@ -19,5 +19,5 @@ impl Default for Wave {
 }
 
 fn sawtooth(t: f32) -> f32 {
-    t
+    -2. * t + 1.
 }

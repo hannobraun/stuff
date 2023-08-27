@@ -10,7 +10,7 @@ use winit::{
 
 use crate::synth::interface::{Note, UserInput};
 
-pub fn run(input: Sender<UserInput>) {
+pub fn run(input: Sender<UserInput>) -> anyhow::Result<()> {
     let event_loop = EventLoop::new();
     let window = Window::new(&event_loop).unwrap();
     let context = unsafe { softbuffer::Context::new(&window) }.unwrap();

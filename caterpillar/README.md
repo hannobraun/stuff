@@ -1,3 +1,3 @@
 # Caterpillar
 
-Moved to another repository: https://github.com/hannobraun/caterpillar/tree/main/archive/cp0
+Moved to another repository: https://github.com/hannobraun/caterpillar

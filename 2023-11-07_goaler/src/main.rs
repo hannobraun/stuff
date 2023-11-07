@@ -14,7 +14,7 @@ fn main() -> anyhow::Result<()> {
         });
 
         egui::CentralPanel::default().show(ctx, |ui| {
-            ui.label("Hello, world!");
+            ui.label("Goal 1");
         });
     })
     .map_err(|err| {

@@ -1,5 +1,7 @@
 fn main() -> anyhow::Result<()> {
-    let config = eframe::NativeOptions::default();
+    let config = eframe::NativeOptions {
+        ..eframe::NativeOptions::default()
+    };
 
     eframe::run_simple_native("Goaler", config, |ctx, frame| {
         frame.set_maximized(true);

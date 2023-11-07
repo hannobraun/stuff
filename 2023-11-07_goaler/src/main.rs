@@ -1,4 +1,4 @@
-use eframe::egui::Key;
+use eframe::egui::{self, Key};
 
 fn main() -> anyhow::Result<()> {
     let config = eframe::NativeOptions {
@@ -11,6 +11,10 @@ fn main() -> anyhow::Result<()> {
             if input.key_pressed(Key::Escape) {
                 frame.close();
             }
+        });
+
+        egui::CentralPanel::default().show(ctx, |ui| {
+            ui.label("Hello, world!");
         });
     })
     .map_err(|err| {

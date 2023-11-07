@@ -14,12 +14,14 @@ fn main() -> anyhow::Result<()> {
         });
 
         egui::CentralPanel::default().show(ctx, |ui| {
-            goal(ui, "Goal 1");
-            goal(ui, "Goal 2");
-            goal(ui, "Goal 3");
-            goal(ui, "Goal 4");
-            goal(ui, "Goal 5");
-            goal(ui, "Goal 6");
+            ui.horizontal(|ui| {
+                goal(ui, "Goal 1");
+                goal(ui, "Goal 2");
+                goal(ui, "Goal 3");
+                goal(ui, "Goal 4");
+                goal(ui, "Goal 5");
+                goal(ui, "Goal 6");
+            });
         });
     })
     .map_err(|err| {

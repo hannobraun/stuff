@@ -1,4 +1,4 @@
-use eframe::egui::{self, Key, Ui};
+use eframe::egui::{self, Key, RichText, Ui};
 
 fn main() -> anyhow::Result<()> {
     let config = eframe::NativeOptions {
@@ -33,5 +33,5 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn goal(ui: &mut Ui, name: &str) {
-    ui.label(name);
+    ui.label(RichText::new(name).heading());
 }

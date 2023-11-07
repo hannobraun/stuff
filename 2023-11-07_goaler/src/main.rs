@@ -1,3 +1,5 @@
+use eframe::egui::Key;
+
 fn main() -> anyhow::Result<()> {
     let config = eframe::NativeOptions {
         maximized: true,
@@ -6,7 +8,7 @@ fn main() -> anyhow::Result<()> {
 
     eframe::run_simple_native("Goaler", config, |ctx, frame| {
         ctx.input(|input| {
-            if input.key_pressed(eframe::egui::Key::Escape) {
+            if input.key_pressed(Key::Escape) {
                 frame.close();
             }
         })

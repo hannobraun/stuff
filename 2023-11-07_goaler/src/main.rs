@@ -11,7 +11,7 @@ fn main() -> anyhow::Result<()> {
             if input.key_pressed(Key::Escape) {
                 frame.close();
             }
-        })
+        });
     })
     .map_err(|err| {
         // `eframe::Error` doesn't implement `Send`, so we need to do a

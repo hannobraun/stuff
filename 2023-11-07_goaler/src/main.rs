@@ -35,6 +35,6 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn goal(ui: &mut Ui, name: &str) {
+fn goal(ui: &mut Ui, name: &String) {
     ui.label(RichText::new(name).heading().strong());
 }

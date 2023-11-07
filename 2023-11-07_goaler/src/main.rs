@@ -6,6 +6,9 @@ fn main() -> anyhow::Result<()> {
         ..eframe::NativeOptions::default()
     };
 
+    let goals =
+        vec!["Goal 1", "Goal 2", "Goal 3", "Goal 4", "Goal 5", "Goal 6"];
+
     eframe::run_simple_native("Goaler", config, move |ctx, frame| {
         ctx.input(|input| {
             if input.key_pressed(Key::Escape) {
@@ -15,12 +18,9 @@ fn main() -> anyhow::Result<()> {
 
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.horizontal(|ui| {
-                goal(ui, "Goal 1");
-                goal(ui, "Goal 2");
-                goal(ui, "Goal 3");
-                goal(ui, "Goal 4");
-                goal(ui, "Goal 5");
-                goal(ui, "Goal 6");
+                for name in &goals {
+                    goal(ui, name);
+                }
             });
         });
     })

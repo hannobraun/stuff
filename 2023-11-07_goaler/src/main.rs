@@ -33,5 +33,5 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn goal(ui: &mut Ui, name: &str) {
-    ui.label(RichText::new(name).heading());
+    ui.label(RichText::new(name).heading().strong());
 }

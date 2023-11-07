@@ -6,7 +6,7 @@ fn main() -> anyhow::Result<()> {
         ..eframe::NativeOptions::default()
     };
 
-    eframe::run_simple_native("Goaler", config, |ctx, frame| {
+    eframe::run_simple_native("Goaler", config, move |ctx, frame| {
         ctx.input(|input| {
             if input.key_pressed(Key::Escape) {
                 frame.close();

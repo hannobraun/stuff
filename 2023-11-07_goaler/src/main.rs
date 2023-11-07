@@ -1,4 +1,4 @@
-use eframe::egui::{self, Key};
+use eframe::egui::{self, Key, Ui};
 
 fn main() -> anyhow::Result<()> {
     let config = eframe::NativeOptions {
@@ -14,7 +14,7 @@ fn main() -> anyhow::Result<()> {
         });
 
         egui::CentralPanel::default().show(ctx, |ui| {
-            ui.label("Goal 1");
+            goal(ui, "Goal 1");
         });
     })
     .map_err(|err| {
@@ -23,4 +23,8 @@ fn main() -> anyhow::Result<()> {
         anyhow::anyhow!("{err}")
     })?;
     Ok(())
+}
+
+fn goal(ui: &mut Ui, name: &str) {
+    ui.label(name);
 }

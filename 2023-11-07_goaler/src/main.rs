@@ -22,7 +22,7 @@ fn main() -> anyhow::Result<()> {
                 }
 
                 if ui.button("+").clicked() {
-                    goals.inner.push(String::from("New Goal"));
+                    goals.add();
                 }
             });
         });
@@ -41,4 +41,10 @@ fn goal(ui: &mut Ui, name: &mut String) {
 
 pub struct Goals {
     inner: Vec<String>,
+}
+
+impl Goals {
+    pub fn add(&mut self) {
+        self.inner.push(String::from("New Goal"));
+    }
 }

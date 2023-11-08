@@ -6,7 +6,7 @@ fn main() -> anyhow::Result<()> {
         ..eframe::NativeOptions::default()
     };
 
-    let goals =
+    let mut goals =
         vec!["Goal 1", "Goal 2", "Goal 3", "Goal 4", "Goal 5", "Goal 6"]
             .into_iter()
             .map(String::from)
@@ -21,7 +21,7 @@ fn main() -> anyhow::Result<()> {
 
         egui::CentralPanel::default().show(ctx, |ui| {
             ui.horizontal(|ui| {
-                for name in &goals {
+                for name in &mut goals {
                     goal(ui, name);
                 }
             });
@@ -35,6 +35,6 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn goal(ui: &mut Ui, name: &String) {
-    ui.label(RichText::new(name).heading().strong());
+fn goal(ui: &mut Ui, name: &mut String) {
+    ui.label(RichText::new(&*name).heading().strong());
 }

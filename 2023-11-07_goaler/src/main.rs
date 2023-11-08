@@ -18,7 +18,7 @@ fn main() -> anyhow::Result<()> {
         CentralPanel::default().show(ctx, |ui| {
             ui.horizontal(|ui| {
                 for Goal { name } in &mut goals.inner {
-                    goal(ui, name);
+                    add_goal(ui, name);
                 }
 
                 if ui.button("+").clicked() {
@@ -35,7 +35,7 @@ fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn goal(ui: &mut Ui, name: &mut String) {
+fn add_goal(ui: &mut Ui, name: &mut String) {
     ui.add(TextEdit::singleline(name).font(TextStyle::Heading));
 }
 

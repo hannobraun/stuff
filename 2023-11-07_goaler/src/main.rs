@@ -36,7 +36,9 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn add_goal(ui: &mut Ui, goal: &mut Goal) {
-    ui.add(TextEdit::singleline(&mut goal.name).font(TextStyle::Heading));
+    TextEdit::singleline(&mut goal.name)
+        .font(TextStyle::Heading)
+        .show(ui);
 }
 
 pub struct Goals {

@@ -6,7 +6,7 @@ fn main() -> anyhow::Result<()> {
         ..eframe::NativeOptions::default()
     };
 
-    let mut goals = Vec::new();
+    let mut goals = Goals { inner: Vec::new() };
 
     eframe::run_simple_native("Goaler", config, move |ctx, frame| {
         ctx.input(|input| {
@@ -17,12 +17,12 @@ fn main() -> anyhow::Result<()> {
 
         CentralPanel::default().show(ctx, |ui| {
             ui.horizontal(|ui| {
-                for name in &mut goals {
+                for name in &mut goals.inner {
                     goal(ui, name);
                 }
 
                 if ui.button("+").clicked() {
-                    goals.push(String::from("New Goal"));
+                    goals.inner.push(String::from("New Goal"));
                 }
             });
         });
@@ -37,4 +37,8 @@ fn main() -> anyhow::Result<()> {
 
 fn goal(ui: &mut Ui, name: &mut String) {
     ui.add(TextEdit::singleline(name).font(TextStyle::Heading));
+}
+
+pub struct Goals {
+    inner: Vec<String>,
 }

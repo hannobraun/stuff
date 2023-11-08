@@ -17,8 +17,8 @@ fn main() -> anyhow::Result<()> {
 
         CentralPanel::default().show(ctx, |ui| {
             ui.horizontal(|ui| {
-                for Goal { name } in &mut goals.inner {
-                    add_goal(ui, name);
+                for goal in &mut goals.inner {
+                    add_goal(ui, &mut goal.name);
                 }
 
                 if ui.button("+").clicked() {

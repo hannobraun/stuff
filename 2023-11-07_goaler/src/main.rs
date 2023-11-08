@@ -1,4 +1,4 @@
-use eframe::egui::{self, Key, TextEdit, Ui};
+use eframe::egui::{self, Key, TextEdit, TextStyle, Ui};
 
 fn main() -> anyhow::Result<()> {
     let config = eframe::NativeOptions {
@@ -36,5 +36,5 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn goal(ui: &mut Ui, name: &mut String) {
-    ui.add(TextEdit::singleline(name));
+    ui.add(TextEdit::singleline(name).font(TextStyle::Heading));
 }

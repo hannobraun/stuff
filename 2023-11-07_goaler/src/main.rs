@@ -20,11 +20,11 @@ fn main() -> anyhow::Result<()> {
                 for name in &mut goals {
                     goal(ui, name);
                 }
-            });
 
-            if ui.button("+").clicked() {
-                goals.push(String::from("New Goal"));
-            }
+                if ui.button("+").clicked() {
+                    goals.push(String::from("New Goal"));
+                }
+            });
         });
     })
     .map_err(|err| {

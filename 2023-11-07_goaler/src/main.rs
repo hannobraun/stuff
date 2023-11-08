@@ -1,4 +1,4 @@
-use eframe::egui::{self, Key, TextEdit, TextStyle, Ui};
+use eframe::egui::{CentralPanel, Key, TextEdit, TextStyle, Ui};
 
 fn main() -> anyhow::Result<()> {
     let config = eframe::NativeOptions {
@@ -19,7 +19,7 @@ fn main() -> anyhow::Result<()> {
             }
         });
 
-        egui::CentralPanel::default().show(ctx, |ui| {
+        CentralPanel::default().show(ctx, |ui| {
             ui.horizontal(|ui| {
                 for name in &mut goals {
                     goal(ui, name);

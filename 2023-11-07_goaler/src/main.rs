@@ -25,6 +25,10 @@ fn main() -> anyhow::Result<()> {
                     goal(ui, name);
                 }
             });
+
+            if ui.button("+").clicked() {
+                goals.push(String::from("New Goal"));
+            }
         });
     })
     .map_err(|err| {

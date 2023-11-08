@@ -17,7 +17,7 @@ fn main() -> anyhow::Result<()> {
 
         CentralPanel::default().show(ctx, |ui| {
             ui.horizontal(|ui| {
-                for name in &mut goals.inner {
+                for Goal { name } in &mut goals.inner {
                     goal(ui, name);
                 }
 
@@ -40,11 +40,17 @@ fn goal(ui: &mut Ui, name: &mut String) {
 }
 
 pub struct Goals {
-    inner: Vec<String>,
+    inner: Vec<Goal>,
 }
 
 impl Goals {
     pub fn add(&mut self) {
-        self.inner.push(String::from("New Goal"));
+        self.inner.push(Goal {
+            name: String::from("New Goal"),
+        });
     }
+}
+
+pub struct Goal {
+    pub name: String,
 }

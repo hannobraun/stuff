@@ -1,3 +1,5 @@
+use serde::Serialize;
+
 pub struct Goals {
     inner: Vec<Goal>,
 }
@@ -22,8 +24,11 @@ impl Goals {
     }
 }
 
+#[derive(Serialize)]
 pub struct Goal {
     name: String,
+
+    #[serde(skip)]
     is_new: bool,
 }
 

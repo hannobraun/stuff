@@ -76,7 +76,7 @@ fn add_goal_name(ui: &mut Ui, goal: &mut Goal) {
 }
 
 pub struct Goals {
-    inner: Vec<Goal>,
+    pub inner: Vec<Goal>,
 }
 
 impl Goals {

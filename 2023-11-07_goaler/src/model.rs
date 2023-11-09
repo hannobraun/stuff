@@ -1,4 +1,5 @@
 use std::{
+    collections::BTreeMap,
     fs::{self, File},
     io::Write,
 };
@@ -8,20 +9,20 @@ use serde::{Deserialize, Serialize};
 const GOAL_DIR: &str = "goals";
 
 pub struct Goals {
-    inner: Vec<Goal>,
+    inner: BTreeMap<u64, Goal>,
     next_id: u64,
 }
 
 impl Goals {
     pub fn load() -> Self {
         Self {
-            inner: Vec::new(),
+            inner: BTreeMap::new(),
             next_id: 0,
         }
     }
 
     pub fn foundational(&mut self) -> impl Iterator<Item = GoalView> {
-        self.inner.iter_mut().map(|goal| GoalView {
+        self.inner.values_mut().map(|goal| GoalView {
             name: goal.name.clone(),
             inner: goal,
         })
@@ -38,7 +39,7 @@ impl Goals {
         };
         goal.store();
 
-        self.inner.push(goal);
+        self.inner.insert(id, goal);
     }
 }
 

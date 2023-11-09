@@ -1,5 +1,5 @@
 pub struct Goals {
-    pub inner: Vec<Goal>,
+    inner: Vec<Goal>,
 }
 
 impl Goals {

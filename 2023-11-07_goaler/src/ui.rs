@@ -3,7 +3,7 @@ use eframe::egui::{
     TextStyle, Ui,
 };
 
-use crate::model::{Goal, Goals};
+use crate::model::{GoalView, Goals};
 
 pub fn init() -> anyhow::Result<()> {
     let config = eframe::NativeOptions {
@@ -46,7 +46,7 @@ pub fn init() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn add_goal(ui: &mut Ui, goal: &mut Goal) {
+fn add_goal(ui: &mut Ui, goal: GoalView) {
     ui.group(|ui| {
         ui.vertical(|ui| {
             add_goal_name(ui, goal);
@@ -57,19 +57,19 @@ fn add_goal(ui: &mut Ui, goal: &mut Goal) {
     });
 }
 
-fn add_goal_name(ui: &mut Ui, goal: &mut Goal) {
-    let mut output = TextEdit::singleline(&mut goal.name)
+fn add_goal_name(ui: &mut Ui, mut goal: GoalView) {
+    let mut output = TextEdit::singleline(goal.name())
         .font(TextStyle::Heading)
         .show(ui);
 
     if output.response.changed() || output.response.lost_focus() {
-        goal.is_new = false;
+        *goal.is_new() = false;
     }
 
-    if goal.is_new {
+    if *goal.is_new() {
         output.state.set_ccursor_range(Some(CCursorRange::two(
             CCursor::new(0),
-            CCursor::new(goal.name.len()),
+            CCursor::new(goal.name().len()),
         )));
         output.state.store(ui.ctx(), output.response.id);
         ui.ctx()

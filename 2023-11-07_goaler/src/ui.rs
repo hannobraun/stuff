@@ -3,6 +3,8 @@ use eframe::egui::{
     TextStyle, Ui,
 };
 
+use crate::model::{Goal, Goals};
+
 pub fn init() -> anyhow::Result<()> {
     let config = eframe::NativeOptions {
         maximized: true,
@@ -73,22 +75,4 @@ fn add_goal_name(ui: &mut Ui, goal: &mut Goal) {
         ui.ctx()
             .memory_mut(|memory| memory.request_focus(output.response.id));
     }
-}
-
-pub struct Goals {
-    pub inner: Vec<Goal>,
-}
-
-impl Goals {
-    pub fn add(&mut self) {
-        self.inner.push(Goal {
-            name: String::from("New Goal"),
-            is_new: true,
-        });
-    }
-}
-
-pub struct Goal {
-    pub name: String,
-    pub is_new: bool,
 }

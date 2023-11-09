@@ -3,6 +3,10 @@ pub struct Goals {
 }
 
 impl Goals {
+    pub fn load() -> Self {
+        Self { inner: Vec::new() }
+    }
+
     pub fn add(&mut self) {
         self.inner.push(Goal {
             name: String::from("New Goal"),

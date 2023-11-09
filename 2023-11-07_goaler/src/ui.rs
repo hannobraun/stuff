@@ -11,7 +11,7 @@ pub fn init() -> anyhow::Result<()> {
         ..eframe::NativeOptions::default()
     };
 
-    let mut goals = Goals { inner: Vec::new() };
+    let mut goals = Goals::load();
 
     eframe::run_simple_native("Goaler", config, move |ctx, frame| {
         ctx.input(|input| {

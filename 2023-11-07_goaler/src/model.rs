@@ -34,6 +34,7 @@ impl Goals {
             name: String::from("New Goal"),
             is_new: true,
         };
+        goal.store();
 
         self.inner.push(goal);
     }

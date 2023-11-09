@@ -7,6 +7,10 @@ impl Goals {
         Self { inner: Vec::new() }
     }
 
+    pub fn foundational(&mut self) -> impl Iterator<Item = &mut Goal> {
+        self.inner.iter_mut()
+    }
+
     pub fn add(&mut self) {
         self.inner.push(Goal {
             name: String::from("New Goal"),

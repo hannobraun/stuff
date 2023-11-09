@@ -25,7 +25,7 @@ pub fn init() -> anyhow::Result<()> {
                 ui.vertical(|ui| {
                     ui.label("Foundational Goals");
                     ui.horizontal(|ui| {
-                        for goal in &mut goals.inner {
+                        for goal in goals.foundational() {
                             add_goal(ui, goal);
                         }
 

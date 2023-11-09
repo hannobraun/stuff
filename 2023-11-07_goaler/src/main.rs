@@ -45,7 +45,12 @@ fn main() -> anyhow::Result<()> {
 
 fn add_goal(ui: &mut Ui, goal: &mut Goal) {
     ui.group(|ui| {
-        add_goal_name(ui, goal);
+        ui.vertical(|ui| {
+            add_goal_name(ui, goal);
+            if ui.button("+").clicked() {
+                todo!("Can't add sub-goal yet")
+            }
+        });
     });
 }
 

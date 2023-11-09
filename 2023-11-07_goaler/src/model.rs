@@ -15,10 +15,10 @@ pub struct Goals {
 
 impl Goals {
     pub fn load() -> Self {
-        Self {
-            inner: BTreeMap::new(),
-            next_id: 0,
-        }
+        let inner = BTreeMap::new();
+        let next_id = 0;
+
+        Self { inner, next_id }
     }
 
     pub fn foundational(&mut self) -> impl Iterator<Item = GoalView> {

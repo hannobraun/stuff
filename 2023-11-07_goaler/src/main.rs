@@ -44,23 +44,25 @@ fn main() -> anyhow::Result<()> {
 }
 
 fn add_goal(ui: &mut Ui, goal: &mut Goal) {
-    let mut output = TextEdit::singleline(&mut goal.name)
-        .font(TextStyle::Heading)
-        .show(ui);
+    ui.group(|ui| {
+        let mut output = TextEdit::singleline(&mut goal.name)
+            .font(TextStyle::Heading)
+            .show(ui);
 
-    if output.response.changed() || output.response.lost_focus() {
-        goal.is_new = false;
-    }
+        if output.response.changed() || output.response.lost_focus() {
+            goal.is_new = false;
+        }
 
-    if goal.is_new {
-        output.state.set_ccursor_range(Some(CCursorRange::two(
-            CCursor::new(0),
-            CCursor::new(goal.name.len()),
-        )));
-        output.state.store(ui.ctx(), output.response.id);
-        ui.ctx()
-            .memory_mut(|memory| memory.request_focus(output.response.id));
-    }
+        if goal.is_new {
+            output.state.set_ccursor_range(Some(CCursorRange::two(
+                CCursor::new(0),
+                CCursor::new(goal.name.len()),
+            )));
+            output.state.store(ui.ctx(), output.response.id);
+            ui.ctx()
+                .memory_mut(|memory| memory.request_focus(output.response.id));
+        }
+    });
 }
 
 pub struct Goals {

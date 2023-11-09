@@ -29,11 +29,13 @@ impl Goals {
         let id = self.next_id;
         self.next_id += 1;
 
-        self.inner.push(Goal {
+        let goal = Goal {
             id,
             name: String::from("New Goal"),
             is_new: true,
-        });
+        };
+
+        self.inner.push(goal);
     }
 }
 

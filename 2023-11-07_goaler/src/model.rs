@@ -1,10 +1,11 @@
 use std::{
     collections::BTreeMap,
     fs::{self, File},
-    io::Write,
+    io::{Read, Write},
 };
 
 use serde::{Deserialize, Serialize};
+use walkdir::WalkDir;
 
 const GOAL_DIR: &str = "goals";
 
@@ -15,8 +16,31 @@ pub struct Goals {
 
 impl Goals {
     pub fn load() -> Self {
-        let inner = BTreeMap::new();
-        let next_id = 0;
+        let mut inner = BTreeMap::new();
+        let mut next_id = 0;
+
+        for entry in WalkDir::new(GOAL_DIR) {
+            let entry = entry.unwrap();
+            if entry.metadata().unwrap().is_dir() {
+                continue;
+            }
+
+            let mut toml = String::new();
+            File::open(entry.path())
+                .unwrap()
+                .read_to_string(&mut toml)
+                .unwrap();
+
+            let goal: Goal = toml::from_str(&toml).unwrap();
+
+            if goal.id >= next_id {
+                next_id = goal.id + 1;
+            }
+
+            if inner.insert(goal.id, goal).is_some() {
+                panic!("Duplicate ID");
+            }
+        }
 
         Self { inner, next_id }
     }

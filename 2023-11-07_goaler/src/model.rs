@@ -5,6 +5,8 @@ use std::{
 
 use serde::{Deserialize, Serialize};
 
+const GOAL_DIR: &str = "goals";
+
 pub struct Goals {
     inner: Vec<Goal>,
     next_id: u64,
@@ -52,10 +54,9 @@ pub struct Goal {
 
 impl Goal {
     pub fn store(&self) {
-        let dir = "goals";
-        fs::create_dir_all(dir).unwrap();
+        fs::create_dir_all(GOAL_DIR).unwrap();
 
-        let path = format!("{dir}/{}.toml", self.id);
+        let path = format!("{GOAL_DIR}/{}.toml", self.id);
         let toml = toml::to_string_pretty(self).unwrap();
         File::create(path)
             .unwrap()

@@ -19,17 +19,19 @@ fn main() -> anyhow::Result<()> {
         });
 
         CentralPanel::default().show(ctx, |ui| {
-            ui.vertical(|ui| {
-                ui.label("Foundational Goals");
-                ui.horizontal(|ui| {
-                    for goal in &mut goals.inner {
-                        add_goal(ui, goal);
-                    }
+            ui.group(|ui| {
+                ui.vertical(|ui| {
+                    ui.label("Foundational Goals");
+                    ui.horizontal(|ui| {
+                        for goal in &mut goals.inner {
+                            add_goal(ui, goal);
+                        }
 
-                    if ui.button("+").clicked() {
-                        goals.add();
-                    }
-                });
+                        if ui.button("+").clicked() {
+                            goals.add();
+                        }
+                    });
+                })
             });
         });
     })

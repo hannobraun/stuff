@@ -23,8 +23,8 @@ impl Goals {
 }
 
 pub struct Goal {
-    pub name: String,
-    pub is_new: bool,
+    name: String,
+    is_new: bool,
 }
 
 pub struct GoalView<'r> {

@@ -11,7 +11,7 @@ impl Goals {
         self.inner.iter_mut()
     }
 
-    pub fn add(&mut self) {
+    pub fn add_foundational(&mut self) {
         self.inner.push(Goal {
             name: String::from("New Goal"),
             is_new: true,

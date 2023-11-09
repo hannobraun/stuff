@@ -30,7 +30,7 @@ pub fn init() -> anyhow::Result<()> {
                         }
 
                         if ui.button("+").clicked() {
-                            goals.add();
+                            goals.add_foundational();
                         }
                     });
                 })

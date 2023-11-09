@@ -1,4 +1,4 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 pub struct Goals {
     inner: Vec<Goal>,
@@ -24,10 +24,11 @@ impl Goals {
     }
 }
 
-#[derive(Serialize)]
+#[derive(Deserialize, Serialize)]
 pub struct Goal {
     name: String,
 
+    /// Uses the default value for `bool`, which is `false`, when deserializing
     #[serde(skip)]
     is_new: bool,
 }

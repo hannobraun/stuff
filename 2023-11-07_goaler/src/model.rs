@@ -52,7 +52,7 @@ impl Goals {
         })
     }
 
-    pub fn add_foundational(&mut self) {
+    pub fn add_foundational(&mut self) -> u64 {
         let id = self.next_id;
         self.next_id += 1;
 
@@ -64,6 +64,8 @@ impl Goals {
         goal.store();
 
         self.inner.insert(id, goal);
+
+        id
     }
 }
 

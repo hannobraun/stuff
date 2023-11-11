@@ -59,7 +59,6 @@ impl Goals {
         let goal = Goal {
             id,
             name: String::from("New Goal"),
-            is_new: true,
         };
         goal.store();
 
@@ -73,10 +72,6 @@ impl Goals {
 pub struct Goal {
     id: u64,
     name: String,
-
-    /// Uses the default value for `bool`, which is `false`, when deserializing
-    #[serde(skip)]
-    is_new: bool,
 }
 
 impl Goal {
@@ -98,12 +93,12 @@ pub struct GoalView<'r> {
 }
 
 impl GoalView<'_> {
-    pub fn name(&mut self) -> &mut String {
-        &mut self.name
+    pub fn id(&self) -> u64 {
+        self.inner.id
     }
 
-    pub fn is_new(&mut self) -> &mut bool {
-        &mut self.inner.is_new
+    pub fn name(&mut self) -> &mut String {
+        &mut self.name
     }
 }
 

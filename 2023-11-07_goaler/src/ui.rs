@@ -12,6 +12,7 @@ pub fn init() -> anyhow::Result<()> {
     };
 
     let mut goals = Goals::load();
+    let mut new_goal = None;
 
     eframe::run_simple_native("Goaler", config, move |ctx, frame| {
         ctx.input(|input| {
@@ -26,11 +27,12 @@ pub fn init() -> anyhow::Result<()> {
                     ui.label("Foundational Goals");
                     ui.horizontal(|ui| {
                         for goal in goals.foundational() {
-                            add_goal(ui, goal);
+                            add_goal(ui, goal, &mut new_goal);
                         }
 
                         if ui.button("+").clicked() {
-                            goals.add_foundational();
+                            let id = goals.add_foundational();
+                            new_goal = Some(id);
                         }
                     });
                 })
@@ -46,10 +48,10 @@ pub fn init() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn add_goal(ui: &mut Ui, goal: GoalView) {
+fn add_goal(ui: &mut Ui, goal: GoalView, new_goal: &mut Option<u64>) {
     ui.group(|ui| {
         ui.vertical(|ui| {
-            add_goal_name(ui, goal);
+            add_goal_name(ui, goal, new_goal);
             if ui.button("+").clicked() {
                 todo!("Can't add sub-goal yet")
             }
@@ -57,22 +59,25 @@ fn add_goal(ui: &mut Ui, goal: GoalView) {
     });
 }
 
-fn add_goal_name(ui: &mut Ui, mut goal: GoalView) {
+fn add_goal_name(ui: &mut Ui, mut goal: GoalView, new_goal: &mut Option<u64>) {
     let mut output = TextEdit::singleline(goal.name())
         .font(TextStyle::Heading)
         .show(ui);
 
-    if output.response.changed() || output.response.lost_focus() {
-        *goal.is_new() = false;
-    }
+    if let Some(id) = *new_goal {
+        if id == goal.id() {
+            if output.response.changed() || output.response.lost_focus() {
+                *new_goal = None;
+                return;
+            }
 
-    if *goal.is_new() {
-        output.state.set_ccursor_range(Some(CCursorRange::two(
-            CCursor::new(0),
-            CCursor::new(goal.name().len()),
-        )));
-        output.state.store(ui.ctx(), output.response.id);
-        ui.ctx()
-            .memory_mut(|memory| memory.request_focus(output.response.id));
+            output.state.set_ccursor_range(Some(CCursorRange::two(
+                CCursor::new(0),
+                CCursor::new(goal.name().len()),
+            )));
+            output.state.store(ui.ctx(), output.response.id);
+            ui.ctx()
+                .memory_mut(|memory| memory.request_focus(output.response.id));
+        }
     }
 }

@@ -22,9 +22,7 @@ pub fn init() -> anyhow::Result<()> {
         });
 
         CentralPanel::default().show(ctx, |ui| {
-            ui.group(|ui| {
-                ui.label("Foundational Goals");
-
+            show_goal_group(ui, "Foundational Goals", |ui| {
                 for goal in goals.foundational() {
                     show_goal(ui, goal, &mut new_goal);
                 }
@@ -43,6 +41,13 @@ pub fn init() -> anyhow::Result<()> {
     })?;
 
     Ok(())
+}
+
+fn show_goal_group(ui: &mut Ui, name: &str, f: impl FnOnce(&mut Ui)) {
+    ui.group(|ui| {
+        ui.label(name);
+        f(ui)
+    });
 }
 
 fn show_goal(ui: &mut Ui, goal: GoalView, new_goal: &mut Option<u64>) {

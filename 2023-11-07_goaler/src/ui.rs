@@ -22,15 +22,17 @@ pub fn init() -> anyhow::Result<()> {
         });
 
         CentralPanel::default().show(ctx, |ui| {
-            show_goal_group(ui, "Foundational Goals", |ui| {
-                for goal in goals.foundational() {
-                    show_goal(ui, goal, &mut new_goal);
-                }
+            ui.horizontal(|ui| {
+                show_goal_group(ui, "Foundational Goals", |ui| {
+                    for goal in goals.foundational() {
+                        show_goal(ui, goal, &mut new_goal);
+                    }
 
-                if ui.button("+").clicked() {
-                    let id = goals.add_foundational();
-                    new_goal = Some(id);
-                }
+                    if ui.button("+").clicked() {
+                        let id = goals.add_foundational();
+                        new_goal = Some(id);
+                    }
+                });
             });
         });
     })

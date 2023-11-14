@@ -50,7 +50,7 @@ pub fn init() -> anyhow::Result<()> {
 fn show_goal(ui: &mut Ui, goal: GoalView, new_goal: &mut Option<u64>) {
     ui.group(|ui| {
         ui.vertical(|ui| {
-            add_goal_name(ui, goal, new_goal);
+            show_goal_name(ui, goal, new_goal);
             if ui.button("+").clicked() {
                 todo!("Can't add sub-goal yet")
             }
@@ -58,7 +58,7 @@ fn show_goal(ui: &mut Ui, goal: GoalView, new_goal: &mut Option<u64>) {
     });
 }
 
-fn add_goal_name(ui: &mut Ui, mut goal: GoalView, new_goal: &mut Option<u64>) {
+fn show_goal_name(ui: &mut Ui, mut goal: GoalView, new_goal: &mut Option<u64>) {
     let mut output = TextEdit::singleline(goal.name())
         .font(TextStyle::Heading)
         .show(ui);

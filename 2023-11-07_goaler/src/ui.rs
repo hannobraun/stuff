@@ -27,7 +27,7 @@ pub fn init() -> anyhow::Result<()> {
                     ui.label("Foundational Goals");
 
                     for goal in goals.foundational() {
-                        add_goal(ui, goal, &mut new_goal);
+                        show_goal(ui, goal, &mut new_goal);
                     }
 
                     if ui.button("+").clicked() {
@@ -47,7 +47,7 @@ pub fn init() -> anyhow::Result<()> {
     Ok(())
 }
 
-fn add_goal(ui: &mut Ui, goal: GoalView, new_goal: &mut Option<u64>) {
+fn show_goal(ui: &mut Ui, goal: GoalView, new_goal: &mut Option<u64>) {
     ui.group(|ui| {
         ui.vertical(|ui| {
             add_goal_name(ui, goal, new_goal);

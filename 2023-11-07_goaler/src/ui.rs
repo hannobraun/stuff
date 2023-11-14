@@ -23,18 +23,16 @@ pub fn init() -> anyhow::Result<()> {
 
         CentralPanel::default().show(ctx, |ui| {
             ui.group(|ui| {
-                ui.vertical(|ui| {
-                    ui.label("Foundational Goals");
+                ui.label("Foundational Goals");
 
-                    for goal in goals.foundational() {
-                        show_goal(ui, goal, &mut new_goal);
-                    }
+                for goal in goals.foundational() {
+                    show_goal(ui, goal, &mut new_goal);
+                }
 
-                    if ui.button("+").clicked() {
-                        let id = goals.add_foundational();
-                        new_goal = Some(id);
-                    }
-                })
+                if ui.button("+").clicked() {
+                    let id = goals.add_foundational();
+                    new_goal = Some(id);
+                }
             });
         });
     })

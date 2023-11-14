@@ -4,7 +4,6 @@ use std::{
     io::{Read, Write},
 };
 
-use serde::{Deserialize, Serialize};
 use walkdir::WalkDir;
 
 const GOAL_DIR: &str = "goals";
@@ -68,7 +67,7 @@ impl Goals {
     }
 }
 
-#[derive(Deserialize, Serialize)]
+#[derive(serde::Deserialize, serde::Serialize)]
 pub struct Goal {
     id: u64,
     name: String,

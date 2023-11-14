@@ -45,8 +45,10 @@ pub fn init() -> anyhow::Result<()> {
 
 fn show_goal_group(ui: &mut Ui, name: &str, f: impl FnOnce(&mut Ui)) {
     ui.group(|ui| {
-        ui.label(name);
-        f(ui)
+        ui.vertical(|ui| {
+            ui.label(name);
+            f(ui);
+        });
     });
 }
 

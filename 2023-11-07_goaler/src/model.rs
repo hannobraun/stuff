@@ -47,7 +47,7 @@ impl Goals {
     pub fn foundational(&mut self) -> impl Iterator<Item = GoalView> {
         self.inner.values_mut().map(|goal| GoalView {
             c: goal.clone(),
-            inner: goal,
+            r: goal,
         })
     }
 
@@ -88,12 +88,12 @@ impl Goal {
 
 pub struct GoalView<'r> {
     c: Goal,
-    inner: &'r mut Goal,
+    r: &'r mut Goal,
 }
 
 impl GoalView<'_> {
     pub fn id(&self) -> u64 {
-        self.inner.id
+        self.r.id
     }
 
     pub fn name(&mut self) -> &mut String {
@@ -103,9 +103,9 @@ impl GoalView<'_> {
 
 impl Drop for GoalView<'_> {
     fn drop(&mut self) {
-        if self.c != *self.inner {
-            self.inner.clone_from(&self.c);
-            self.inner.store();
+        if self.c != *self.r {
+            self.r.clone_from(&self.c);
+            self.r.store();
         }
     }
 }

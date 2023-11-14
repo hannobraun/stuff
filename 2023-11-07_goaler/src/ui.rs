@@ -25,16 +25,15 @@ pub fn init() -> anyhow::Result<()> {
             ui.group(|ui| {
                 ui.vertical(|ui| {
                     ui.label("Foundational Goals");
-                    ui.horizontal(|ui| {
-                        for goal in goals.foundational() {
-                            add_goal(ui, goal, &mut new_goal);
-                        }
 
-                        if ui.button("+").clicked() {
-                            let id = goals.add_foundational();
-                            new_goal = Some(id);
-                        }
-                    });
+                    for goal in goals.foundational() {
+                        add_goal(ui, goal, &mut new_goal);
+                    }
+
+                    if ui.button("+").clicked() {
+                        let id = goals.add_foundational();
+                        new_goal = Some(id);
+                    }
                 })
             });
         });

@@ -67,7 +67,7 @@ impl Goals {
     }
 }
 
-#[derive(Clone, serde::Deserialize, serde::Serialize)]
+#[derive(Clone, Eq, PartialEq, serde::Deserialize, serde::Serialize)]
 pub struct Goal {
     id: u64,
     name: String,

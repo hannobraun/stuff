@@ -7,9 +7,11 @@ fn main() -> anyhow::Result<()> {
 
     let mut t = 0.;
 
+    let volume = 0.2;
+
     let _device = tinyaudio::run_output_device(params, move |data| {
         for samples in data.chunks_mut(params.channels_count) {
-            let value = -1. + t * 2.;
+            let value = -1. + t * 2. * volume;
 
             for sample in samples {
                 *sample = value;

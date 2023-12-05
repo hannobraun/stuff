@@ -12,7 +12,7 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
 
     let device = tinyaudio::run_output_device(params, move |data| {
         for samples in data.chunks_mut(params.channels_count) {
-            let value = -1. + t * 2. * volume;
+            let value = sawtooth(t) * volume;
 
             for sample in samples {
                 *sample = value;
@@ -25,4 +25,8 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     .map_err(|err| anyhow::anyhow!("Audio error: {err:?}"))?;
 
     Ok(device)
+}
+
+fn sawtooth(t: f32) -> f32 {
+    -1. + t * 2.
 }

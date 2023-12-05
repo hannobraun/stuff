@@ -7,6 +7,7 @@ fn main() -> anyhow::Result<()> {
 
     let mut t = 0.;
 
+    let frequency = 220.;
     let volume = 0.2;
 
     let _device = tinyaudio::run_output_device(params, move |data| {
@@ -17,7 +18,7 @@ fn main() -> anyhow::Result<()> {
                 *sample = value;
             }
 
-            t += 220. / params.sample_rate as f32;
+            t += frequency / params.sample_rate as f32;
             t %= 1.;
         }
     })

@@ -1,3 +1,0 @@
-[workspace]
-resolver = "2"
-members = ["2023-11-07_goaler"]

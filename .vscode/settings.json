@@ -1,5 +1,8 @@
 {
     "editor.formatOnPaste": true,
     "editor.formatOnSave": true,
-    "rust-analyzer.checkOnSave.command": "clippy"
+    "rust-analyzer.checkOnSave.command": "clippy",
+    "search.exclude": {
+        "/archive": true
+    }
 }

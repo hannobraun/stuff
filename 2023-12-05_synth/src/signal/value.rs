@@ -19,11 +19,11 @@ impl From<f32> for Value {
     }
 }
 
-impl<V> From<V> for Signal<Value>
+impl<T> From<T> for Signal<Value>
 where
-    V: Into<Value>,
+    T: Into<Value>,
 {
-    fn from(value: V) -> Self {
+    fn from(value: T) -> Self {
         let value = value.into();
         Self::constant(value)
     }

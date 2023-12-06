@@ -3,9 +3,8 @@ use crate::{
     wave::sawtooth,
 };
 
-pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
-    const SAMPLE_RATE: u32 = 48000;
-
+pub fn start<const SAMPLE_RATE: u32>(
+) -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     let sample_rate = SAMPLE_RATE.try_into().expect(
         "Converting `u32` to `usize` should always work on supported platforms",
     );

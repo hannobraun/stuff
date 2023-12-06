@@ -32,7 +32,7 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     Ok(device)
 }
 
-fn oscillator<const SAMPLE_RATE: u32>(
+pub fn oscillator<const SAMPLE_RATE: u32>(
     wave: fn(f32) -> f32,
     frequency: f32,
 ) -> Signal<SAMPLE_RATE> {

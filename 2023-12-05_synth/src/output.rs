@@ -3,8 +3,9 @@ use std::iter;
 pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     const SAMPLE_RATE: u32 = 48000;
 
+    let sample_rate = SAMPLE_RATE as usize;
     let params = tinyaudio::OutputDeviceParameters {
-        sample_rate: SAMPLE_RATE as usize,
+        sample_rate,
         channels_count: 1,
         channel_sample_count: 4800,
     };

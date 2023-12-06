@@ -24,7 +24,6 @@ where
     T: Into<Value>,
 {
     fn from(value: T) -> Self {
-        let value = value.into();
-        Self::constant(value)
+        Self::constant(value.into())
     }
 }

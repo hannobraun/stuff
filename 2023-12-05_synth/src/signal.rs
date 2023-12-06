@@ -22,6 +22,12 @@ impl<const SAMPLE_RATE: u32> Signal<SAMPLE_RATE> {
     }
 }
 
+impl<const SAMPLE_RATE: u32> From<f32> for Signal<SAMPLE_RATE> {
+    fn from(value: f32) -> Self {
+        Self::from_fn(move || value)
+    }
+}
+
 pub trait SignalSource {
     fn next_value(&mut self) -> f32;
 

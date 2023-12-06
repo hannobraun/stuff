@@ -1,7 +1,4 @@
-use super::{
-    source::{Fn, SignalSource},
-    Value,
-};
+use super::source::{Fn, SignalSource};
 
 pub struct Signal<T> {
     source: Box<dyn SignalSource<T> + Send>,
@@ -23,15 +20,5 @@ impl<T> Signal<T> {
 
     pub fn next_value(&mut self) -> T {
         self.source.next_value()
-    }
-}
-
-impl<V> From<V> for Signal<Value>
-where
-    V: Into<Value>,
-{
-    fn from(value: V) -> Self {
-        let value = value.into();
-        Self::constant(value)
     }
 }

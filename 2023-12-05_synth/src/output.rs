@@ -31,11 +31,11 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     Ok(device)
 }
 
-struct Signal {
+struct Signal<const SAMPLE_RATE: u32> {
     inner: Box<dyn Iterator<Item = f32> + Send>,
 }
 
-impl<I> From<I> for Signal
+impl<I, const SAMPLE_RATE: u32> From<I> for Signal<SAMPLE_RATE>
 where
     I: IntoIterator<Item = f32>,
     I::IntoIter: Send + 'static,
@@ -54,7 +54,7 @@ fn sawtooth(t: f32) -> f32 {
 fn oscillator<const SAMPLE_RATE: u32>(
     wave: fn(f32) -> f32,
     frequency: f32,
-) -> Signal {
+) -> Signal<SAMPLE_RATE> {
     let mut t = 0.;
 
     iter::from_fn(move || {

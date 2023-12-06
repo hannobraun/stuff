@@ -24,13 +24,6 @@ impl<const SAMPLE_RATE: u32> From<f32> for Signal<SAMPLE_RATE> {
 
 pub trait SignalSource {
     fn next_value(&mut self) -> f32;
-
-    fn map<F>(self, f: F) -> Map<Self, F>
-    where
-        Self: Sized,
-    {
-        Map { source: self, f }
-    }
 }
 
 impl<S> SignalSource for Box<S>

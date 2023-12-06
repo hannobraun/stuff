@@ -1,4 +1,4 @@
-mod signal_;
+mod signal;
 mod source;
 
-pub use self::signal_::Signal;
+pub use self::signal::Signal;

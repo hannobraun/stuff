@@ -48,7 +48,7 @@ pub fn oscillator<const SAMPLE_RATE: u32>(
     })
 }
 
-fn amplify<const SAMPLE_RATE: u32>(
+pub fn amplify<const SAMPLE_RATE: u32>(
     signal: Signal<SAMPLE_RATE>,
     amplitude: f32,
 ) -> Signal<SAMPLE_RATE> {

@@ -9,7 +9,7 @@ impl Amplify for Signal {
         let mut amplitude = amplitude.into();
 
         Signal::from_fn(move || {
-            Value(self.next_value().0 * amplitude.next_value().0)
+            Value::new(self.next_value().0 * amplitude.next_value().0)
         })
     }
 }

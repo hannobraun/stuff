@@ -1,8 +1,11 @@
 use crate::signal::Signal;
 
-pub fn amplify<const SAMPLE_RATE: u32>(
-    signal: Signal<SAMPLE_RATE>,
-    amplitude: f32,
-) -> Signal<SAMPLE_RATE> {
-    signal.map(move |value| value * amplitude)
+pub trait Amplify<const SAMPLE_RATE: u32> {
+    fn amplify(self, amplitude: f32) -> Signal<SAMPLE_RATE>;
+}
+
+impl<const SAMPLE_RATE: u32> Amplify<SAMPLE_RATE> for Signal<SAMPLE_RATE> {
+    fn amplify(self, amplitude: f32) -> Signal<SAMPLE_RATE> {
+        self.map(move |value| value * amplitude)
+    }
 }

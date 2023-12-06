@@ -15,7 +15,7 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
 
     let device = tinyaudio::run_output_device(params, move |data| {
         for samples in data.chunks_mut(params.channels_count) {
-            let Some(value) = oscillator.next() else {
+            let Some(value) = oscillator.inner.next() else {
                 return;
             };
             let value = value * volume;
@@ -30,6 +30,10 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     Ok(device)
 }
 
+struct Signal {
+    inner: Box<dyn Iterator<Item = f32> + Send>,
+}
+
 fn sawtooth(t: f32) -> f32 {
     -1. + t * 2.
 }
@@ -38,15 +42,17 @@ fn oscillator(
     wave: fn(f32) -> f32,
     frequency: f32,
     sample_rate: f32,
-) -> Box<dyn Iterator<Item = f32> + Send> {
+) -> Signal {
     let mut t = 0.;
 
-    Box::new(iter::from_fn(move || {
+    let inner = Box::new(iter::from_fn(move || {
         let value = wave(t);
 
         t += frequency / sample_rate;
         t %= 1.;
 
         Some(value)
-    }))
+    }));
+
+    Signal { inner }
 }

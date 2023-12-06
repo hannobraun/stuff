@@ -1,4 +1,5 @@
 mod output;
+mod signal;
 
 fn main() -> anyhow::Result<()> {
     let _device = output::start()?;

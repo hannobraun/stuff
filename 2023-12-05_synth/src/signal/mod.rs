@@ -45,18 +45,3 @@ where
         self.0()
     }
 }
-
-pub struct Map<S, F> {
-    source: S,
-    f: F,
-}
-
-impl<S, F> SignalSource for Map<S, F>
-where
-    S: SignalSource,
-    F: FnMut(f32) -> f32,
-{
-    fn next_value(&mut self) -> f32 {
-        (self.f)(self.source.next_value())
-    }
-}

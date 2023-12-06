@@ -46,6 +46,12 @@ impl<const SAMPLE_RATE: u32> Signal<SAMPLE_RATE> {
     pub fn next_value(&mut self) -> f32 {
         self.source.next_value()
     }
+
+    pub fn map(self, f: impl FnMut(f32) -> f32 + Send + 'static) -> Self {
+        Self {
+            source: Box::new(self.source.map(f)),
+        }
+    }
 }
 
 impl<S, const SAMPLE_RATE: u32> From<S> for Signal<SAMPLE_RATE>
@@ -129,5 +135,5 @@ fn amplify<const SAMPLE_RATE: u32>(
     signal: Signal<SAMPLE_RATE>,
     amplitude: f32,
 ) -> Signal<SAMPLE_RATE> {
-    signal.source.map(move |value| value * amplitude).into()
+    signal.map(move |value| value * amplitude)
 }

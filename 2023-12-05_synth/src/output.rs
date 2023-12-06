@@ -38,15 +38,15 @@ fn oscillator(
     wave: fn(f32) -> f32,
     frequency: f32,
     sample_rate: f32,
-) -> impl Iterator<Item = f32> {
+) -> Box<dyn Iterator<Item = f32> + Send> {
     let mut t = 0.;
 
-    iter::from_fn(move || {
+    Box::new(iter::from_fn(move || {
         let value = wave(t);
 
         t += frequency / sample_rate;
         t %= 1.;
 
         Some(value)
-    })
+    }))
 }

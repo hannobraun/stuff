@@ -39,6 +39,12 @@ struct Signal<const SAMPLE_RATE: u32> {
 }
 
 impl<const SAMPLE_RATE: u32> Signal<SAMPLE_RATE> {
+    pub fn from_fn(mut f: impl FnMut() -> f32 + Send + 'static) -> Self {
+        Self {
+            inner: Box::new(iter::from_fn(move || Some(f()))),
+        }
+    }
+
     pub fn next_value(&mut self) -> Option<f32> {
         self.inner.next()
     }
@@ -66,15 +72,14 @@ fn oscillator<const SAMPLE_RATE: u32>(
 ) -> Signal<SAMPLE_RATE> {
     let mut t = 0.;
 
-    iter::from_fn(move || {
+    Signal::from_fn(move || {
         let value = wave(t);
 
         t += frequency / SAMPLE_RATE as f32;
         t %= 1.;
 
-        Some(value)
+        value
     })
-    .into()
 }
 
 fn amplify<const SAMPLE_RATE: u32>(

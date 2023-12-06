@@ -5,6 +5,10 @@ impl Value {
     pub fn new(inner: f32) -> Self {
         Self(inner)
     }
+
+    pub fn inner(&self) -> f32 {
+        self.0
+    }
 }
 
 impl From<f32> for Value {

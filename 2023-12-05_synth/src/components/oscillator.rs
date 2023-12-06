@@ -10,7 +10,7 @@ pub fn oscillator(wave: Wave, frequency: impl Into<Signal>) -> Signal {
     Signal::from_fn(move || {
         let value = wave(t);
 
-        t += frequency.next_value().0 / SAMPLE_RATE as f32;
+        t += frequency.next_value().inner() / SAMPLE_RATE as f32;
         t %= 1.;
 
         value

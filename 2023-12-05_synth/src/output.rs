@@ -15,14 +15,14 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     let frequency = 220.;
     let volume = 0.2;
 
-    let mut oscillator = oscillator::<SAMPLE_RATE>(sawtooth, frequency);
+    let mut oscillator =
+        amplify(oscillator::<SAMPLE_RATE>(sawtooth, frequency), volume);
 
     let device = tinyaudio::run_output_device(params, move |data| {
         for samples in data.chunks_mut(params.channels_count) {
             let Some(value) = oscillator.inner.next() else {
                 return;
             };
-            let value = value * volume;
 
             for sample in samples {
                 *sample = value;
@@ -69,4 +69,11 @@ fn oscillator<const SAMPLE_RATE: u32>(
         Some(value)
     })
     .into()
+}
+
+fn amplify<const SAMPLE_RATE: u32>(
+    signal: Signal<SAMPLE_RATE>,
+    amplitude: f32,
+) -> Signal<SAMPLE_RATE> {
+    signal.inner.map(move |value| value * amplitude).into()
 }

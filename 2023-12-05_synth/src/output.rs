@@ -1,4 +1,4 @@
-use std::iter;
+use std::ops::DerefMut;
 
 pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     const SAMPLE_RATE: u32 = 48000;
@@ -35,29 +35,75 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
 }
 
 struct Signal<const SAMPLE_RATE: u32> {
-    inner: Box<dyn Iterator<Item = f32> + Send>,
+    inner: Box<dyn SignalSource + Send>,
 }
 
 impl<const SAMPLE_RATE: u32> Signal<SAMPLE_RATE> {
-    pub fn from_fn(mut f: impl FnMut() -> f32 + Send + 'static) -> Self {
+    pub fn from_fn(f: impl FnMut() -> f32 + Send + 'static) -> Self {
         Self {
-            inner: Box::new(iter::from_fn(move || Some(f()))),
+            inner: Box::new(Fn(f)),
         }
     }
 
     pub fn next_value(&mut self) -> Option<f32> {
-        self.inner.next()
+        Some(self.inner.next_value())
     }
 }
 
 impl<I, const SAMPLE_RATE: u32> From<I> for Signal<SAMPLE_RATE>
 where
-    I: Iterator<Item = f32> + Send + 'static,
+    I: SignalSource + Send + 'static,
 {
     fn from(iter: I) -> Self {
         Self {
-            inner: Box::new(iter.into_iter()),
+            inner: Box::new(iter),
         }
+    }
+}
+
+pub trait SignalSource {
+    fn next_value(&mut self) -> f32;
+
+    fn map<F>(self, f: F) -> Map<Self, F>
+    where
+        Self: Sized,
+    {
+        Map { source: self, f }
+    }
+}
+
+impl<S> SignalSource for Box<S>
+where
+    S: SignalSource + ?Sized,
+{
+    fn next_value(&mut self) -> f32 {
+        self.deref_mut().next_value()
+    }
+}
+
+pub struct Fn<F>(F);
+
+impl<F> SignalSource for Fn<F>
+where
+    F: FnMut() -> f32,
+{
+    fn next_value(&mut self) -> f32 {
+        self.0()
+    }
+}
+
+pub struct Map<S, F> {
+    source: S,
+    f: F,
+}
+
+impl<S, F> SignalSource for Map<S, F>
+where
+    S: SignalSource,
+    F: FnMut(f32) -> f32,
+{
+    fn next_value(&mut self) -> f32 {
+        (self.f)(self.source.next_value())
     }
 }
 

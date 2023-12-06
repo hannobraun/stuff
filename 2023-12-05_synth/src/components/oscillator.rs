@@ -1,7 +1,7 @@
-use crate::signal::{Signal, SAMPLE_RATE};
+use crate::{signal::{Signal, SAMPLE_RATE}, wave::Wave};
 
 pub fn oscillator(
-    wave: fn(f32) -> f32,
+    wave: Wave,
     frequency: impl Into<Signal>,
 ) -> Signal {
     let mut frequency = frequency.into();

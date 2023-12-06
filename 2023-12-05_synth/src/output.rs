@@ -54,17 +54,6 @@ impl<const SAMPLE_RATE: u32> Signal<SAMPLE_RATE> {
     }
 }
 
-impl<S, const SAMPLE_RATE: u32> From<S> for Signal<SAMPLE_RATE>
-where
-    S: SignalSource + Send + 'static,
-{
-    fn from(source: S) -> Self {
-        Self {
-            source: Box::new(source),
-        }
-    }
-}
-
 pub trait SignalSource {
     fn next_value(&mut self) -> f32;
 

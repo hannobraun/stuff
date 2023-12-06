@@ -1,5 +1,5 @@
 #[derive(Clone, Copy)]
-pub struct Value(pub f32);
+pub struct Value(f32);
 
 impl Value {
     pub fn new(inner: f32) -> Self {

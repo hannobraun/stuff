@@ -3,23 +3,23 @@ use super::{
     Value,
 };
 
-pub struct Signal {
-    source: Box<dyn SignalSource<Value> + Send>,
+pub struct Signal<T> {
+    source: Box<dyn SignalSource<T> + Send>,
 }
 
-impl Signal {
-    pub fn from_fn(f: impl FnMut() -> Value + Send + 'static) -> Self {
+impl<T> Signal<T> {
+    pub fn from_fn(f: impl FnMut() -> T + Send + 'static) -> Self {
         Self {
             source: Box::new(Fn(f)),
         }
     }
 
-    pub fn next_value(&mut self) -> Value {
+    pub fn next_value(&mut self) -> T {
         self.source.next_value()
     }
 }
 
-impl<V> From<V> for Signal
+impl<V> From<V> for Signal<Value>
 where
     V: Into<Value>,
 {

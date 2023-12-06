@@ -1,10 +1,10 @@
 use crate::{
     components::{oscillator, Amplify as _},
-    signal::Signal,
+    signal::{Signal, Value},
     wave,
 };
 
-pub fn create() -> Signal {
+pub fn create() -> Signal<Value> {
     let frequency = 220.;
     let volume = 0.1;
 

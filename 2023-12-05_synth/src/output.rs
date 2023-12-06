@@ -13,7 +13,7 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     };
 
     let frequency = 220.;
-    let volume = 0.2;
+    let volume = 0.1;
 
     let mut oscillator =
         amplify(oscillator::<SAMPLE_RATE>(sawtooth, frequency), volume);

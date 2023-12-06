@@ -8,6 +8,13 @@ pub struct Signal<T> {
 }
 
 impl<T> Signal<T> {
+    pub fn constant(value: T) -> Self
+    where
+        T: Copy + Send + 'static,
+    {
+        Self::from_fn(move || value)
+    }
+
     pub fn from_fn(f: impl FnMut() -> T + Send + 'static) -> Self {
         Self {
             source: Box::new(Fn(f)),
@@ -25,6 +32,6 @@ where
 {
     fn from(value: V) -> Self {
         let value = value.into();
-        Self::from_fn(move || value)
+        Self::constant(value)
     }
 }

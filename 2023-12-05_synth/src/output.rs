@@ -20,9 +20,7 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
 
     let device = tinyaudio::run_output_device(params, move |data| {
         for samples in data.chunks_mut(params.channels_count) {
-            let Some(value) = signal.next_value() else {
-                return;
-            };
+            let value = signal.next_value();
 
             for sample in samples {
                 *sample = value;
@@ -45,8 +43,8 @@ impl<const SAMPLE_RATE: u32> Signal<SAMPLE_RATE> {
         }
     }
 
-    pub fn next_value(&mut self) -> Option<f32> {
-        Some(self.inner.next_value())
+    pub fn next_value(&mut self) -> f32 {
+        self.inner.next_value()
     }
 }
 

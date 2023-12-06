@@ -34,6 +34,18 @@ struct Signal {
     inner: Box<dyn Iterator<Item = f32> + Send>,
 }
 
+impl<I> From<I> for Signal
+where
+    I: IntoIterator<Item = f32>,
+    I::IntoIter: Send + 'static,
+{
+    fn from(iter: I) -> Self {
+        Self {
+            inner: Box::new(iter.into_iter()),
+        }
+    }
+}
+
 fn sawtooth(t: f32) -> f32 {
     -1. + t * 2.
 }
@@ -45,14 +57,13 @@ fn oscillator(
 ) -> Signal {
     let mut t = 0.;
 
-    let inner = Box::new(iter::from_fn(move || {
+    iter::from_fn(move || {
         let value = wave(t);
 
         t += frequency / sample_rate;
         t %= 1.;
 
         Some(value)
-    }));
-
-    Signal { inner }
+    })
+    .into()
 }

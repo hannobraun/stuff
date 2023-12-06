@@ -1,10 +1,10 @@
 use super::source::{Fn, SignalSource};
 
-pub struct Signal<const SAMPLE_RATE: u32> {
+pub struct Signal {
     source: Box<dyn SignalSource + Send>,
 }
 
-impl<const SAMPLE_RATE: u32> Signal<SAMPLE_RATE> {
+impl Signal {
     pub fn from_fn(f: impl FnMut() -> f32 + Send + 'static) -> Self {
         Self {
             source: Box::new(Fn(f)),
@@ -16,7 +16,7 @@ impl<const SAMPLE_RATE: u32> Signal<SAMPLE_RATE> {
     }
 }
 
-impl<const SAMPLE_RATE: u32> From<f32> for Signal<SAMPLE_RATE> {
+impl From<f32> for Signal {
     fn from(value: f32) -> Self {
         Self::from_fn(move || value)
     }

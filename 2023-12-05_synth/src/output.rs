@@ -33,18 +33,18 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
 }
 
 struct Signal<const SAMPLE_RATE: u32> {
-    inner: Box<dyn SignalSource + Send>,
+    source: Box<dyn SignalSource + Send>,
 }
 
 impl<const SAMPLE_RATE: u32> Signal<SAMPLE_RATE> {
     pub fn from_fn(f: impl FnMut() -> f32 + Send + 'static) -> Self {
         Self {
-            inner: Box::new(Fn(f)),
+            source: Box::new(Fn(f)),
         }
     }
 
     pub fn next_value(&mut self) -> f32 {
-        self.inner.next_value()
+        self.source.next_value()
     }
 }
 
@@ -54,7 +54,7 @@ where
 {
     fn from(source: S) -> Self {
         Self {
-            inner: Box::new(source),
+            source: Box::new(source),
         }
     }
 }
@@ -129,5 +129,5 @@ fn amplify<const SAMPLE_RATE: u32>(
     signal: Signal<SAMPLE_RATE>,
     amplitude: f32,
 ) -> Signal<SAMPLE_RATE> {
-    signal.inner.map(move |value| value * amplitude).into()
+    signal.source.map(move |value| value * amplitude).into()
 }

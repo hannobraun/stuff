@@ -5,7 +5,7 @@ pub fn create<const SAMPLE_RATE: u32>() -> Signal<SAMPLE_RATE> {
     let volume = 0.1;
 
     components::amplify(
-        components::oscillator::<SAMPLE_RATE>(wave::sawtooth, frequency),
+        components::oscillator(wave::sawtooth, frequency),
         volume,
     )
 }

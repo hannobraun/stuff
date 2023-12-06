@@ -12,8 +12,7 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     let frequency = 220.;
     let volume = 0.2;
 
-    let mut oscillator =
-        oscillator(sawtooth, frequency, params.sample_rate as u32);
+    let mut oscillator = oscillator::<SAMPLE_RATE>(sawtooth, frequency);
 
     let device = tinyaudio::run_output_device(params, move |data| {
         for samples in data.chunks_mut(params.channels_count) {
@@ -52,17 +51,16 @@ fn sawtooth(t: f32) -> f32 {
     -1. + t * 2.
 }
 
-fn oscillator(
+fn oscillator<const SAMPLE_RATE: u32>(
     wave: fn(f32) -> f32,
     frequency: f32,
-    sample_rate: u32,
 ) -> Signal {
     let mut t = 0.;
 
     iter::from_fn(move || {
         let value = wave(t);
 
-        t += frequency / sample_rate as f32;
+        t += frequency / SAMPLE_RATE as f32;
         t %= 1.;
 
         Some(value)

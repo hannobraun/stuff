@@ -14,12 +14,6 @@ impl<const SAMPLE_RATE: u32> Signal<SAMPLE_RATE> {
     pub fn next_value(&mut self) -> f32 {
         self.source.next_value()
     }
-
-    pub fn map(self, f: impl FnMut(f32) -> f32 + Send + 'static) -> Self {
-        Self {
-            source: Box::new(self.source.map(f)),
-        }
-    }
 }
 
 impl<const SAMPLE_RATE: u32> From<f32> for Signal<SAMPLE_RATE> {

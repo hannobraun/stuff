@@ -9,7 +9,7 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     let params = tinyaudio::OutputDeviceParameters {
         sample_rate,
         channels_count: 1,
-        channel_sample_count: 4800,
+        channel_sample_count: sample_rate / 1000, // results in 1ms latency
     };
 
     let frequency = 220.;

@@ -1,16 +1,8 @@
-use crate::{
-    components::{amplify, oscillator},
-    wave::sawtooth,
-};
+use crate::signal::Signal;
 
 pub fn start<const SAMPLE_RATE: u32>(
+    mut signal: Signal<SAMPLE_RATE>,
 ) -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
-    let frequency = 220.;
-    let volume = 0.1;
-
-    let mut signal =
-        amplify(oscillator::<SAMPLE_RATE>(sawtooth, frequency), volume);
-
     let sample_rate = SAMPLE_RATE.try_into().expect(
         "Converting `u32` to `usize` should always work on supported platforms",
     );

@@ -35,7 +35,7 @@ where
     }
 }
 
-pub struct Fn<F>(F);
+pub struct Fn<F>(pub F);
 
 impl<F> SignalSource for Fn<F>
 where

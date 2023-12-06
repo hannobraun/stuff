@@ -32,7 +32,7 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     Ok(device)
 }
 
-struct Signal<const SAMPLE_RATE: u32> {
+pub struct Signal<const SAMPLE_RATE: u32> {
     source: Box<dyn SignalSource + Send>,
 }
 

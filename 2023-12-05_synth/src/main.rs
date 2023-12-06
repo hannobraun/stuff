@@ -1,3 +1,4 @@
+mod components;
 mod output;
 mod signal;
 mod wave;

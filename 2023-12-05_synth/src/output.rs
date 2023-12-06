@@ -1,4 +1,7 @@
-use crate::{signal::Signal, wave::sawtooth};
+use crate::{
+    components::{amplify, oscillator},
+    wave::sawtooth,
+};
 
 pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     const SAMPLE_RATE: u32 = 48000;
@@ -30,27 +33,4 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     .map_err(|err| anyhow::anyhow!("Audio error: {err:?}"))?;
 
     Ok(device)
-}
-
-pub fn oscillator<const SAMPLE_RATE: u32>(
-    wave: fn(f32) -> f32,
-    frequency: f32,
-) -> Signal<SAMPLE_RATE> {
-    let mut t = 0.;
-
-    Signal::from_fn(move || {
-        let value = wave(t);
-
-        t += frequency / SAMPLE_RATE as f32;
-        t %= 1.;
-
-        value
-    })
-}
-
-pub fn amplify<const SAMPLE_RATE: u32>(
-    signal: Signal<SAMPLE_RATE>,
-    amplitude: f32,
-) -> Signal<SAMPLE_RATE> {
-    signal.map(move |value| value * amplitude)
 }

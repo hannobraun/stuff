@@ -1,27 +1,25 @@
 use std::ops::DerefMut;
 
-use super::Value;
-
-pub trait SignalSource {
-    fn next_value(&mut self) -> Value;
+pub trait SignalSource<T> {
+    fn next_value(&mut self) -> T;
 }
 
-impl<S> SignalSource for Box<S>
+impl<S, T> SignalSource<T> for Box<S>
 where
-    S: SignalSource + ?Sized,
+    S: SignalSource<T> + ?Sized,
 {
-    fn next_value(&mut self) -> Value {
+    fn next_value(&mut self) -> T {
         self.deref_mut().next_value()
     }
 }
 
 pub struct Fn<F>(pub F);
 
-impl<F> SignalSource for Fn<F>
+impl<F, T> SignalSource<T> for Fn<F>
 where
-    F: FnMut() -> Value,
+    F: FnMut() -> T,
 {
-    fn next_value(&mut self) -> Value {
+    fn next_value(&mut self) -> T {
         self.0()
     }
 }

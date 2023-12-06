@@ -4,7 +4,7 @@ use super::{
 };
 
 pub struct Signal {
-    source: Box<dyn SignalSource + Send>,
+    source: Box<dyn SignalSource<Value> + Send>,
 }
 
 impl Signal {

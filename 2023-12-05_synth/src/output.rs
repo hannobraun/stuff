@@ -1,4 +1,4 @@
-use crate::signal::Signal;
+use crate::{signal::Signal, wave::sawtooth};
 
 pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     const SAMPLE_RATE: u32 = 48000;
@@ -30,10 +30,6 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     .map_err(|err| anyhow::anyhow!("Audio error: {err:?}"))?;
 
     Ok(device)
-}
-
-pub fn sawtooth(t: f32) -> f32 {
-    -1. + t * 2.
 }
 
 fn oscillator<const SAMPLE_RATE: u32>(

@@ -48,11 +48,11 @@ impl<const SAMPLE_RATE: u32> Signal<SAMPLE_RATE> {
     }
 }
 
-impl<I, const SAMPLE_RATE: u32> From<I> for Signal<SAMPLE_RATE>
+impl<S, const SAMPLE_RATE: u32> From<S> for Signal<SAMPLE_RATE>
 where
-    I: SignalSource + Send + 'static,
+    S: SignalSource + Send + 'static,
 {
-    fn from(iter: I) -> Self {
+    fn from(iter: S) -> Self {
         Self {
             inner: Box::new(iter),
         }

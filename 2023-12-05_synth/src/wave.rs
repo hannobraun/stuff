@@ -1,5 +1,7 @@
-pub type Wave = fn(f32) -> f32;
+use crate::signal::Value;
 
-pub fn sawtooth(t: f32) -> f32 {
+pub type Wave = fn(f32) -> Value;
+
+pub fn sawtooth(t: f32) -> Value {
     -1. + t * 2.
 }

@@ -1,23 +1,26 @@
-use super::source::{Fn, SignalSource};
+use super::{
+    source::{Fn, SignalSource},
+    Value,
+};
 
 pub struct Signal {
     source: Box<dyn SignalSource + Send>,
 }
 
 impl Signal {
-    pub fn from_fn(f: impl FnMut() -> f32 + Send + 'static) -> Self {
+    pub fn from_fn(f: impl FnMut() -> Value + Send + 'static) -> Self {
         Self {
             source: Box::new(Fn(f)),
         }
     }
 
-    pub fn next_value(&mut self) -> f32 {
+    pub fn next_value(&mut self) -> Value {
         self.source.next_value()
     }
 }
 
-impl From<f32> for Signal {
-    fn from(value: f32) -> Self {
+impl From<Value> for Signal {
+    fn from(value: Value) -> Self {
         Self::from_fn(move || value)
     }
 }

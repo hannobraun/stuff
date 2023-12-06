@@ -15,12 +15,12 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     let frequency = 220.;
     let volume = 0.1;
 
-    let mut oscillator =
+    let mut signal =
         amplify(oscillator::<SAMPLE_RATE>(sawtooth, frequency), volume);
 
     let device = tinyaudio::run_output_device(params, move |data| {
         for samples in data.chunks_mut(params.channels_count) {
-            let Some(value) = oscillator.next_value() else {
+            let Some(value) = signal.next_value() else {
                 return;
             };
 

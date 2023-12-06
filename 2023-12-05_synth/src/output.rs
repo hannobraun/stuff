@@ -32,7 +32,7 @@ pub fn start() -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     Ok(device)
 }
 
-fn sawtooth(t: f32) -> f32 {
+pub fn sawtooth(t: f32) -> f32 {
     -1. + t * 2.
 }
 

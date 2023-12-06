@@ -1,6 +1,6 @@
-use crate::signal::Signal;
+use crate::signal::{Signal, SAMPLE_RATE};
 
-pub fn start<const SAMPLE_RATE: u32>(
+pub fn start(
     mut signal: Signal,
 ) -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     let sample_rate = SAMPLE_RATE.try_into().expect(

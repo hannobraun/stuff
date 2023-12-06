@@ -2,17 +2,17 @@
 pub struct Audio(f32);
 
 impl Audio {
-    pub fn new(inner: f32) -> Self {
+    pub fn new(value: f32) -> Self {
         assert!(
-            inner.is_finite(),
+            value.is_finite(),
             "`Audio` value must not be NaN or infinite"
         );
         assert!(
-            (-1. ..=1.).contains(&inner),
+            (-1. ..=1.).contains(&value),
             "`Audio` value must be within the range of [-1, 1]"
         );
 
-        Self(inner)
+        Self(value)
     }
 
     pub fn value(&self) -> f32 {

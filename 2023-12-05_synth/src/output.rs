@@ -52,8 +52,7 @@ impl<const SAMPLE_RATE: u32> Signal<SAMPLE_RATE> {
 
 impl<I, const SAMPLE_RATE: u32> From<I> for Signal<SAMPLE_RATE>
 where
-    I: IntoIterator<Item = f32>,
-    I::IntoIter: Send + 'static,
+    I: Iterator<Item = f32> + Send + 'static,
 {
     fn from(iter: I) -> Self {
         Self {

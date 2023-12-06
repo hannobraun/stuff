@@ -1,12 +1,12 @@
 use crate::{
-    signal::{Signal, Value, SAMPLE_RATE},
+    signal::{Audio, Signal, Value, SAMPLE_RATE},
     wave::Wave,
 };
 
 pub fn oscillator(
     wave: Wave,
     frequency: impl Into<Signal<Value>>,
-) -> Signal<Value> {
+) -> Signal<Audio> {
     let mut frequency = frequency.into();
     let mut t = 0.;
 

@@ -19,8 +19,12 @@ impl Signal {
     }
 }
 
-impl From<Value> for Signal {
-    fn from(value: Value) -> Self {
+impl<V> From<V> for Signal
+where
+    V: Into<Value>,
+{
+    fn from(value: V) -> Self {
+        let value = value.into();
         Self::from_fn(move || value)
     }
 }

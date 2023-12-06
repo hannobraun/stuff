@@ -1,5 +1,7 @@
 #[derive(Clone, Copy)]
-pub struct Audio(f32);
+pub struct Audio {
+    value: f32,
+}
 
 impl Audio {
     pub fn new(value: f32) -> Self {
@@ -12,10 +14,10 @@ impl Audio {
             "`Audio` value must be within the range of [-1, 1]"
         );
 
-        Self(value)
+        Self { value }
     }
 
     pub fn value(&self) -> f32 {
-        self.0
+        self.value
     }
 }

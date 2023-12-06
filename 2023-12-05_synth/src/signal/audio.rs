@@ -15,7 +15,7 @@ impl Audio {
         Self(inner)
     }
 
-    pub fn inner(&self) -> f32 {
+    pub fn value(&self) -> f32 {
         self.0
     }
 }

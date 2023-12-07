@@ -17,7 +17,6 @@ impl Value {
 
     pub fn from_frequency(frequency: f32) -> Self {
         let value = AUDIBLE_RANGE.convert_value_to(frequency, &VALUE_RANGE);
-
         Self::new(value)
     }
 

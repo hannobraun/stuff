@@ -1,6 +1,6 @@
 use crate::signal::range::{
     FREQUENCY_MAX, FREQUENCY_MIN, FREQUENCY_RANGE, VALUE_MAX, VALUE_MIN,
-    VALUE_RANGE,
+    VALUE_RANGE_WIDTH,
 };
 
 #[derive(Clone, Copy)]
@@ -26,7 +26,7 @@ impl Value {
         );
 
         let value = VALUE_MIN
-            + VALUE_RANGE / FREQUENCY_RANGE * (frequency - FREQUENCY_MIN);
+            + VALUE_RANGE_WIDTH / FREQUENCY_RANGE * (frequency - FREQUENCY_MIN);
 
         Self::new(value)
     }
@@ -36,7 +36,8 @@ impl Value {
     }
 
     pub fn as_frequency(&self) -> f32 {
-        FREQUENCY_MIN + FREQUENCY_RANGE / VALUE_RANGE * (self.inner - VALUE_MIN)
+        FREQUENCY_MIN
+            + FREQUENCY_RANGE / VALUE_RANGE_WIDTH * (self.inner - VALUE_MIN)
     }
 }
 

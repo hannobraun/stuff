@@ -8,5 +8,5 @@ pub fn create() -> Signal {
     let frequency = Value::encode_from(220., AUDIBLE_RANGE);
     let volume = 0.1;
 
-    oscillator(wave::sawtooth, frequency).amplify(volume)
+    oscillator(wave::sawtooth, frequency, AUDIBLE_RANGE).amplify(volume)
 }

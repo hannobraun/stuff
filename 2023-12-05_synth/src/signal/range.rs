@@ -11,6 +11,10 @@ impl Range {
     pub fn width(&self) -> f32 {
         self.max - self.min
     }
+
+    pub fn contains(&self, value: f32) -> bool {
+        (self.min..=self.max).contains(&value)
+    }
 }
 
 pub const VALUE_RANGE: Range = Range::new(-1., 1.);

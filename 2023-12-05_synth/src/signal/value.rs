@@ -11,7 +11,7 @@ impl Value {
     pub fn new(value: f32) -> Self {
         assert!(value.is_finite(), "`Value` must not be NaN or infinite");
         assert!(
-            (VALUE_RANGE.min..=VALUE_RANGE.max).contains(&value),
+            VALUE_RANGE.contains(value),
             "`Value` must be within the range of [-1, 1]"
         );
 

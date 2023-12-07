@@ -36,3 +36,9 @@ impl From<f32> for Value {
         Self::new(value)
     }
 }
+
+impl From<(f32, Range)> for Value {
+    fn from((value, range): (f32, Range)) -> Self {
+        Self::encode_from(value, range)
+    }
+}

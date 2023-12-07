@@ -1,5 +1,5 @@
 use crate::signal::range::{
-    FREQUENCY_MAX, FREQUENCY_MIN, FREQUENCY_RANGE, VALUE_MAX, VALUE_MIN,
+    FREQUENCY_MAX, FREQUENCY_MIN, FREQUENCY_RANGE, VALUE_RANGE,
     VALUE_RANGE_WIDTH,
 };
 
@@ -12,7 +12,7 @@ impl Value {
     pub fn new(value: f32) -> Self {
         assert!(value.is_finite(), "`Value` must not be NaN or infinite");
         assert!(
-            (VALUE_MIN..=VALUE_MAX).contains(&value),
+            (VALUE_RANGE.min..=VALUE_RANGE.max).contains(&value),
             "`Value` must be within the range of [-1, 1]"
         );
 
@@ -25,7 +25,7 @@ impl Value {
             "frequency value must be within human audible range"
         );
 
-        let value = VALUE_MIN
+        let value = VALUE_RANGE.min
             + VALUE_RANGE_WIDTH / FREQUENCY_RANGE * (frequency - FREQUENCY_MIN);
 
         Self::new(value)
@@ -37,7 +37,8 @@ impl Value {
 
     pub fn as_frequency(&self) -> f32 {
         FREQUENCY_MIN
-            + FREQUENCY_RANGE / VALUE_RANGE_WIDTH * (self.inner - VALUE_MIN)
+            + FREQUENCY_RANGE / VALUE_RANGE_WIDTH
+                * (self.inner - VALUE_RANGE.min)
     }
 }
 

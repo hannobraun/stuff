@@ -1,3 +1,5 @@
+use std::ops;
+
 use crate::signal::range::VALUE_RANGE;
 
 use super::range::Range;
@@ -28,6 +30,15 @@ impl Value {
 
     pub fn decode_to(&self, range: Range) -> f32 {
         VALUE_RANGE.convert_value_to(self.inner, range)
+    }
+}
+
+impl ops::Mul<f32> for Value {
+    type Output = Self;
+
+    fn mul(self, rhs: f32) -> Self::Output {
+        let result = (self.inner * rhs).clamp(VALUE_RANGE.min, VALUE_RANGE.max);
+        Self::new(result)
     }
 }
 

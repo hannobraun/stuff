@@ -1,5 +1,5 @@
-pub const VALUE_MIN: f32 = -1.0;
-pub const VALUE_MAX: f32 = 1.0;
+pub const VALUE_MIN: f32 = -1.;
+pub const VALUE_MAX: f32 = 1.;
 
 pub const FREQUENCY_MIN: f32 = 20.;
 pub const FREQUENCY_MAX: f32 = 20_000.;

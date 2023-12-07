@@ -26,8 +26,8 @@ impl Value {
         self.inner
     }
 
-    pub fn decode_to(&self, range: &Range) -> f32 {
-        VALUE_RANGE.convert_value_to(self.inner, range)
+    pub fn decode_to(&self, range: Range) -> f32 {
+        VALUE_RANGE.convert_value_to(self.inner, &range)
     }
 }
 

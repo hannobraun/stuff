@@ -26,7 +26,7 @@ impl Value {
         self.inner
     }
 
-    pub fn as_frequency(&self, range: &Range) -> f32 {
+    pub fn decode_to(&self, range: &Range) -> f32 {
         VALUE_RANGE.convert_value_to(self.inner, range)
     }
 }

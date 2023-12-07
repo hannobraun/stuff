@@ -1,5 +1,7 @@
 use crate::signal::range::{AUDIBLE_RANGE, VALUE_RANGE};
 
+use super::range::Range;
+
 #[derive(Clone, Copy)]
 pub struct Value {
     inner: f32,
@@ -15,8 +17,8 @@ impl Value {
         Self { inner: value }
     }
 
-    pub fn from_frequency(frequency: f32) -> Self {
-        let value = AUDIBLE_RANGE.convert_value_to(frequency, &VALUE_RANGE);
+    pub fn from_frequency(frequency: f32, range: &Range) -> Self {
+        let value = range.convert_value_to(frequency, &VALUE_RANGE);
         Self::new(value)
     }
 

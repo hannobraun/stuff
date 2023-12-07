@@ -21,9 +21,7 @@ impl Value {
             "frequency value must be within human audible range"
         );
 
-        let value = VALUE_RANGE.min
-            + VALUE_RANGE.width() / AUDIBLE_RANGE.width()
-                * (frequency - AUDIBLE_RANGE.min);
+        let value = AUDIBLE_RANGE.convert_value_to(frequency, &VALUE_RANGE);
 
         Self::new(value)
     }
@@ -33,9 +31,7 @@ impl Value {
     }
 
     pub fn as_frequency(&self) -> f32 {
-        AUDIBLE_RANGE.min
-            + AUDIBLE_RANGE.width() / VALUE_RANGE.width()
-                * (self.inner - VALUE_RANGE.min)
+        VALUE_RANGE.convert_value_to(self.inner, &AUDIBLE_RANGE)
     }
 }
 

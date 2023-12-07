@@ -16,6 +16,10 @@ impl Range {
         assert!(value.is_finite());
         (self.min..=self.max).contains(&value)
     }
+
+    pub fn convert_value_to(&self, value: f32, other: &Range) -> f32 {
+        other.min + other.width() / self.width() * (value - self.min)
+    }
 }
 
 pub const VALUE_RANGE: Range = Range::new(-1., 1.);

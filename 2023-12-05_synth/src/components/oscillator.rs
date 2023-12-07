@@ -13,7 +13,7 @@ pub fn oscillator(
     Signal::from_fn(move || {
         let value = wave(t);
 
-        t += frequency.next_value().value() / SAMPLE_RATE as f32;
+        t += frequency.next_value().inner() / SAMPLE_RATE as f32;
         t %= 1.;
 
         value

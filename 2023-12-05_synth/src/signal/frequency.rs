@@ -19,7 +19,7 @@ impl Frequency {
         Self { value }
     }
 
-    pub fn value(&self) -> f32 {
+    pub fn inner(&self) -> f32 {
         self.value
     }
 }

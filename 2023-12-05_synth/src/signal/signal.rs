@@ -22,3 +22,12 @@ impl Signal {
         self.source.next_value()
     }
 }
+
+impl<T> From<T> for Signal
+where
+    T: Into<Value>,
+{
+    fn from(value: T) -> Self {
+        Signal::constant(value.into())
+    }
+}

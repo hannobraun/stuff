@@ -1,5 +1,3 @@
-use super::Signal;
-
 #[derive(Clone, Copy)]
 pub struct Value {
     inner: f32,
@@ -40,15 +38,6 @@ impl Value {
 impl From<f32> for Value {
     fn from(value: f32) -> Self {
         Self::new(value)
-    }
-}
-
-impl<T> From<T> for Signal
-where
-    T: Into<Value>,
-{
-    fn from(value: T) -> Self {
-        Signal::constant(value.into())
     }
 }
 

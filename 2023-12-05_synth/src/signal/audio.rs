@@ -1,6 +1,6 @@
 #[derive(Clone, Copy)]
 pub struct Value {
-    value: f32,
+    inner: f32,
 }
 
 impl Value {
@@ -11,10 +11,10 @@ impl Value {
             "`Value` must be within the range of [-1, 1]"
         );
 
-        Self { value }
+        Self { inner: value }
     }
 
     pub fn inner(&self) -> f32 {
-        self.value
+        self.inner
     }
 }

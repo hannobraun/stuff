@@ -4,8 +4,8 @@ use crate::{
 };
 
 pub fn oscillator(
-    wave: Wave,
     frequency: impl Into<Signal>,
+    wave: Wave,
     range: Range,
 ) -> Signal {
     let mut frequency = frequency.into();

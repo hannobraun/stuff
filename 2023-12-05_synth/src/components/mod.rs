@@ -1,4 +1,4 @@
-mod amplify;
+mod amplifier;
 mod oscillator;
 
-pub use self::{amplify::Amplify, oscillator::oscillator};
+pub use self::{amplifier::Amplify, oscillator::oscillator};

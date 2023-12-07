@@ -17,7 +17,7 @@ pub fn start(
             let value = signal.next_value();
 
             for sample in samples {
-                *sample = value.value();
+                *sample = value.inner();
             }
         }
     })

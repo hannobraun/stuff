@@ -20,5 +20,3 @@ impl Range {
 
 pub const VALUE_RANGE: Range = Range::new(-1., 1.);
 pub const AUDIBLE_RANGE: Range = Range::new(20., 20_000.);
-
-pub const FREQUENCY_RANGE: f32 = AUDIBLE_RANGE.max - AUDIBLE_RANGE.min;

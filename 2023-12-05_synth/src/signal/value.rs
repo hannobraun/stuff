@@ -1,4 +1,4 @@
-use crate::signal::range::{AUDIBLE_RANGE, FREQUENCY_RANGE, VALUE_RANGE};
+use crate::signal::range::{AUDIBLE_RANGE, VALUE_RANGE};
 
 #[derive(Clone, Copy)]
 pub struct Value {
@@ -22,7 +22,7 @@ impl Value {
         );
 
         let value = VALUE_RANGE.min
-            + VALUE_RANGE.width() / FREQUENCY_RANGE
+            + VALUE_RANGE.width() / AUDIBLE_RANGE.width()
                 * (frequency - AUDIBLE_RANGE.min);
 
         Self::new(value)
@@ -34,7 +34,7 @@ impl Value {
 
     pub fn as_frequency(&self) -> f32 {
         AUDIBLE_RANGE.min
-            + FREQUENCY_RANGE / VALUE_RANGE.width()
+            + AUDIBLE_RANGE.width() / VALUE_RANGE.width()
                 * (self.inner - VALUE_RANGE.min)
     }
 }

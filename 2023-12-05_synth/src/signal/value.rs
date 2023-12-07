@@ -16,11 +16,6 @@ impl Value {
     }
 
     pub fn from_frequency(frequency: f32) -> Self {
-        assert!(
-            AUDIBLE_RANGE.contains(frequency),
-            "frequency value must be within human audible range"
-        );
-
         let value = AUDIBLE_RANGE.convert_value_to(frequency, &VALUE_RANGE);
 
         Self::new(value)

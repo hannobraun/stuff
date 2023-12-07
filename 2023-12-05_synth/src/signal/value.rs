@@ -1,4 +1,4 @@
-use crate::signal::range::{AUDIBLE_RANGE, VALUE_RANGE};
+use crate::signal::range::VALUE_RANGE;
 
 use super::range::Range;
 
@@ -26,8 +26,8 @@ impl Value {
         self.inner
     }
 
-    pub fn as_frequency(&self) -> f32 {
-        VALUE_RANGE.convert_value_to(self.inner, &AUDIBLE_RANGE)
+    pub fn as_frequency(&self, range: &Range) -> f32 {
+        VALUE_RANGE.convert_value_to(self.inner, range)
     }
 }
 

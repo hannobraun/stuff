@@ -1,7 +1,7 @@
-use crate::signal::Audio;
+use crate::signal::Value;
 
-pub type Wave = fn(f32) -> Audio;
+pub type Wave = fn(f32) -> Value;
 
-pub fn sawtooth(t: f32) -> Audio {
-    Audio::new(-1. + t * 2.)
+pub fn sawtooth(t: f32) -> Value {
+    Value::new(-1. + t * 2.)
 }

@@ -1,15 +1,15 @@
-use crate::signal::{Audio, Control, Signal};
+use crate::signal::{Control, Signal, Value};
 
 pub trait Amplify {
-    fn amplify(self, factor: impl Into<Signal<Control>>) -> Signal<Audio>;
+    fn amplify(self, factor: impl Into<Signal<Control>>) -> Signal<Value>;
 }
 
-impl Amplify for Signal<Audio> {
-    fn amplify(mut self, factor: impl Into<Signal<Control>>) -> Signal<Audio> {
+impl Amplify for Signal<Value> {
+    fn amplify(mut self, factor: impl Into<Signal<Control>>) -> Signal<Value> {
         let mut factor = factor.into();
 
         Signal::from_fn(move || {
-            Audio::new(self.next_value().value() * factor.next_value().inner())
+            Value::new(self.next_value().value() * factor.next_value().inner())
         })
     }
 }

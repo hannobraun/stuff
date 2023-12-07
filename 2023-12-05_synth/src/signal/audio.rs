@@ -1,9 +1,9 @@
 #[derive(Clone, Copy)]
-pub struct Audio {
+pub struct Value {
     value: f32,
 }
 
-impl Audio {
+impl Value {
     pub fn new(value: f32) -> Self {
         assert!(
             value.is_finite(),

@@ -13,6 +13,7 @@ impl Range {
     }
 
     pub fn contains(&self, value: f32) -> bool {
+        assert!(value.is_finite(), "`Value` must not be NaN or infinite");
         (self.min..=self.max).contains(&value)
     }
 }

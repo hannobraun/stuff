@@ -4,7 +4,7 @@ use crate::signal::range::VALUE_RANGE;
 
 use super::range::Range;
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug)]
 pub struct Value {
     inner: f32,
 }

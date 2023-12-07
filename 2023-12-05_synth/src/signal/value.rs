@@ -1,3 +1,8 @@
+use crate::signal::range::{
+    FREQUENCY_MAX, FREQUENCY_MIN, FREQUENCY_RANGE, VALUE_MAX, VALUE_MIN,
+    VALUE_RANGE,
+};
+
 #[derive(Clone, Copy)]
 pub struct Value {
     inner: f32,
@@ -40,12 +45,3 @@ impl From<f32> for Value {
         Self::new(value)
     }
 }
-
-const VALUE_MIN: f32 = -1.0;
-const VALUE_MAX: f32 = 1.0;
-
-const FREQUENCY_MIN: f32 = 20.;
-const FREQUENCY_MAX: f32 = 20_000.;
-
-const VALUE_RANGE: f32 = VALUE_MAX - VALUE_MIN;
-const FREQUENCY_RANGE: f32 = FREQUENCY_MAX - FREQUENCY_MIN;

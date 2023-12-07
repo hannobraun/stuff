@@ -4,7 +4,7 @@ use crate::{
     wave,
 };
 
-pub fn create() -> Signal<Value> {
+pub fn create() -> Signal {
     let frequency = Value::from_frequency(220.);
     let volume = 0.1;
 

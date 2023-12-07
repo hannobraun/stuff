@@ -1,7 +1,7 @@
-use crate::signal::{Signal, Value, SAMPLE_RATE};
+use crate::signal::{Signal, SAMPLE_RATE};
 
 pub fn start(
-    mut signal: Signal<Value>,
+    mut signal: Signal,
 ) -> anyhow::Result<Box<dyn tinyaudio::BaseAudioOutputDevice>> {
     let sample_rate = SAMPLE_RATE.try_into().expect(
         "Converting `u32` to `usize` should always work on supported platforms",

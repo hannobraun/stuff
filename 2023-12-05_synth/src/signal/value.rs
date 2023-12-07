@@ -43,7 +43,7 @@ impl From<f32> for Value {
     }
 }
 
-impl<T> From<T> for Signal<Value>
+impl<T> From<T> for Signal
 where
     T: Into<Value>,
 {

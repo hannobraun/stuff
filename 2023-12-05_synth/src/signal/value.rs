@@ -17,7 +17,7 @@ impl Value {
         Self { inner: value }
     }
 
-    pub fn from_frequency(frequency: f32, range: &Range) -> Self {
+    pub fn encode_from(frequency: f32, range: &Range) -> Self {
         let value = range.convert_value_to(frequency, &VALUE_RANGE);
         Self::new(value)
     }

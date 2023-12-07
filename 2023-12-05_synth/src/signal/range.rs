@@ -4,12 +4,16 @@ pub struct Range {
 }
 
 impl Range {
+    pub const fn new(min: f32, max: f32) -> Self {
+        Self { min, max }
+    }
+
     pub fn width(&self) -> f32 {
         self.max - self.min
     }
 }
 
-pub const VALUE_RANGE: Range = Range { min: -1., max: 1. };
+pub const VALUE_RANGE: Range = Range::new(-1., 1.);
 
 pub const FREQUENCY_MIN: f32 = 20.;
 pub const FREQUENCY_MAX: f32 = 20_000.;

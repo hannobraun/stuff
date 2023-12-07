@@ -5,7 +5,7 @@ use crate::{
 };
 
 pub fn create() -> Signal<Value> {
-    let frequency = 220.;
+    let frequency = Value::from_frequency(220.);
     let volume = 0.1;
 
     oscillator(wave::sawtooth, frequency).amplify(volume)

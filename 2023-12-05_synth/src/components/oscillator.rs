@@ -1,11 +1,11 @@
 use crate::{
-    signal::{Frequency, Signal, Value, SAMPLE_RATE},
+    signal::{Signal, Value, SAMPLE_RATE},
     wave::Wave,
 };
 
 pub fn oscillator(
     wave: Wave,
-    frequency: impl Into<Signal<Frequency>>,
+    frequency: impl Into<Signal<Value>>,
 ) -> Signal<Value> {
     let mut frequency = frequency.into();
     let mut t = 0.;
@@ -13,7 +13,7 @@ pub fn oscillator(
     Signal::from_fn(move || {
         let value = wave(t);
 
-        t += frequency.next_value().inner() / SAMPLE_RATE as f32;
+        t += frequency.next_value().as_frequency() / SAMPLE_RATE as f32;
         t %= 1.;
 
         value

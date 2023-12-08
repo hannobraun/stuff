@@ -1,6 +1,6 @@
 use synth::{
     components::{oscillator, Amplify as _},
-    range, wave,
+    output, range, wave,
 };
 
 fn main() -> anyhow::Result<()> {
@@ -11,7 +11,7 @@ fn main() -> anyhow::Result<()> {
         oscillator((frequency, range::AUDIBLE), wave::sawtooth, range::AUDIBLE)
             .amplify((volume, range::AMPLIFIER))
     };
-    let _device = ::synth::output::start(signal)?;
+    let _device = output::start(signal)?;
 
     std::thread::sleep(std::time::Duration::from_millis(200));
 

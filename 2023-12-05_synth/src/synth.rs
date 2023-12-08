@@ -7,8 +7,8 @@ use crate::{
 
 pub fn create() -> Signal {
     let frequency = 220.;
-    let volume = (0.1, range::AMPLIFIER);
+    let volume = 0.1;
 
     oscillator((frequency, range::AUDIBLE), wave::sawtooth, range::AUDIBLE)
-        .amplify(volume)
+        .amplify((volume, range::AMPLIFIER))
 }

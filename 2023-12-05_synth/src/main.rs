@@ -1,5 +1,5 @@
 use synth::{
-    components::{oscillator, Amplify as _},
+    components::{oscillator, Amplify},
     output, range, wave,
 };
 

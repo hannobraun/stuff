@@ -19,7 +19,10 @@ impl Range {
     }
 
     pub fn convert_value_to(&self, value: f32, other: Range) -> f32 {
-        assert!(self.contains(value));
+        assert!(
+            self.contains(value),
+            "assertion failed: {self:?}.contains({value:?})"
+        );
         other.min + other.width() / self.width() * (value - self.min)
     }
 }

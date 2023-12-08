@@ -1,12 +1,12 @@
 use crate::{
     components::{oscillator, Amplify as _},
-    signal::{range, range::AUDIBLE_RANGE, Signal},
+    signal::{range, Signal},
     wave,
 };
 
 pub fn create() -> Signal {
-    let frequency = (220., AUDIBLE_RANGE);
+    let frequency = (220., range::AUDIBLE_RANGE);
     let volume = (0.1, range::AMPLIFIER);
 
-    oscillator(frequency, wave::sawtooth, AUDIBLE_RANGE).amplify(volume)
+    oscillator(frequency, wave::sawtooth, range::AUDIBLE_RANGE).amplify(volume)
 }

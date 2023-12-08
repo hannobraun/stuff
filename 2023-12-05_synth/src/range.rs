@@ -27,6 +27,6 @@ impl Range {
     }
 }
 
-pub const VALUE_RANGE: Range = Range::new(-1., 1.);
+pub const VALUE: Range = Range::new(-1., 1.);
 pub const AUDIBLE: Range = Range::new(20., 20_000.);
 pub const AMPLIFIER: Range = Range::new(0., 100.);

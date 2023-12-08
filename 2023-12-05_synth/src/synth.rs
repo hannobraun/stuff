@@ -1,4 +1,4 @@
-use crate::{
+use synth::{
     components::{oscillator, Amplify as _},
     range,
     signal::Signal,

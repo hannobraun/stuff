@@ -1,9 +1,9 @@
-mod components;
-mod output;
-mod range;
-mod signal;
-mod synth;
-mod wave;
+pub mod components;
+pub mod output;
+pub mod range;
+pub mod signal;
+pub mod synth;
+pub mod wave;
 
 fn main() -> anyhow::Result<()> {
     let signal = synth::create();

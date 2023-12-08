@@ -1,6 +1,6 @@
 use crate::{
     components::{oscillator, Amplify as _},
-    signal::{range, Signal, AUDIBLE_RANGE},
+    signal::{range, range::AUDIBLE_RANGE, Signal},
     wave,
 };
 

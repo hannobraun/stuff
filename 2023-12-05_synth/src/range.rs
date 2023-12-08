@@ -29,4 +29,5 @@ impl Range {
 
 pub const VALUE: Range = Range::new(-1., 1.);
 pub const AUDIBLE: Range = Range::new(20., 20_000.);
+pub const LFO: Range = Range::new(0.1, 20.);
 pub const AMPLIFIER: Range = Range::new(0., 100.);

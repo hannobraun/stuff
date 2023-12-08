@@ -1,5 +1,5 @@
 use crate::{
-    signal::{Range, Signal, SAMPLE_RATE},
+    signal::{range::Range, Signal, SAMPLE_RATE},
     wave::Wave,
 };
 

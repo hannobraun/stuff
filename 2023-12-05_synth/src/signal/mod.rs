@@ -5,7 +5,7 @@ mod source;
 mod value;
 
 pub use self::{
-    range::{Range, AMPLIFIER_RANGE, AUDIBLE_RANGE},
+    range::{AMPLIFIER_RANGE, AUDIBLE_RANGE},
     signal::Signal,
     value::Value,
 };

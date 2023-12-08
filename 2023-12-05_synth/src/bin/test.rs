@@ -1,5 +1,5 @@
 use synth::{
-    components::{oscillator, Amplify},
+    components::{oscillator, Amplify, Limit},
     output, range, wave,
 };
 
@@ -8,8 +8,15 @@ fn main() -> anyhow::Result<()> {
         let frequency = 220.;
         let volume = 0.1;
 
+        let gain = oscillator((20., range::LFO), wave::square, range::LFO)
+            .limit(
+                (0., range::AMPLIFIER),
+                (volume, range::AMPLIFIER),
+                range::AMPLIFIER,
+            );
+
         oscillator((frequency, range::AUDIBLE), wave::sawtooth, range::AUDIBLE)
-            .amplify((volume, range::AMPLIFIER))
+            .amplify(gain)
     };
     let _device = output::start(signal)?;
 

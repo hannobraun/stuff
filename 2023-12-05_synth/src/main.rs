@@ -1,5 +1,6 @@
 mod components;
 mod output;
+mod range;
 mod signal;
 mod synth;
 mod wave;

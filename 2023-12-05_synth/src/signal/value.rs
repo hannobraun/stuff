@@ -1,8 +1,6 @@
 use std::ops;
 
-use crate::signal::range::VALUE_RANGE;
-
-use super::range::Range;
+use crate::range::{Range, VALUE_RANGE};
 
 #[derive(Clone, Copy, Debug)]
 pub struct Value {

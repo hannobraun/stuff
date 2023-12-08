@@ -1,4 +1,4 @@
-use crate::signal::{Signal, AMPLIFIER_RANGE};
+use crate::signal::{range::AMPLIFIER_RANGE, Signal};
 
 pub trait Amplify {
     fn amplify(self, factor: impl Into<Signal>) -> Signal;

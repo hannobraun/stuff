@@ -12,11 +12,13 @@ impl Wave for Sawtooth {
     }
 }
 
-pub struct Square;
+pub struct Square {
+    pub duty_cycle: f32,
+}
 
 impl Wave for Square {
     fn value_at(&self, t: f32) -> Value {
-        let value = if t < 0.5 { 1. } else { -1. };
+        let value = if t < self.duty_cycle { 1. } else { -1. };
         Value::new(value)
     }
 }

@@ -16,7 +16,7 @@ pub struct Square;
 
 impl Wave for Square {
     fn value_at(&self, t: f32) -> Value {
-        let value = if t < 0.5 { -1. } else { 1. };
+        let value = if t < 0.5 { 1. } else { -1. };
         Value::new(value)
     }
 }

@@ -45,15 +45,6 @@ impl Signal {
     }
 }
 
-impl<T> From<T> for Signal
-where
-    T: Into<Value>,
-{
-    fn from(value: T) -> Self {
-        Signal::constant(value.into())
-    }
-}
-
 pub trait IntoSignal {
     fn into_signal(self, range: Range) -> Signal;
 }

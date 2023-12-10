@@ -40,9 +40,3 @@ impl ops::Mul<f32> for Value {
         Self::new(result)
     }
 }
-
-impl From<(f32, Range)> for Value {
-    fn from((value, range): (f32, Range)) -> Self {
-        Self::encode_from(value, range)
-    }
-}

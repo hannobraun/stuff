@@ -7,7 +7,7 @@ pub trait Limit {
     fn limit(
         self,
         min: impl IntoSignal,
-        max: impl Into<Signal>,
+        max: impl IntoSignal,
         range: Range,
     ) -> Signal;
 }
@@ -16,11 +16,11 @@ impl Limit for Signal {
     fn limit(
         mut self,
         min: impl IntoSignal,
-        max: impl Into<Signal>,
+        max: impl IntoSignal,
         range: Range,
     ) -> Signal {
         let mut min = min.into_signal(range);
-        let mut max = max.into();
+        let mut max = max.into_signal(range);
 
         Signal::from_fn(move || {
             let value = self.next_value().decode_to(range);

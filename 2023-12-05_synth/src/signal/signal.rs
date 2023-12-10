@@ -1,3 +1,5 @@
+use crate::range::Range;
+
 use super::{
     source::{Fn, SignalSource},
     Value,
@@ -49,5 +51,31 @@ where
 {
     fn from(value: T) -> Self {
         Signal::constant(value.into())
+    }
+}
+
+pub trait IntoSignal {
+    fn into_signal(self, range: Range) -> Signal;
+}
+
+impl IntoSignal for Signal {
+    fn into_signal(self, range: Range) -> Signal {
+        // If a signal is already a signal, then the range is ignored. This
+        // might be error-prone. See documentation of `Signal` for a discussion
+        // of the trade-offs made in `Signal`'s design.
+        //
+        // It's possible that in the future, `Signal` will store the range it's
+        // encoded in. In that case, this parameter could be used for a check,
+        // or maybe a conversion.
+        let _ = range;
+
+        self
+    }
+}
+
+impl IntoSignal for f32 {
+    fn into_signal(self, range: Range) -> Signal {
+        let value = Value::encode_from(self, range);
+        Signal::constant(value)
     }
 }

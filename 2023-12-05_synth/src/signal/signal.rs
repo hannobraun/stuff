@@ -21,10 +21,10 @@ use super::{
 /// the cost of being error-prone. Whether this is the right trade-off remains
 /// to be seen.
 ///
-/// While this software is certainly *inspired by* modular hardware
-/// synthesizers, it was not created to copy them. It is meant to re-imagine the
-/// concept of modular synthesis for a code-based, functional world. And it
-/// *might* yet turn out, that stronger typing makes more sense there.
+/// While this software is certainly *inspired by* modular hardware synths, it
+/// was not created to copy them. It is meant to re-imagine the concept of
+/// modular synthesis for a code-based, functional world. And it might yet turn
+/// out, that stronger typing makes more sense there.
 pub struct Signal {
     source: Box<dyn SignalSource<Value> + Send>,
 }

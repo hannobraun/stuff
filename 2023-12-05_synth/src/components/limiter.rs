@@ -1,12 +1,12 @@
 use crate::{
     range::Range,
-    signal::{Signal, Value},
+    signal::{IntoSignal, Signal, Value},
 };
 
 pub trait Limit {
     fn limit(
         self,
-        min: impl Into<Signal>,
+        min: impl IntoSignal,
         max: impl Into<Signal>,
         range: Range,
     ) -> Signal;
@@ -15,11 +15,11 @@ pub trait Limit {
 impl Limit for Signal {
     fn limit(
         mut self,
-        min: impl Into<Signal>,
+        min: impl IntoSignal,
         max: impl Into<Signal>,
         range: Range,
     ) -> Signal {
-        let mut min = min.into();
+        let mut min = min.into_signal(range);
         let mut max = max.into();
 
         Signal::from_fn(move || {

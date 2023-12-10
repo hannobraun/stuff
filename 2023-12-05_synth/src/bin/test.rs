@@ -10,11 +10,7 @@ fn main() -> anyhow::Result<()> {
 
         let gain =
             oscillator(20., wave::Square { duty_cycle: 0.5 }, range::LFO)
-                .limit(
-                    (0., range::AMPLIFIER),
-                    (volume, range::AMPLIFIER),
-                    range::AMPLIFIER,
-                );
+                .limit(0., (volume, range::AMPLIFIER), range::AMPLIFIER);
 
         oscillator(frequency, wave::Sawtooth, range::AUDIBLE).amplify(gain)
     };

@@ -2,6 +2,8 @@ export ESP_DIR := "target/esp"
 export BOOT_DIR := ESP_DIR/"efi/boot"
 
 start:
+    cargo build
+
     rm -rf $BOOT_DIR
     mkdir -p $BOOT_DIR
 

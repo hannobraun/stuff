@@ -1,6 +1,5 @@
 #![no_std]
-
-fn main() {}
+#![no_main]
 
 #[panic_handler]
 fn panic(_info: &core::panic::PanicInfo) -> ! {

@@ -4,5 +4,6 @@
     "rust-analyzer.checkOnSave.command": "clippy",
     "search.exclude": {
         "/archive": true
-    }
+    },
+    "rust-analyzer.check.allTargets": false
 }

@@ -1,10 +1,12 @@
+use std::ops::Deref;
+
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let feed = reqwest::get("https://hanno.braun-odw.eu/atom.xml")
         .await?
-        .text()
+        .bytes()
         .await?;
-    let feed = feed_rs::parser::parse(feed.as_bytes())?;
+    let feed = feed_rs::parser::parse(feed.deref())?;
     dbg!(feed);
     Ok(())
 }

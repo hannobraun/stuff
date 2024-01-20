@@ -1,5 +1,5 @@
 [package]
-name = "p2p-rss"
+name = "p2p-feed"
 version = "0.1.0"
 edition = "2021"
 

@@ -4,6 +4,7 @@ async fn main() -> anyhow::Result<()> {
         .await?
         .text()
         .await?;
+    let feed = feed_rs::parser::parse(feed.as_bytes())?;
     dbg!(feed);
     Ok(())
 }

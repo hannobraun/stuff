@@ -7,6 +7,8 @@ async fn main() -> anyhow::Result<()> {
         .bytes()
         .await?;
     let feed = feed_rs::parser::parse(feed.deref())?;
+
     dbg!(feed);
+
     Ok(())
 }

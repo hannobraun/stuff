@@ -8,7 +8,9 @@ async fn main() -> anyhow::Result<()> {
         .await?;
     let feed = feed_rs::parser::parse(feed.deref())?;
 
-    dbg!(feed);
+    for entry in feed.entries {
+        dbg!(entry);
+    }
 
     Ok(())
 }

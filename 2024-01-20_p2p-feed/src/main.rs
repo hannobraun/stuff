@@ -28,7 +28,7 @@ async fn main() -> anyhow::Result<()> {
 
 #[derive(serde::Deserialize, serde::Serialize)]
 struct Item {
-    pub _timestamp: u64,
+    pub timestamp: u64,
     pub id: String,
     pub title: Option<String>,
     pub links: Vec<String>,
@@ -46,7 +46,7 @@ impl Item {
         let links = entry.links.into_iter().map(|link| link.href).collect();
 
         Ok(Item {
-            _timestamp: timestamp,
+            timestamp,
             id,
             title,
             links,
@@ -57,7 +57,7 @@ impl Item {
         let hash = {
             let mut hasher = blake3::Hasher::new();
 
-            hasher.update(&self._timestamp.to_be_bytes());
+            hasher.update(&self.timestamp.to_be_bytes());
             hasher.update(self.id.as_bytes());
             if let Some(title) = &self.title {
                 hasher.update(title.as_bytes());

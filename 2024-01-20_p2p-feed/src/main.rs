@@ -8,43 +8,44 @@ async fn main() -> anyhow::Result<()> {
         .await?;
     let feed = feed_rs::parser::parse(feed.deref())?;
 
-    let items = feed.entries.into_iter().map(|entry| {
-        let timestamp = Instant::now();
-        let id = entry.id;
-        let title = entry.title.map(|title| title.content);
-        let links = entry.links.into_iter().map(|link| link.href).collect();
+    feed.entries
+        .into_iter()
+        .map(|entry| {
+            let timestamp = Instant::now();
+            let id = entry.id;
+            let title = entry.title.map(|title| title.content);
+            let links = entry.links.into_iter().map(|link| link.href).collect();
 
-        Item {
-            _timestamp: timestamp,
-            id,
-            title,
-            links,
-        }
-    });
-
-    for item in items {
-        println!("{}", item.id);
-
-        let title = item
-            .title
-            .map(|title| format!("Title: {}", title))
-            .unwrap_or_else(|| "no title".to_string());
-
-        println!("- {title}");
-
-        if item.links.is_empty() {
-            println!("- no links")
-        } else {
-            println!("- Links:");
-
-            for link in item.links {
-                println!("  - {}", link);
+            Item {
+                _timestamp: timestamp,
+                id,
+                title,
+                links,
             }
-        }
+        })
+        .for_each(|item| {
+            println!("{}", item.id);
 
-        println!();
-        println!();
-    }
+            let title = item
+                .title
+                .map(|title| format!("Title: {}", title))
+                .unwrap_or_else(|| "no title".to_string());
+
+            println!("- {title}");
+
+            if item.links.is_empty() {
+                println!("- no links")
+            } else {
+                println!("- Links:");
+
+                for link in item.links {
+                    println!("  - {}", link);
+                }
+            }
+
+            println!();
+            println!();
+        });
 
     Ok(())
 }

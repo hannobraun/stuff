@@ -1,4 +1,4 @@
-use std::{ops::Deref, time::Instant};
+use std::{ops::Deref, time::SystemTime};
 
 use feed_rs::model::Entry;
 
@@ -19,7 +19,7 @@ async fn main() -> anyhow::Result<()> {
 }
 
 struct Item {
-    pub _timestamp: Instant,
+    pub _timestamp: u128,
     pub id: String,
     pub title: Option<String>,
     pub links: Vec<String>,
@@ -27,7 +27,10 @@ struct Item {
 
 impl Item {
     pub fn from_entry(entry: Entry) -> Self {
-        let timestamp = Instant::now();
+        let timestamp = SystemTime::UNIX_EPOCH
+            .elapsed()
+            .expect("Expected system time after unix epoch")
+            .as_nanos();
         let id = entry.id;
         let title = entry.title.map(|title| title.content);
         let links = entry.links.into_iter().map(|link| link.href).collect();

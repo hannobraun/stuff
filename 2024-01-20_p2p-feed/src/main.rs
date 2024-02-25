@@ -13,7 +13,7 @@ async fn main() -> anyhow::Result<()> {
     feed.entries
         .into_iter()
         .map(Item::from_entry)
-        .for_each(Item::print);
+        .try_for_each(track(Item::print))?;
 
     Ok(())
 }
@@ -27,7 +27,7 @@ struct Item {
 }
 
 impl Item {
-    pub fn from_entry(entry: Entry) -> Self {
+    pub fn from_entry(entry: Entry) -> anyhow::Result<Self> {
         let timestamp = SystemTime::UNIX_EPOCH
             .elapsed()
             .expect("Expected system time after unix epoch")
@@ -36,12 +36,12 @@ impl Item {
         let title = entry.title.map(|title| title.content);
         let links = entry.links.into_iter().map(|link| link.href).collect();
 
-        Item {
+        Ok(Item {
             _timestamp: timestamp,
             id,
             title,
             links,
-        }
+        })
     }
 
     pub fn print(self) {
@@ -66,5 +66,14 @@ impl Item {
 
         println!();
         println!();
+    }
+}
+
+pub fn track<A, B, E>(
+    mut f: impl FnMut(A) -> B,
+) -> impl FnMut(Result<A, E>) -> Result<B, E> {
+    move |res| match res {
+        Ok(a) => Ok(f(a)),
+        Err(err) => Err(err),
     }
 }

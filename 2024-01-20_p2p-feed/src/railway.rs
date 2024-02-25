@@ -17,9 +17,9 @@ pub trait IteratorExt<T, E>: Iterator<Item = Result<T, E>> {
 
 impl<I, T, E> IteratorExt<T, E> for I where I: Iterator<Item = Result<T, E>> {}
 
-pub fn track<A, B, E>(
-    mut f: impl FnMut(A) -> B,
-) -> impl FnMut(Result<A, E>) -> Result<B, E> {
+pub fn track<T, B, E>(
+    mut f: impl FnMut(T) -> B,
+) -> impl FnMut(Result<T, E>) -> Result<B, E> {
     move |res| match res {
         Ok(a) => Ok(f(a)),
         Err(err) => Err(err),

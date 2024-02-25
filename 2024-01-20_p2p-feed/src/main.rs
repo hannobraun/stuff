@@ -1,5 +1,6 @@
 use std::{ops::Deref, time::SystemTime};
 
+use anyhow::Context;
 use feed_rs::model::Entry;
 
 #[tokio::main]
@@ -20,7 +21,7 @@ async fn main() -> anyhow::Result<()> {
 
 #[derive(serde::Deserialize, serde::Serialize)]
 struct Item {
-    pub _timestamp: u128,
+    pub _timestamp: u64,
     pub id: String,
     pub title: Option<String>,
     pub links: Vec<String>,
@@ -28,7 +29,11 @@ struct Item {
 
 impl Item {
     pub fn from_entry(entry: Entry) -> anyhow::Result<Self> {
-        let timestamp = SystemTime::UNIX_EPOCH.elapsed()?.as_nanos();
+        let timestamp = SystemTime::UNIX_EPOCH
+            .elapsed()?
+            .as_nanos()
+            .try_into()
+            .context("Expected system time to be within ~500 years of epoch")?;
         let id = entry.id;
         let title = entry.title.map(|title| title.content);
         let links = entry.links.into_iter().map(|link| link.href).collect();

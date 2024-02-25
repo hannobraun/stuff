@@ -13,15 +13,19 @@ pub trait IteratorExt<T, E>: Iterator<Item = Result<T, E>> {
             Err(err) => Err(err),
         })
     }
+
+    fn track<U>(
+        self,
+        mut f: impl FnMut(T) -> U,
+    ) -> iter::Map<Self, impl FnMut(Result<T, E>) -> Result<U, E>>
+    where
+        Self: Sized,
+    {
+        self.map(move |res| match res {
+            Ok(a) => Ok(f(a)),
+            Err(err) => Err(err),
+        })
+    }
 }
 
 impl<I, T, E> IteratorExt<T, E> for I where I: Iterator<Item = Result<T, E>> {}
-
-pub fn track<T, U, E>(
-    mut f: impl FnMut(T) -> U,
-) -> impl FnMut(Result<T, E>) -> Result<U, E> {
-    move |res| match res {
-        Ok(a) => Ok(f(a)),
-        Err(err) => Err(err),
-    }
-}

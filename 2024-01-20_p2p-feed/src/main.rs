@@ -22,22 +22,22 @@ async fn main() -> anyhow::Result<()> {
         }
     });
 
-    for entry in items {
-        println!("{}", entry.id);
+    for item in items {
+        println!("{}", item.id);
 
-        let title = entry
+        let title = item
             .title
             .map(|title| format!("Title: {}", title))
             .unwrap_or_else(|| "no title".to_string());
 
         println!("- {title}");
 
-        if entry.links.is_empty() {
+        if item.links.is_empty() {
             println!("- no links")
         } else {
             println!("- Links:");
 
-            for link in entry.links {
+            for link in item.links {
                 println!("  - {}", link);
             }
         }

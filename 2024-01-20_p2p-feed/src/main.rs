@@ -1,3 +1,5 @@
+mod railway;
+
 use std::{
     fs::{self, File},
     io::Write,
@@ -8,6 +10,7 @@ use std::{
 
 use anyhow::Context;
 use feed_rs::model::Entry;
+use railway::{switch, track};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -102,23 +105,5 @@ impl Item {
 
         println!();
         println!();
-    }
-}
-
-pub fn switch<A, B, E>(
-    mut f: impl FnMut(A) -> Result<B, E>,
-) -> impl FnMut(Result<A, E>) -> Result<B, E> {
-    move |res| match res {
-        Ok(a) => f(a),
-        Err(err) => Err(err),
-    }
-}
-
-pub fn track<A, B, E>(
-    mut f: impl FnMut(A) -> B,
-) -> impl FnMut(Result<A, E>) -> Result<B, E> {
-    move |res| match res {
-        Ok(a) => Ok(f(a)),
-        Err(err) => Err(err),
     }
 }

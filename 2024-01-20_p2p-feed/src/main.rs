@@ -2,7 +2,7 @@ use std::ops::Deref;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let feed = reqwest::get("https://hanno.braun-odw.eu/atom.xml")
+    let feed = reqwest::get("https://www.hannobraun.com/rss/")
         .await?
         .bytes()
         .await?;

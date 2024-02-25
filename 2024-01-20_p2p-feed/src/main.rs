@@ -13,29 +13,7 @@ async fn main() -> anyhow::Result<()> {
     feed.entries
         .into_iter()
         .map(Item::from_entry)
-        .for_each(|item| {
-            println!("{}", item.id);
-
-            let title = item
-                .title
-                .map(|title| format!("Title: {}", title))
-                .unwrap_or_else(|| "no title".to_string());
-
-            println!("- {title}");
-
-            if item.links.is_empty() {
-                println!("- no links")
-            } else {
-                println!("- Links:");
-
-                for link in item.links {
-                    println!("  - {}", link);
-                }
-            }
-
-            println!();
-            println!();
-        });
+        .for_each(|item| item.print());
 
     Ok(())
 }
@@ -60,5 +38,29 @@ impl Item {
             title,
             links,
         }
+    }
+
+    pub fn print(self) {
+        println!("{}", self.id);
+
+        let title = self
+            .title
+            .map(|title| format!("Title: {}", title))
+            .unwrap_or_else(|| "no title".to_string());
+
+        println!("- {title}");
+
+        if self.links.is_empty() {
+            println!("- no links")
+        } else {
+            println!("- Links:");
+
+            for link in self.links {
+                println!("  - {}", link);
+            }
+        }
+
+        println!();
+        println!();
     }
 }

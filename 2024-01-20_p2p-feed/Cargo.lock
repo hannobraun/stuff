@@ -567,6 +567,7 @@ dependencies = [
  "anyhow",
  "feed-rs",
  "reqwest",
+ "serde",
  "tokio",
 ]
 

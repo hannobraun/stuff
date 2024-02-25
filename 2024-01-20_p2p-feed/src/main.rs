@@ -18,6 +18,7 @@ async fn main() -> anyhow::Result<()> {
     Ok(())
 }
 
+#[derive(serde::Deserialize, serde::Serialize)]
 struct Item {
     pub _timestamp: u128,
     pub id: String,

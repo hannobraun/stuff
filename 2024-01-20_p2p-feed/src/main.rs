@@ -1,5 +1,7 @@
 use std::{ops::Deref, time::Instant};
 
+use feed_rs::model::Entry;
+
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
     let feed = reqwest::get("https://www.hannobraun.com/rss/")
@@ -10,19 +12,7 @@ async fn main() -> anyhow::Result<()> {
 
     feed.entries
         .into_iter()
-        .map(|entry| {
-            let timestamp = Instant::now();
-            let id = entry.id;
-            let title = entry.title.map(|title| title.content);
-            let links = entry.links.into_iter().map(|link| link.href).collect();
-
-            Item {
-                _timestamp: timestamp,
-                id,
-                title,
-                links,
-            }
-        })
+        .map(Item::from_entry)
         .for_each(|item| {
             println!("{}", item.id);
 
@@ -55,4 +45,20 @@ struct Item {
     pub id: String,
     pub title: Option<String>,
     pub links: Vec<String>,
+}
+
+impl Item {
+    pub fn from_entry(entry: Entry) -> Self {
+        let timestamp = Instant::now();
+        let id = entry.id;
+        let title = entry.title.map(|title| title.content);
+        let links = entry.links.into_iter().map(|link| link.href).collect();
+
+        Item {
+            _timestamp: timestamp,
+            id,
+            title,
+            links,
+        }
+    }
 }

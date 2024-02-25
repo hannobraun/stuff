@@ -2,7 +2,7 @@ use std::ops::Deref;
 
 use crate::{
     item::Item,
-    railway::{switch, track},
+    railway::{track, IteratorExt},
 };
 
 pub async fn main() -> anyhow::Result<()> {
@@ -15,7 +15,7 @@ pub async fn main() -> anyhow::Result<()> {
     feed.entries
         .into_iter()
         .map(Item::from_entry)
-        .map(switch(Item::store))
+        .switch(Item::store)
         .try_for_each(track(Item::print))?;
 
     Ok(())

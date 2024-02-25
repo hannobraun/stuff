@@ -28,10 +28,7 @@ struct Item {
 
 impl Item {
     pub fn from_entry(entry: Entry) -> anyhow::Result<Self> {
-        let timestamp = SystemTime::UNIX_EPOCH
-            .elapsed()
-            .expect("Expected system time after unix epoch")
-            .as_nanos();
+        let timestamp = SystemTime::UNIX_EPOCH.elapsed()?.as_nanos();
         let id = entry.id;
         let title = entry.title.map(|title| title.content);
         let links = entry.links.into_iter().map(|link| link.href).collect();

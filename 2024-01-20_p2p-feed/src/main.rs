@@ -13,7 +13,7 @@ async fn main() -> anyhow::Result<()> {
     feed.entries
         .into_iter()
         .map(Item::from_entry)
-        .for_each(|item| item.print());
+        .for_each(Item::print);
 
     Ok(())
 }

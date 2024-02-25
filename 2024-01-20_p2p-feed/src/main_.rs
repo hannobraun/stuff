@@ -1,5 +1,3 @@
-use std::ops::Deref;
-
 use crate::{item::Item, railway::IteratorExt};
 
 pub async fn main() -> anyhow::Result<()> {
@@ -7,7 +5,7 @@ pub async fn main() -> anyhow::Result<()> {
         .await?
         .bytes()
         .await?;
-    let feed = feed_rs::parser::parse(feed.deref())?;
+    let feed = feed_rs::parser::parse(&*feed)?;
 
     feed.entries
         .into_iter()

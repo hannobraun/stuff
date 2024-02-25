@@ -1,6 +1,6 @@
-pub fn switch<T, B, E>(
-    mut f: impl FnMut(T) -> Result<B, E>,
-) -> impl FnMut(Result<T, E>) -> Result<B, E> {
+pub fn switch<T, U, E>(
+    mut f: impl FnMut(T) -> Result<U, E>,
+) -> impl FnMut(Result<T, E>) -> Result<U, E> {
     move |res| match res {
         Ok(a) => f(a),
         Err(err) => Err(err),

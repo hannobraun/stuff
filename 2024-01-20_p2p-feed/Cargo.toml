@@ -9,6 +9,7 @@ anyhow = "*"
 feed-rs = "*"
 reqwest = "*"
 serde = "*"
+toml = "*"
 
 [dependencies.tokio]
 version = "*"

@@ -1,4 +1,10 @@
-use std::{ops::Deref, time::SystemTime};
+use std::{
+    fs::{self, File},
+    io::Write,
+    ops::Deref,
+    path::Path,
+    time::SystemTime,
+};
 
 use anyhow::Context;
 use feed_rs::model::Entry;
@@ -14,6 +20,7 @@ async fn main() -> anyhow::Result<()> {
     feed.entries
         .into_iter()
         .map(Item::from_entry)
+        .map(switch(Item::store))
         .try_for_each(track(Item::print))?;
 
     Ok(())
@@ -44,6 +51,33 @@ impl Item {
             title,
             links,
         })
+    }
+
+    pub fn store(self) -> anyhow::Result<Self> {
+        let hash = {
+            let mut hasher = blake3::Hasher::new();
+
+            hasher.update(&self._timestamp.to_be_bytes());
+            hasher.update(self.id.as_bytes());
+            if let Some(title) = &self.title {
+                hasher.update(title.as_bytes());
+            }
+            for link in &self.links {
+                hasher.update(link.as_bytes());
+            }
+
+            hasher.finalize()
+        };
+        let toml = toml::ser::to_string_pretty(&self)
+            .context("Serializing to TOML")?;
+
+        let store = Path::new("store");
+        fs::create_dir_all(store)?;
+
+        let path = store.join(format!("{hash}.toml"));
+        File::create(path)?.write_all(toml.as_bytes())?;
+
+        Ok(self)
     }
 
     pub fn print(self) {

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>Zig Experiment</title>
+    </head>
+    <body>
+        <script type="module">
+            const wasmCode = await (await fetch("main.wasm")).arrayBuffer();
+            const wasmModule = new WebAssembly.Module(wasmCode);
+
+            const wasmInstance = new WebAssembly.Instance(wasmModule);
+
+            const add = wasmInstance.exports.add;
+            console.log(add(3, 7).toString());
+        </script>
+    </body>
+</html>

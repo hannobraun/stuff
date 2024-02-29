@@ -11,9 +11,9 @@
             const code = await (await fetch("main.wasm")).arrayBuffer();
             const module = new WebAssembly.Module(code);
 
-            const wasmInstance = new WebAssembly.Instance(module);
+            const instance = new WebAssembly.Instance(module);
 
-            const add = wasmInstance.exports.add;
+            const add = instance.exports.add;
             console.log(add(3, 7).toString());
         </script>
     </body>

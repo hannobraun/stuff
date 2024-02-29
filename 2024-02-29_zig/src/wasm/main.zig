@@ -1,11 +1,11 @@
 const std = @import("std");
 const testing = std.testing;
 
-extern fn print(ptr: [*]const u8, len: usize) void;
+const ffi = @import("ffi.zig");
 
 export fn add(a: i32, b: i32) i32 {
     const message = "Hello, world!";
-    print(message.ptr, message.len);
+    ffi.print(message.ptr, message.len);
 
     return a + b;
 }

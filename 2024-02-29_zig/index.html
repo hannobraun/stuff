@@ -9,7 +9,16 @@
     <body>
         <script type="module">
             const wasmCode = await (await fetch("main.wasm")).arrayBuffer();
-            const { instance } = await WebAssembly.instantiate(wasmCode);
+            const { instance } = await WebAssembly.instantiate(wasmCode, {
+                env: {
+                    print: (ptr, len) => {
+                        const memory = instance.exports.memory;
+                        const array = new Uint8Array(memory.buffer, ptr, len);
+                        const string = new TextDecoder().decode(array);
+                        console.log(string);
+                    },
+                }
+            });
 
             const add = instance.exports.add;
             console.log(add(3, 7).toString());

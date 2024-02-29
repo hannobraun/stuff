@@ -39,6 +39,14 @@ fn buildAndRunServer(b: *std.Build) void {
         .optimize = optimize,
     });
 
+    const zap = b.dependency("zap", .{
+        .target = std.zig.CrossTarget{},
+        .optimize = optimize,
+        .openssl = false,
+    });
+    server.addModule("zap", zap.module("zap"));
+    server.linkLibrary(zap.artifact("facil.io"));
+
     b.installArtifact(server);
 
     const run_cmd = b.addRunArtifact(server);

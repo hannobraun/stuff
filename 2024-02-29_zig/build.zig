@@ -31,7 +31,7 @@ pub fn build(b: *std.Build) void {
     // but does not run it.
     const main_tests = b.addTest(.{
         .root_source_file = .{ .path = "src/wasm/main.zig" },
-        .target = target,
+        .target = .{},
         .optimize = optimize,
     });
 

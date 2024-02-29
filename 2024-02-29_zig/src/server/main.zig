@@ -20,6 +20,8 @@ pub fn main() !void {
     });
     try listener.listen();
 
+    std.debug.print("\nServing Zig experiment...\n", .{});
+
     zap.start(.{
         .threads = 2,
         .workers = 2,

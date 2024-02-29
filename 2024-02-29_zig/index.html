@@ -9,9 +9,9 @@
     <body>
         <script type="module">
             const code = await (await fetch("main.wasm")).arrayBuffer();
-            const wasmModule = new WebAssembly.Module(code);
+            const module = new WebAssembly.Module(code);
 
-            const wasmInstance = new WebAssembly.Instance(wasmModule);
+            const wasmInstance = new WebAssembly.Instance(module);
 
             const add = wasmInstance.exports.add;
             console.log(add(3, 7).toString());

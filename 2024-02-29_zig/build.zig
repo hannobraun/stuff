@@ -5,10 +5,6 @@ const Target = std.Target;
 // declaratively construct a build graph that will be executed by an external
 // runner.
 pub fn build(b: *std.Build) void {
-    // Standard target options allows the person running `zig build` to choose
-    // what target to build for. Here we do not override the defaults, which
-    // means any target is allowed, and the default is native. Other options
-    // for restricting supported target set are available.
     const target = b.standardTargetOptions(.{ .default_target = .{ .cpu_arch = Target.Cpu.Arch.wasm32, .os_tag = Target.Os.Tag.freestanding } });
 
     // Standard optimization options allow the person running `zig build` to select

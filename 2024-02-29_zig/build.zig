@@ -8,22 +8,7 @@ const optimize = std.builtin.Mode.Debug;
 // runner.
 pub fn build(b: *std.Build) void {
     buildAndInstallWasm(b);
-
-    // Creates a step for unit testing. This only builds the test executable
-    // but does not run it.
-    const main_tests = b.addTest(.{
-        .root_source_file = .{ .path = "src/wasm/main.zig" },
-        .target = .{},
-        .optimize = optimize,
-    });
-
-    const run_main_tests = b.addRunArtifact(main_tests);
-
-    // This creates a build step. It will be visible in the `zig build --help` menu,
-    // and can be selected like this: `zig build test`
-    // This will evaluate the `test` step rather than the default, which is "install".
-    const test_step = b.step("test", "Run library tests");
-    test_step.dependOn(&run_main_tests.step);
+    buildAndRunTests(b);
 }
 
 fn buildAndInstallWasm(b: *std.Build) void {
@@ -43,4 +28,22 @@ fn buildAndInstallWasm(b: *std.Build) void {
     // location when the user invokes the "install" step (the default step when
     // running `zig build`).
     b.installArtifact(lib);
+}
+
+fn buildAndRunTests(b: *std.Build) void {
+    // Creates a step for unit testing. This only builds the test executable
+    // but does not run it.
+    const main_tests = b.addTest(.{
+        .root_source_file = .{ .path = "src/wasm/main.zig" },
+        .target = .{},
+        .optimize = optimize,
+    });
+
+    const run_main_tests = b.addRunArtifact(main_tests);
+
+    // This creates a build step. It will be visible in the `zig build --help` menu,
+    // and can be selected like this: `zig build test`
+    // This will evaluate the `test` step rather than the default, which is "install".
+    const test_step = b.step("test", "Run library tests");
+    test_step.dependOn(&run_main_tests.step);
 }

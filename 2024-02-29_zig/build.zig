@@ -8,6 +8,7 @@ const optimize = std.builtin.Mode.Debug;
 // runner.
 pub fn build(b: *std.Build) void {
     buildAndInstallWasm(b);
+    buildAndRunServer(b);
     buildAndRunTests(b);
 }
 
@@ -28,6 +29,23 @@ fn buildAndInstallWasm(b: *std.Build) void {
     // location when the user invokes the "install" step (the default step when
     // running `zig build`).
     b.installArtifact(lib);
+}
+
+fn buildAndRunServer(b: *std.Build) void {
+    const server = b.addExecutable(.{
+        .name = "server",
+        .root_source_file = .{ .path = "src/server/main.zig" },
+        .target = .{},
+        .optimize = optimize,
+    });
+
+    b.installArtifact(server);
+
+    const run_cmd = b.addRunArtifact(server);
+    run_cmd.step.dependOn(b.getInstallStep());
+
+    const run_step = b.step("run", "Run the server");
+    run_step.dependOn(&run_cmd.step);
 }
 
 fn buildAndRunTests(b: *std.Build) void {

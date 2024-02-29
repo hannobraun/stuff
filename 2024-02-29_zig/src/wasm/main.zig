@@ -4,10 +4,13 @@ const testing = std.testing;
 const ffi = @import("ffi.zig");
 
 export fn add(a: i32, b: i32) i32 {
-    const message = "Hello, world!";
-    ffi.print(message.ptr, message.len);
+    print("Hello, world!");
 
     return a + b;
+}
+
+fn print(message: []const u8) void {
+    ffi.print(message.ptr, message.len);
 }
 
 test "basic add functionality" {

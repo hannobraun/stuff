@@ -8,8 +8,8 @@
     </head>
     <body>
         <script type="module">
-            const wasmCode = await (await fetch("main.wasm")).arrayBuffer();
-            const wasmModule = new WebAssembly.Module(wasmCode);
+            const code = await (await fetch("main.wasm")).arrayBuffer();
+            const wasmModule = new WebAssembly.Module(code);
 
             const wasmInstance = new WebAssembly.Instance(wasmModule);
 

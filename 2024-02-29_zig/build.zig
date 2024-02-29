@@ -1,6 +1,5 @@
 const std = @import("std");
-const Arch = std.Target.Cpu.Arch;
-const Tag = std.Target.Os.Tag;
+const Target = std.Target;
 
 // Although this function looks imperative, note that its job is to
 // declaratively construct a build graph that will be executed by an external
@@ -10,7 +9,7 @@ pub fn build(b: *std.Build) void {
     // what target to build for. Here we do not override the defaults, which
     // means any target is allowed, and the default is native. Other options
     // for restricting supported target set are available.
-    const target = b.standardTargetOptions(.{ .default_target = .{ .cpu_arch = Arch.wasm32, .os_tag = Tag.freestanding } });
+    const target = b.standardTargetOptions(.{ .default_target = .{ .cpu_arch = Target.Cpu.Arch.wasm32, .os_tag = Target.Os.Tag.freestanding } });
 
     // Standard optimization options allow the person running `zig build` to select
     // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall. Here we do not

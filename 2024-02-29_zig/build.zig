@@ -1,16 +1,13 @@
 const std = @import("std");
 const Target = std.Target;
 
+const optimize = std.builtin.Mode.Debug;
+
 // Although this function looks imperative, note that its job is to
 // declaratively construct a build graph that will be executed by an external
 // runner.
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{ .default_target = .{ .cpu_arch = Target.Cpu.Arch.wasm32, .os_tag = Target.Os.Tag.freestanding } });
-
-    // Standard optimization options allow the person running `zig build` to select
-    // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall. Here we do not
-    // set a preferred release mode, allowing the user to decide how to optimize.
-    const optimize = b.standardOptimizeOption(.{});
 
     const lib = b.addSharedLibrary(.{
         .name = "main",

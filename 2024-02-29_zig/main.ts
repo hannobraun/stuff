@@ -1,7 +1,14 @@
-const wasmCode = await Deno.readFile("zig-out/lib/main.wasm");
-const wasmModule = new WebAssembly.Module(wasmCode);
+import { serveDir } from "https://deno.land/std@0.217.0/http/file_server.ts"
 
-const wasmInstance = new WebAssembly.Instance(wasmModule);
+const dir = await Deno.makeTempDir();
 
-const add = wasmInstance.exports.add as CallableFunction;
-console.log(add(3, 7).toString());
+await Deno.copyFile("index.html", `${dir}/index.html`);
+await Deno.copyFile("zig-out/lib/main.wasm", `${dir}/main.wasm`);
+
+
+Deno.serve(8000, (request) => {
+    return serveDir(request, {
+        fsRoot: dir,
+    });
+});
+

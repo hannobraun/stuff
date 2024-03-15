@@ -6,7 +6,7 @@ This repository contains the hardware designs, documentation, and firmware code 
 
 This repository is currently private, and only available to paid members of [my website](https://www.hannobraun.com/). It will be made public when the wake-up light ships to customers.
 
-However, everything in here is already open source! Feel free to use it for your own projects in any way you see fit, open source or not. I'd like to ask though, as a favor and not a legal obligation, that you don't publish this repository in full until I have made it public.
+However, everything in here is already open source! Feel free to use it for your own projects in any way you see fit, open source or not. I'd like to ask though, as a favor and not a legal obligation, that you don't publish this repository in full until I have myself made it public.
 
 ## License
 
